@@ -39,7 +39,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
 <body>
     <div class="container">
         <form action="doUpload.php" method="post" enctype="multipart/form-data">
-            <a href="./dashboard.php" class="my-2 btn btn-info">返回</a>
+            <a href="./dashboard.php" class="my-2 btn btn-dark">返回</a>
             <div class="mb-2">
                 <label for="">名稱</label>
                 <input type="text" name="name" class="form-control">
@@ -97,7 +97,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);
                 <label for="">選取檔案</label>
                 <input type="file" name="myFile" class="form-control">
             </div>
-            <button class="btn btn-info" type="submit">送出</button>
+            <button class="btn btn-dark" type="submit">送出</button>
         </form>
         <?php exit; ?>
         <div class="row g-3 mt-3">

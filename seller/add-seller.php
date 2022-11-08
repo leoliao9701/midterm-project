@@ -16,7 +16,7 @@
 <body>
   <!-- 新增資料頁面 -->
   <div class="container">
-    <div class="py-2"><a class="btn btn-secondary" href="sellers.php">seller List</a></div>
+    <div class="py-2"><a class="btn btn-dark" href="sellers.php">seller List</a></div>
     <form action="doInsert.php" method="post">
       
         <div class="mb-2">
@@ -35,7 +35,7 @@
             <label for="email">email</label>
             <input type="text" class="form-control" id="email" name="email">
         </div>
-        <button class="btn btn-secondary" type="submit">送出</button>
+        <button class="btn btn-dark" type="submit">送出</button>
     </form>
   </div>
 </body>

@@ -5,6 +5,8 @@ if(!isset($_GET["id"])){
     exit;
 }
 
+
+
 $id=$_GET["id"];
 
 
@@ -40,7 +42,7 @@ $row=$result->fetch_assoc();
 <body>
   <div class="container">
     <div class="py-2">
-        <a class="btn btn-secondary" href="sellers.php">Seller List</a>
+        <a class="btn btn-dark" href="sellers.php">Seller List</a>
     </div>
     <?php if($sellerCount==0): ?>
         使用者不存在
@@ -74,7 +76,7 @@ $row=$result->fetch_assoc();
         </tbody>
     </table>
     <div class="py-2">
-        <a class="btn btn-secondary" href="edit-seller.php?id=<?=$row["id"]?>">編輯使用者</a>
+        <a class="btn btn-dark" href="edit-seller.php?id=<?=$row["id"]?>">編輯使用者</a>
     </div>
     <?php endif ?>
   </div>

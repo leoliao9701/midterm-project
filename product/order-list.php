@@ -83,6 +83,15 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
             padding: 0;
         }
 
+        a{
+            text-decoration: none;
+            color: black;
+            font-weight: 600;
+        }
+        a:hover{
+            color:cadetblue
+        }
+
         .object-cover {
             width: 100%;
             height: 100%;
@@ -95,9 +104,10 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
             min-height: 50px;
         }
         .nav-item:hover{
-            background: #0d6efd;
+            background: cadetblue;
             border-radius: 15px;
         }
+       
     </Style>
 </head>
 
@@ -117,53 +127,53 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
-                            <a href="#" class="nav-link text-white" aria-current="page">
+                            <a href="../seller/dashboard.php" class="nav-link text-white" aria-current="page">
                                 <svg class="bi me-2" width="16" height="16">
                                     <use xlink:href="#home"></use>
                                 </svg>
-                                Home
+                                首頁
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="order-list2.php" class="nav-link  text-white">
                                 <svg class="bi me-2" width="16" height="16">
                                     <use xlink:href="#speedometer2"></use>
                                 </svg>
                                 Coupon
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
-                            <a href="order-detail.php" class="nav-link text-white">
+                            <a href="../seller/sellers.php" class="nav-link text-white">
                                 <svg class="bi me-2" width="16" height="16">
                                     <use xlink:href="#table"></use>
                                 </svg>
-                                Order List
+                                賣家管理
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link text-white">
+                            <a href="./product-list2.php" class="nav-link text-white">
                                 <svg class="bi me-2" width="16" height="16">
                                     <use xlink:href="#grid"></use>
                                 </svg>
-                                Products
+                                藝術品
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link text-white">
+                            <a href="../seller/file-upload.php" class="nav-link text-white">
                                 <svg class="bi me-2" width="16" height="16">
                                     <use xlink:href="#people-circle"></use>
                                 </svg>
-                                Customers
+                                賣家藝術品上傳
                             </a>
                         </li>
                     </ul>
                     <hr>
                     <div class="dropdown">
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="/images/1.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                            <strong>about us</strong>
+                            <img src="./images/201.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
+                            <strong>關於我們</strong>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                        <!-- <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                             <li><a class="dropdown-item" href="#">New project...</a></li>
                             <li><a class="dropdown-item" href="#">Settings</a></li>
                             <li><a class="dropdown-item" href="#">Profile</a></li>
@@ -171,7 +181,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                 <hr class="dropdown-divider">
                             </li>
                             <li><a class="dropdown-item" href="#">Sign out</a></li>
-                        </ul>
+                        </ul> -->
                     </div>
                 </div>
 
@@ -181,7 +191,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                 <div class="container">
                     <?php if (isset($_GET["date"]) || isset($_GET["product_id"]) || isset($_GET["user_id"]) || isset($_GET["startDate"])) : ?>
                         <div class="py-2">
-                            <a class="btn btn-info" href="order-list.php">Back</a>
+                            <a class="btn btn-dark" href="order-list.php">Back</a>
                         </div>
                     <?php endif; ?>
                     <div class="py-2">
@@ -201,7 +211,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                                                                                     ?>">
                                 </div>
                                 <div class="col-auto">
-                                    <button class="btn btn-info">確定</button>
+                                    <button class="btn btn-dark">確定</button>
                                 </div>
                             </div>
                         </form>

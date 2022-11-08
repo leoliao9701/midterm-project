@@ -44,14 +44,14 @@ $row=$result->fetch_assoc();
         使用者不存在
     <?php else: ?>
     <div class="py-2">
-        <a class="btn btn-secondary" href="seller.php?id=<?=$row["id"]?>">回使用者</a>
+        <a class="btn btn-dark" href="seller.php?id=<?=$row["id"]?>">回使用者</a>
     </div>
     <form action="doUpdate.php" method="post">
         <table class="table table-bordered">
             <tbody>
                 <tr>
                     <input type="hidden" name="id" value="<?=$row["id"]?>">
-                    <td>id</td>
+                    <td>ID</td>
                     <td>
                         <?=$row["id"]?>
                     </td>
@@ -63,20 +63,26 @@ $row=$result->fetch_assoc();
                     </td>
                 </tr>
                 <tr>
-                    <td>phone</td>
+                    <td>Phone</td>
                     <td>
                         <input type="text" class="form-control" value="<?=$row["phone"]?>" name="phone">
                     </td>
                 </tr>
                 <tr>
-                    <td>email</td>
+                    <td>Email</td>
                     <td>
                         <input type="text" class="form-control" value="<?=$row["email"]?>" name="email">
                     </td>
                 </tr>
+                <tr>
+                    <td>Introduce</td>
+                    <td>
+                        <input type="text" class="form-control" value="<?=$row["introduce"]?>" name="introduce">
+                    </td>
+                </tr>
             </tbody>
         </table>
-        <button class="btn btn-secondary" type="submit">送出</button>
+        <button class="btn btn-dark" type="submit">送出</button>
     </form>
     <?php endif ?>
   </div>

@@ -57,104 +57,113 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
   <!-- Bootstrap CSS v5.2.1 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   <style>
-    .body {
-      margin: 0;
-      padding: 0;
-    }
+           .body {
+            margin: 0;
+            padding: 0;
+        }
 
-    .object-cover {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+        a{
+            text-decoration: none;
+            color: black;
+            font-weight: 600;
+        }
+        a:hover{
+            color:cadetblue
+        }
 
-    .footer {
-      background-color: black;
-      padding: 25px 30px;
-      min-height: 50px;
-    }
-    a{
-      color: black;
-      text-decoration: none;
-    }
+        .object-cover {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .footer {
+            background-color: black;
+            padding: 25px 30px;
+            min-height: 50px;
+        }
+        .nav-item:hover{
+            background: cadetblue;
+            border-radius: 15px;
+        }
   </style>
 </head>
 
 <body>
   <!--  style="border: 1px solid red ;"檢查邊框 -->
-  <main>
-    <div class="row g-0">
-      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+  <main class="">
+        <div class="row g-0">
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 ">
 
-        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="height: 100%;">
-          <a href="../user/login.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-            <svg class="bi me-2" width="40" height="32">
-              <use xlink:href="#bootstrap"></use>
-            </svg>
-            <span class="fs-4">藝拍</span>
-          </a>
-          <hr>
-          <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item">
-              <a href="#" class="nav-link active" aria-current="page">
-                <svg class="bi me-2" width="16" height="16">
-                  <use xlink:href="#home"></use>
-                </svg>
-                Home
-              </a>
-            </li>
-            <li>
-              <a href="#" class="nav-link text-white">
-                <svg class="bi me-2" width="16" height="16">
-                  <use xlink:href="#speedometer2"></use>
-                </svg>
-                Dashboard
-              </a>
-            </li>
-            <li>
-              <a href="#" class="nav-link text-white">
-                <svg class="bi me-2" width="16" height="16">
-                  <use xlink:href="#table"></use>
-                </svg>
-                Orders
-              </a>
-            </li>
-            <li>
-              <a href="product-list2.php" class="nav-link text-white">
-                <svg class="bi me-2" width="16" height="16">
-                  <use xlink:href="#grid"></use>
-                </svg>
-                藝術品
-              </a>
-            </li>
-            <li>
-              <a href="#" class="nav-link text-white">
-                <svg class="bi me-2" width="16" height="16">
-                  <use xlink:href="#people-circle"></use>
-                </svg>
-                Customers
-              </a>
-            </li>
-          </ul>
-          <hr>
-          <div class="dropdown">
-            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="/images/1.png" alt="" width="32" height="32" class="rounded-circle me-2">
-              <strong>about us</strong>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-              <li><a class="dropdown-item" href="#">New project...</a></li>
-              <li><a class="dropdown-item" href="#">Settings</a></li>
-              <li><a class="dropdown-item" href="#">Profile</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="#">登出</a></li>
-            </ul>
-          </div>
-        </div>
+                <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark " style="height: 100%; min-height:100vh">
+                    <a href="../seller/dashboard.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                        <svg class="bi me-2" width="40" height="32">
+                            <use xlink:href="#bootstrap"></use>
+                        </svg>
+                        <span class="fs-4">藝拍</span>
+                    </a>
+                    <hr>
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a href="../seller/dashboard.php" class="nav-link text-white" aria-current="page">
+                                <svg class="bi me-2" width="16" height="16">
+                                    <use xlink:href="#home"></use>
+                                </svg>
+                                首頁
+                            </a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a href="order-list2.php" class="nav-link  text-white">
+                                <svg class="bi me-2" width="16" height="16">
+                                    <use xlink:href="#speedometer2"></use>
+                                </svg>
+                                Coupon
+                            </a>
+                        </li> -->
+                        <li class="nav-item">
+                            <a href="../seller/sellers.php" class="nav-link text-white">
+                                <svg class="bi me-2" width="16" height="16">
+                                    <use xlink:href="#table"></use>
+                                </svg>
+                                賣家管理
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./product-list2.php" class="nav-link text-white">
+                                <svg class="bi me-2" width="16" height="16">
+                                    <use xlink:href="#grid"></use>
+                                </svg>
+                                藝術品
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../seller/file-upload.php" class="nav-link text-white">
+                                <svg class="bi me-2" width="16" height="16">
+                                    <use xlink:href="#people-circle"></use>
+                                </svg>
+                                賣家藝術品上傳
+                            </a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <div class="dropdown">
+                        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="./images/201.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
+                            <strong>關於我們</strong>
+                        </a>
+                        <!-- <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                            <li><a class="dropdown-item" href="#">New project...</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        </ul> -->
+                    </div>
+                </div>
 
-      </div>
+            </div>
       <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">
         <div class="container">
 
@@ -188,7 +197,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                   if (isset($_GET["max"])) echo $price;?>">
                 </div>
                 <div class="col-auto">
-                  <button class="btn btn-info" type="submit">篩選</button>
+                  <button class="btn btn-dark" type="submit">篩選</button>
                 </div>
               </div>
             </form>

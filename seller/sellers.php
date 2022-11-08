@@ -51,27 +51,33 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
+  <style>
+    .page-style{
+      color: black;
+      
+    }
+  </style>
 </head>
 
 <body>
   <div class="container">
     <div class="py-2 d-flex justify-content-between">
-        <a class="btn btn-secondary mx-2" href="./dashboard.php">Go Back</a>
+        <a class="btn btn-dark mx-2" href="./dashboard.php">Go Back</a>
 
-        <a class="btn btn-secondary" href="add-seller.php">Add seller</a>
+        <a class="btn btn-dark" href="add-seller.php">Add seller</a>
     </div>
     <div class="py-2">
       <form action="sellers.php" method="get">
         <div class="input-group">
           <input type="text" class="form-control" name="search">
-          <button type="submit" class="btn btn-secondary">搜尋</button>
+          <button type="submit" class="btn btn-dark">搜尋</button>
         </div>
       </form>
     </div>
 
     <?php if(isset($_GET["search"])): ?>
       <div class="py-2">
-        <a class="btn btn-secondary" href="sellers.php">回使用者列表</a>
+        <a class="btn btn-dark" href="sellers.php">回使用者列表</a>
       </div>
       <h1><?=$_GET["search"]?>的搜尋結果</h1>
     <?php endif; ?>
@@ -104,7 +110,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
                 <!-- <td><?=$row["introduce"]?></td> -->
                 
                 <td>
-                  <a class="btn btn-secondary" href="seller.php?id=<?=$row["id"]?>">檢視</a>
+                  <a class="btn btn-dark" href="seller.php?id=<?=$row["id"]?>">檢視</a>
                   <a class="btn btn-danger" href="delete-seller.php?id=<?=$row["id"]?>">刪除</a>
                 </td>
               </tr>
@@ -116,7 +122,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
     <nav aria-label="Page navigation example">
       <ul class="pagination">
         <?php for($i=1; $i<=$totalPage; $i++): ?>
-        <li class="page-item <?php if($i==$page)echo "active"; ?>"><a class="page-link" href="sellers.php?page=<?=$i?>"><?=$i?></a></li>
+        <li class="page-item  <?php if($i==$page)echo "active"; ?>"><a class="page-link page-style" href="sellers.php?page=<?=$i?>"><?=$i?></a></li>
         <?php endfor; ?>
       </ul>
     </nav>

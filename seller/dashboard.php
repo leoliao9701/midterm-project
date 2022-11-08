@@ -88,7 +88,7 @@ if(!isset($_SESSION["seller"])){
             <li><a href="" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>Orders</a></li>
             <li><a href="../product/product-list2.php" class="px-3 py-2"><i class="fa-solid fa-cart-shopping"></i>藝術品</a></li>
             <li><a href="../seller/sellers.php" class="px-3 py-2"><i class="fa-solid fa-user"></i>賣家管理</a></li>
-            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-chart-simple"></i>Reports</a></li>
+            <li><a href="./file-upload.php" class="px-3 py-2"><i class="fa-solid fa-chart-simple"></i>賣家藝術品上傳</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-layer-group"></i>Integrations</a></li>
         </ul>
         <div class="aside-subtitle px-3 text-secondary mb-4 d-flex justify-content-between">SAVED REPORTS <a role="button"><i class="fa-solid fa-plus"></i></a></div>

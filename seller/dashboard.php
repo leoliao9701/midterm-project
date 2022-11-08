@@ -2,7 +2,7 @@
 
 session_start();
 
-if(!isset($_SESSION["seller"])){
+if(!isset($_SESSION["user"])){
   header("location: login.php");
 }
 //如果登出，回到login這一頁
@@ -74,36 +74,36 @@ if(!isset($_SESSION["seller"])){
 
 <body>
   <nav class="main-nav d-flex bg-dark fixed-top shadow">
-    <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center logo flex-shrink-0" href="">Company Name</a>
+    <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center logo flex-shrink-0" href="">藝拍</a>
     <input type="text" class="form-control">
     <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
   </nav>
   <aside class="left-aside position-fixed bg-light border-end">
     <nav class="aside-menu">
       <div class="pt-1 px-3 pb-2">
-        hi,<?=$_SESSION["seller"]["account"]?>
+        Welcome <?=$_SESSION["seller"]["account"]?> !
       </div>
         <ul class="list-unstyled">
-            <li><a href="" class="px-3 py-2"> <i class="fa-solid fa-gauge fa-fw"></i>Dashboard</a></li>            
-            <li><a href="" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>Orders</a></li>
+            <!-- <li><a href="" class="px-3 py-2"> <i class="fa-solid fa-gauge fa-fw"></i>Dashboard</a></li>             -->
+            <li><a href="../product/order-list.php" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>訂單管理</a></li>
             <li><a href="../product/product-list2.php" class="px-3 py-2"><i class="fa-solid fa-cart-shopping"></i>藝術品</a></li>
             <li><a href="../seller/sellers.php" class="px-3 py-2"><i class="fa-solid fa-user"></i>賣家管理</a></li>
             <li><a href="./file-upload.php" class="px-3 py-2"><i class="fa-solid fa-chart-simple"></i>賣家藝術品上傳</a></li>
-            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-layer-group"></i>Integrations</a></li>
+            <!-- <li><a href="" class="px-3 py-2"><i class="fa-solid fa-layer-group"></i>Integrations</a></li> -->
         </ul>
-        <div class="aside-subtitle px-3 text-secondary mb-4 d-flex justify-content-between">SAVED REPORTS <a role="button"><i class="fa-solid fa-plus"></i></a></div>
+        <!-- <div class="aside-subtitle px-3 text-secondary mb-4 d-flex justify-content-between">SAVED REPORTS <a role="button"><i class="fa-solid fa-plus"></i></a></div>
 
         <ul class="list-unstyled">
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-file"></i>Current month</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-file"></i>Last quarter</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-file"></i>Social engagement</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-file"></i>Year-end sale</a></li>
-        </ul>
+        </ul> -->
     </nav>
   </aside>
   <main class="main-content">
     <div class="d-flex justify-content-between">
-        <h1>Dashboard</h1>
+        <h1>主選單</h1>
 
         
     </div>

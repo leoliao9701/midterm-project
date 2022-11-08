@@ -108,7 +108,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
 
                 <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="height: 100%; min-height:100vh">
-                    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <a href="../seller/dashboard.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                         <svg class="bi me-2" width="40" height="32">
                             <use xlink:href="#bootstrap"></use>
                         </svg>
@@ -181,7 +181,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                 <div class="container">
                     <?php if (isset($_GET["date"]) || isset($_GET["product_id"]) || isset($_GET["user_id"]) || isset($_GET["startDate"])) : ?>
                         <div class="py-2">
-                            <a class="btn btn-info" href="order-list2.php">Back</a>
+                            <a class="btn btn-info" href="order-list.php">Back</a>
                         </div>
                     <?php endif; ?>
                     <div class="py-2">
@@ -216,7 +216,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                     <th>訂購數量</th>
                                     <th>訂購者</th>
                                     <th>寄送地址</th>
-                                    <th>優惠券代碼</th>
+                                    <!-- <th>優惠券代碼</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -227,30 +227,30 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                                 <?= $data["id"] ?>
                                             </a>
                                         <td>
-                                            <a href="order-list2.php?date=<?= $data["order_date"] ?>"><?= $data["order_date"] ?></a>
+                                            <a href="order-list.php?date=<?= $data["order_date"] ?>"><?= $data["order_date"] ?></a>
                                         </td>
                                         </td>
                                         <td>
-                                        <a href="order-list2.php?product_id=<?=$data["product_id"] ?>">
+                                        <a href="order-list.php?product_id=<?=$data["product_id"] ?>">
                                         <?=$data["product_name"] ?>
                                         </a>
                                         </td>
                                         <td><?= $data["amount"] ?></td>
                                         <td>
-                                            <a href="order-list2.php?user_id=<?= $data["user_id"] ?>">
+                                            <a href="order-list.php?user_id=<?= $data["user_id"] ?>">
                                                 <?= $data["account"] ?>
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="order-list2.php?send_address=<?= $data["send_address"] ?>">
+                                            <a href="order-list.php?send_address=<?= $data["send_address"] ?>">
                                                 <?= $data["send_address"] ?>
                                             </a>
                                         </td>
-                                        <td>
+                                        <!-- <td>
                                             <a href="order-list2.php?coupon_id=<?= $data["coupon_id"] ?>">
                                                 <?= $data["coupon_id"] ?>
                                             </a>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

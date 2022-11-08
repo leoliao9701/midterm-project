@@ -2,13 +2,15 @@
 require_once("../db2-connect.php");
 
 session_start();
-if(isset($_SESSION["user"])){
-    header("location: dashboard.php");
+
+if(!isset($_SESSION["seller"])){
+    header("location: login.php");
 }
 
 $sql="SELECT * FROM product ORDER BY id DESC";
 $result=$conn->query($sql);
 $rows=$result->fetch_all(MYSQLI_ASSOC);
+
 
 // var_dump($rows);
 

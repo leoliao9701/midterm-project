@@ -22,7 +22,10 @@ if(isset($_SESSION["user"])){
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
     integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <style>
-        
+        body { 
+          background-image: url(../images/25.jpg);
+          background-size: cover;
+        }
         .login-panel{
             width: 320px;
             /* background: #eee; */
@@ -52,7 +55,7 @@ if(isset($_SESSION["user"])){
     <div class="vh-100 d-flex justify-content-center align-items-center">
         <div class="login-panel text-center">
             <!-- <img class="logo mb-3" src="/images/bootstrap-logo.svg" alt=""> -->
-            <h1>買家登入</h1>
+            <h1 class="text-white">會員登入</h1>
             <?php if(isset($_SESSION["error"]) && $_SESSION["error"]["times"]>=5): ?>
               <div class="text-center h3">
                 您已超過登入錯誤次數，請稍後再登入
@@ -84,20 +87,20 @@ if(isset($_SESSION["user"])){
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                     <label class="form-check-label" for="flexCheckDefault">
-                      Remember Me
+                      <h6 class="text-white">Remember Me</h6>
                     </label>
                 </div>
             </div>
             <div class="d-grid mb-4" >
-                <button type="submit" class="btn btn-primary" type="button">登入</button>
+                <button type="submit" class="btn btn-dark opacity-75" type="button">登入</button>
               </div>
               <div class="d-grid mb-4" >
-                <a href="./sign-up.php" class="btn btn-primary" type="button">註冊</a>
+                <a href="./sign-up.php" class="btn btn-dark opacity-75" type="button">註冊</a>
               </div>
       
               </form>
               <?php endif; ?>
-              <div class="">© 2017–2022</div>
+              <div class="text-white">© 2017–2022</div>
         </div>
     </div>
   <!-- Bootstrap JavaScript Libraries -->

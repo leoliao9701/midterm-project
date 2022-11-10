@@ -22,6 +22,6 @@ if ($conn->query($sql) === TRUE) {
     echo "更新資料錯誤: " . $conn->error;
 }
 
-header("location: edit-user.php?id=".$id);
+header("location: user.php?id=".$id);
 
 

@@ -23,9 +23,10 @@ if($userCount>0){
     unset($_SESSION["error"]);
      //登入成功後，把錯誤訊息刪掉
     $_SESSION["user"]=[
+        "id"=>$row["id"],
         "account"=>$row["account"],
         "name"=>$row["name"],
-        "email"=>$row["email"]
+        "email"=>$row["email"],
     ];
     // var_dump($_SESSION["user"]);
     // 把資料存入["user"]

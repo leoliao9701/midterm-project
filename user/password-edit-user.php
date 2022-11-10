@@ -93,6 +93,7 @@ $row=$result->fetch_assoc();
         }
     </style>
     </style>
+    </style>
 </head>
 
 <body>
@@ -100,11 +101,11 @@ $row=$result->fetch_assoc();
     <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-4 text" href="">藝拍</a>
     <div class="nav">
       <a class="nav-link" aria-current="page" href="#">首頁</a>
-      <a class="nav-link" href="../product/product-list2.php">藝術品</a>
-      <a class="nav-link" href="../seller/sellers.php">畫家</a>
+      <a class="nav-link" href="#">藝術品</a>
+      <a class="nav-link" href="#">畫家</a>
       <a class="nav-link active" href="../user/dashboard.php">會員</a>
-      <a class="nav-link" href="../product/order-list.php">訂單</a>
-      <a class="nav-link" href="../user/product-list2.php">展覽空間</a>
+      <a class="nav-link" href="#">訂單</a>
+      <a class="nav-link" href="#">展覽空間</a>
     </div>
     <div class="position-absolute top-0 end-0">
       <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
@@ -112,7 +113,7 @@ $row=$result->fetch_assoc();
   </nav>
   <aside class="left-aside position-fixed bg-dark border-end">
     <nav class="aside-menu">
-      <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
+      <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center">
         Welcome <?=$_SESSION["user"]["account"]?> !
       </div> -->
       <ul class="list-unstyled">
@@ -129,7 +130,7 @@ $row=$result->fetch_assoc();
   </aside>
   <main class="main-content">
     <div class="d-flex justify-content-between">
-        <h3>編輯會員資料</h3>
+        <h3>變更密碼</h3>
     
     </div>
     <div class="container">
@@ -140,7 +141,7 @@ $row=$result->fetch_assoc();
     <div class="py-2">
         <a class="btn btn-secondary" href="user.php?id=<?=$row["id"]?>">回使用者</a>
     </div>
-    <form action="doUpdate.php" method="post">
+    <form action="doUpdate-password.php" method="post">
         <table class="table table-bordered">
             <tbody>
                 <tr>
@@ -151,21 +152,22 @@ $row=$result->fetch_assoc();
                     </td>
                 </tr>
                 <tr>
+                    <input type="hidden" name="name" value="<?=$row["name"]?>">
                     <td>姓名</td>
                     <td>
-                        <input type="text" class="form-control" value="<?=$row["name"]?>" name="name">
+                        <?=$row["name"]?>
                     </td>
                 </tr>
                 <tr>
-                    <td>phone</td>
+                    <td>password</td>
                     <td>
-                        <input type="text" class="form-control" value="<?=$row["phone"]?>" name="phone">
+                        <input type="text" class="form-control" value="password" name="password">
                     </td>
                 </tr>
                 <tr>
-                    <td>email</td>
+                    <td>repassword</td>
                     <td>
-                        <input type="text" class="form-control" value="<?=$row["email"]?>" name="email">
+                        <input type="text" class="form-control" value="repassword" name="repassword">
                     </td>
                 </tr>
             </tbody>

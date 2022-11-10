@@ -36,7 +36,7 @@ $row=$result->fetch_assoc();
 <body>
   <div class="container">
     <div class="py-2">
-        <a class="btn btn-info" href="products.php">回到商品列表</a>
+        <a class="btn btn-dark" href="products.php">回到商品列表</a>
     </div>
     <?php if($userCount==0): ?>
         商品不存在
@@ -103,7 +103,7 @@ $row=$result->fetch_assoc();
         </tbody>
     </table>
     <div class="py-2">
-        <a class="btn btn-info" href="edit-product.php?id=<?=$row["id"]?>">編輯商品</a>
+        <a class="btn btn-dark" href="edit-product.php?id=<?=$row["id"]?>">編輯商品</a>
     </div>
     <?php endif; ?>
   </div>

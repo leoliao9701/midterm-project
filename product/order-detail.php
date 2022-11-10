@@ -80,7 +80,7 @@ $row = $result->fetch_assoc();
               </a>
             </li>
             <li class="nav-item">
-              <a href="order-list2.php" class="nav-link  text-white">
+              <a href="order-list.php" class="nav-link  text-white">
                 <svg class="bi me-2" width="16" height="16">
                   <use xlink:href="#speedometer2"></use>
                 </svg>
@@ -136,7 +136,7 @@ $row = $result->fetch_assoc();
         <div class="container">
 
           <div class="py-2">
-            <a class="btn btn-info" href="order-list2.php">Back</a>
+            <a class="btn btn-info" href="order-list.php">Back</a>
           </div>
           <table class="table">
             <tr>

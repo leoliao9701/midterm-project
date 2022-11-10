@@ -121,11 +121,11 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                             </a>
                         </li> -->
                         <li class="nav-item">
-                            <a href="../seller/sellers.php" class="nav-link text-white">
+                            <a href="../user/users.php" class="nav-link text-white">
                                 <svg class="bi me-2" width="16" height="16">
                                     <use xlink:href="#table"></use>
                                 </svg>
-                                賣家管理
+                                買家管理
                             </a>
                         </li>
                         <li class="nav-item">
@@ -133,17 +133,17 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                 <svg class="bi me-2" width="16" height="16">
                                     <use xlink:href="#grid"></use>
                                 </svg>
-                                藝術品
+                                訂單查詢
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="../seller/file-upload.php" class="nav-link text-white">
                                 <svg class="bi me-2" width="16" height="16">
                                     <use xlink:href="#people-circle"></use>
                                 </svg>
                                 賣家藝術品上傳
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                     <hr>
                     <div class="dropdown">

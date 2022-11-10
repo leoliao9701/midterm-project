@@ -43,8 +43,9 @@ $row=$result->fetch_assoc();
     <?php if($sellerCount==0): ?>
         使用者不存在
     <?php else: ?>
-    <div class="py-2">
-        <a class="btn btn-dark" href="seller.php?id=<?=$row["id"]?>">回使用者</a>
+    <div class="py-2 d-flex justify-content-between">
+    <a class="btn btn-dark" href="seller.php?id=<?=$row["id"]?>">回使用者</a>
+        <a class="btn btn-dark" href="../product/products.php">回商品列表</a>
     </div>
     <form action="doUpdate.php" method="post">
         <table class="table table-bordered">

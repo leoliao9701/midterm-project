@@ -2,15 +2,13 @@
 require_once("../db2-connect.php");
 
 session_start();
-if(!isset($_SESSION["user"])){
+if (!isset($_SESSION["user"])) {
   header("location: login.php");
 }
-
-$sqlCategory = "SELECT * FROM category ORDER BY id ASC";
+$category = "";
+$sqlCategory = "SELECT * FROM category  ORDER BY id ASC";
 $resultCategory = $conn->query($sqlCategory);
 $rowsCategory = $resultCategory->fetch_all(MYSQLI_ASSOC);
-// var_dump($resultCategory);
-// exit;
 
 
 if (isset($_GET["min"])) {
@@ -32,6 +30,8 @@ if (isset($_GET["min"])) {
     $sql = "SELECT product.*, category.name AS category_name FROM product
         JOIN category ON product.category = category.id";
   }
+  //$sqlCategory_id = "SELECT * FROM category WHERE `category` = 1 ORDER BY id ASC";
+
 }
 
 
@@ -40,6 +40,43 @@ $productCount = $result->num_rows;
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 
 
+// 頁數
+
+
+if (isset($_GET["page"])) {
+  $page = $_GET["page"];
+} else {
+  $page = 1;
+}
+$per_page = 10;
+// $page=1;
+$page_start = ($page - 1) * $per_page;
+// 分類頁面ＳＱＬ
+if (isset($_GET["category"])) {
+  $pageCategory = $_GET["category"];
+  $sql = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC LIMIT $page_start, $per_page";
+  $sqlAll = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC";
+  $resultAll = $conn->query($sqlAll);
+  $userCount = $resultAll->num_rows;
+} else {
+  $sql = "SELECT * FROM `product` ORDER BY `product`.`create_time` DESC
+  LIMIT $page_start, $per_page";
+  $sqlAll = "SELECT * FROM `product` ORDER BY `product`.`id` ASC ";
+  $resultAll = $conn->query($sqlAll);
+  $userCount = $resultAll->num_rows;
+}
+// 
+
+
+
+
+$result = $conn->query($sql);
+
+//計算頁數
+$totalPage = ceil($userCount / $per_page);
+$totalPage_category =
+
+  $rows = $result->fetch_all(MYSQLI_ASSOC);
 
 // var_dump($rows);
 // exit;
@@ -57,125 +94,128 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
   <!-- Bootstrap CSS v5.2.1 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   <style>
-           .body {
-            margin: 0;
-            padding: 0;
-        }
+    body {
+      height: 300vh;
+    }
 
-        a{
-            text-decoration: none;
-            color: black;
-            font-weight: 600;
-        }
-        a:hover{
-            color:cadetblue
-        }
+    :root {
+      --side-width: 260px;
+    }
 
-        .object-cover {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+    .main-nav .form-control {
+      background: #444;
+      border: none;
+      color: #fff;
+      border-radius: 0;
+    }
 
-        .footer {
-            background-color: black;
-            padding: 25px 30px;
-            min-height: 50px;
-        }
-        .nav-item:hover{
-            background: cadetblue;
-            border-radius: 15px;
-        }
+    .main-nav .btn {
+      border-radius: 0;
+    }
+
+    .nav a {
+      color: gray;
+    }
+
+    .nav a:hover {
+      color: white;
+    }
+
+    .logo {
+      width: var(--side-width);
+    }
+
+    .left-aside {
+      width: var(--side-width);
+      height: 100vh;
+      padding-top: 54px;
+      overflow: auto;
+    }
+
+    .aside-menu ul a {
+      display: block;
+      color: #666;
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      margin: 15px;
+    }
+
+    .aside-menu a:hover {
+      color: white;
+      background: cadetblue;
+      border-radius: 0.375rem;
+
+    }
+
+    .aside-menu a i {
+      margin-right: 8px;
+      margin-top: 4px;
+    }
+
+    .aside-subtitle {
+      font-size: 14px;
+    }
+
+    .main-content {
+      margin-left: calc(var(--side-width) + 20px);
+      padding-top: 54px;
+    }
   </style>
 </head>
 
 <body>
   <!--  style="border: 1px solid red ;"檢查邊框 -->
   <main class="">
-        <div class="row g-0">
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 ">
+    <nav class="main-nav d-flex bg-dark fixed-top shadow">
+      <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-4 text" href="">藝拍</a>
+      <div class="nav">
+        <a class="nav-link active" aria-current="page" href="#">首頁</a>
+        <a class="nav-link" href="../product/product-list2.php">藝術品</a>
+        <a class="nav-link" href="../seller/sellers.php">畫家</a>
+        <a class="nav-link" href="../user/users.php">會員</a>
+        <a class="nav-link" href="../product/order-list.php">訂單</a>
+        <a class="nav-link" href="../user/product-list2.php">展覽空間</a>
+      </div>
+      <div class="position-absolute top-0 end-0">
+        <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
+      </div>
+    </nav>
+    <aside class="left-aside position-fixed bg-dark border-end">
+      <nav class="aside-menu">
+        <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
+        Welcome <?= $_SESSION["user"]["account"] ?> !
+      </div> -->
+        <ul class="list-unstyled">
+          <h1 class="py-2 d-flex justify-content-center text-white">會員</h1>
+          <hr class="text-white">
+          <li><a href="../user/users.php" class="px-3 py-2"> <i class="fa-solid fa-gauge fa-fw"></i>會員資料</a></li>
+          <li><a href="../product/order-list.php" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>訂單管理</a></li>
+          <li><a href="" class="px-3 py-2"><i class="fa-solid fa-user"></i>折扣卷</a></li>
+          <li><a href="../product/product-list2.php" class="px-3 py-2"><i class="fa-solid fa-cart-shopping"></i>藝術品</a></li>
+          <li><a href="" class="px-3 py-2"><i class="fa-solid fa-chart-simple"></i>我的收藏</a></li>
+        </ul>
 
-                <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark " style="height: 100%; min-height:100vh">
-                    <a href="../seller/dashboard.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                        <svg class="bi me-2" width="40" height="32">
-                            <use xlink:href="#bootstrap"></use>
-                        </svg>
-                        <span class="fs-4">藝拍</span>
-                    </a>
-                    <hr>
-                    <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item">
-                            <a href="../seller/dashboard.php" class="nav-link text-white" aria-current="page">
-                                <svg class="bi me-2" width="16" height="16">
-                                    <use xlink:href="#home"></use>
-                                </svg>
-                                首頁
-                            </a>
-                        </li>
-                        <!-- <li class="nav-item">
-                            <a href="order-list2.php" class="nav-link  text-white">
-                                <svg class="bi me-2" width="16" height="16">
-                                    <use xlink:href="#speedometer2"></use>
-                                </svg>
-                                Coupon
-                            </a>
-                        </li> -->
-                        <li class="nav-item">
-                            <a href="../user/users.php" class="nav-link text-white">
-                                <svg class="bi me-2" width="16" height="16">
-                                    <use xlink:href="#table"></use>
-                                </svg>
-                                買家管理
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="./product-list2.php" class="nav-link text-white">
-                                <svg class="bi me-2" width="16" height="16">
-                                    <use xlink:href="#grid"></use>
-                                </svg>
-                                訂單查詢
-                            </a>
-                        </li>
-                        <!-- <li class="nav-item">
-                            <a href="../seller/file-upload.php" class="nav-link text-white">
-                                <svg class="bi me-2" width="16" height="16">
-                                    <use xlink:href="#people-circle"></use>
-                                </svg>
-                                賣家藝術品上傳
-                            </a>
-                        </li> -->
-                    </ul>
-                    <hr>
-                    <div class="dropdown">
-                        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="./images/201.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
-                            <strong>關於我們</strong>
-                        </a>
-                        <!-- <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                            <li><a class="dropdown-item" href="#">New project...</a></li>
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Sign out</a></li>
-                        </ul> -->
-                    </div>
-                </div>
-
-            </div>
-      <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">
+      </nav>
+    </aside>
+    <main class="main-content">
+      <div class="d-flex justify-content-between">
+        <h1>主選單</h1>
+      </div>
+      <div class="">
         <div class="container">
 
           <ul class="nav nav-tabs">
             <li class="nav-item">
               <a class="nav-link <?php if (!isset($_GET["category"])) echo "active"; ?>" aria-current="page" href="product-list2.php">全部</a>
             </li>
+            <!--  -->
             <?php foreach ($rowsCategory as $category) : ?>
               <li class="nav-item">
-                <a class="nav-link" <?php if (isset($_GET["category"]) && $_GET["category"] == $category["id"]) echo "active"; ?> href="product-list2.php?category=<?= $category["id"] ?>"><?= $category["name"] ?></a>
+                <a class="nav-link" <?php if (isset($_GET["category"]) && $_GET["category"] == $category["id"]) echo "active"; ?> href="product-list2.php?category=<?= $category["id"] ?>"> <?= $category["name"] ?> </a>
               </li>
             <?php endforeach; ?>
+            <!--  -->
           </ul>
           <div class="py-2">
             <form action="product-list2.php">
@@ -187,14 +227,14 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                 <?php endif; ?>
                 <div class="col-auto">
                   <input type="number" class="form-control text-center" name="min" placeholder="輸入最小金額" value="<?php
-                   if (isset($_GET["min"])) echo $price; ?>">
+                                                                                                                if (isset($_GET["min"])) echo $price; ?>">
                 </div>
                 <div class="col-auto">
                   ~
                 </div>
                 <div class="col-auto">
                   <input type="number" class="form-control text-center" name="max" placeholder="輸入最大金額" value="<?php
-                  if (isset($_GET["max"])) echo $price;?>">
+                                                                                                                if (isset($_GET["max"])) echo $price; ?>">
                 </div>
                 <div class="col-auto">
                   <button class="btn btn-dark" type="submit">篩選</button>
@@ -205,74 +245,109 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
           <div class="py-2 text-end">
             共<?= $productCount ?>項
           </div>
-          <div class="row d-flex flex-wrap">
-            <?php foreach ($rows as $product) :
-            ?>
-              <div class="col-lg-3 col-md-6 py-3">
-                <div class="card position-relative">
-                  <a class="like position-absolute"></a>
-                  <figure class="ratio ratio-16x9">
-                    <img class="object-cover" src="./images/<?= $product["images"] ?>" alt="">
-                  </figure>
-                  <div class="px-2 pb-3">
-                    <div class="pb-2 text-primary">
-                      <a href="product-list2.php?category=<?= $product["category"] ?>"><?= $product["category_name"] ?></a>
-                    </div>
-                    <h3 class="text-center h4">
-                      <?= $product["name"] ?>
-                    </h3>
-                    <div class="text-end">
-                      <?= $product["price"] ?>
+          <?php if ($userCount > 0) : ?>
+            <div class="row d-flex flex-wrap">
+              <?php foreach ($rows as $row) :
+              ?>
+
+                <div class="col-lg-3 col-md-6 py-3">
+                  <div class="card position-relative">
+                    <a class="like position-absolute"></a>
+                    <figure class="ratio ratio-16x9">
+                      <img class="object-cover" src="./images/<?= $row["images"] ?>" alt="">
+                    </figure>
+                    <div class="px-2 pb-3">
+                      <div class="pb-2 text-primary">
+                        <a href="product-list2.php?category=<?= $row["category"] ?>">
+                          <?php
+                          if ($row["category"] == "1") {
+                            echo "ink";
+                          } elseif ($row["category"] == "2") {
+                            echo "collage";
+                          } elseif ($row["category"] == "3") {
+                            echo "canvas";
+                          } elseif ($row["category"] == "4") {
+                            echo "watercolor";
+                          } elseif ($row["category"] == "5") {
+                            echo "Sculpture";
+                          } elseif ($row["category"] == "6") {
+                            echo "digit";
+                          }
+                          ?>
+
+                        </a>
+                      </div>
+                      <h3 class="text-center h4">
+                        <?= $row["name"] ?>
+                      </h3>
+                      <div class="text-end">
+                        <?= $row["price"] ?>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            <?php endforeach; ?>
-          </div>
+
+              <?php endforeach; ?>
+            </div>
+          <?php endif; ?>
+
         </div>
-        <!-- 頁面選單 -->
-        <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-end px-5">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+        <!-- 頁碼選單 -->
+        <?php if (isset($_GET["category"])) : ?>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                <li class="page-item 
+            <?php
+                if ($i == $page) echo "active";
+            ?>">
+                  <a class="page-link" href="product-list2.php?category=<?= $_GET["category"] ?>&page=<?= $i ?>"><?= $i ?></a>
+                </li>
+              <?php endfor; ?>
+            </ul>
+          </nav>
+        <?php else : ?>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                <li class="page-item 
+            <?php
+                if ($i == $page) echo "active";
+            ?>">
+                  <a class="page-link" href="product-list2.php?page=<?= $i ?>"><?= $i ?></a>
+                </li>
+              <?php endfor; ?>
+            </ul>
+          </nav>
+        <?php endif; ?>
+
       </div>
-    </div>
-  </main>
-
-  <footer class="footer">
-    <div class="container-fruid d-flex justify-content-center">
-      <div class="menu list-unstyled inline-flex">
-
-        <a href="#" class="text-decoration-none text-white-50 px-2">關於 藝拍</a>
-
-        <a href="#" class="text-decoration-none text-white-50 px-2">隱私權政策</a>
-
-        <a href="#" class="text-decoration-none text-white-50 px-2">聯絡我們</a>
       </div>
-
-    </div>
-    <div class="d-flex justify-content-center">
-      <div class="menu list-unstyled inline-flex py-2">
-        <a href="" class="text-decoration-none text-white-50">E𝝅 © All Rights Reserved.</a>
       </div>
 
-    </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container-fruid d-flex justify-content-center">
+        <div class="menu list-unstyled inline-flex">
+
+          <a href="#" class="text-decoration-none text-white-50 px-2">關於 藝拍</a>
+
+          <a href="#" class="text-decoration-none text-white-50 px-2">隱私權政策</a>
+
+          <a href="#" class="text-decoration-none text-white-50 px-2">聯絡我們</a>
+        </div>
+
+      </div>
+      <div class="d-flex justify-content-center">
+        <div class="menu list-unstyled inline-flex py-2">
+          <a href="" class="text-decoration-none text-white-50">E𝝅 © All Rights Reserved.</a>
+        </div>
+
+      </div>
 
 
-  </footer>
+    </footer>
 
 </body>
 

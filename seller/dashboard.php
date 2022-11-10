@@ -2,8 +2,8 @@
 
 session_start();
 
-if(!isset($_SESSION["user"])){
-  header("location: login.php");
+if(!isset($_SESSION["seller"])){
+  header("location: /seller/login.php");
 }
 //如果登出，回到login這一頁
 
@@ -86,7 +86,7 @@ if(!isset($_SESSION["user"])){
         <ul class="list-unstyled">
             <!-- <li><a href="" class="px-3 py-2"> <i class="fa-solid fa-gauge fa-fw"></i>Dashboard</a></li>             -->
             <li><a href="../product/order-list.php" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>訂單管理</a></li>
-            <li><a href="../product/product-list2.php" class="px-3 py-2"><i class="fa-solid fa-cart-shopping"></i>藝術品</a></li>
+            <li><a href="../product/products.php" class="px-3 py-2"><i class="fa-solid fa-cart-shopping"></i>藝術品管理</a></li>
             <li><a href="../seller/sellers.php" class="px-3 py-2"><i class="fa-solid fa-user"></i>賣家管理</a></li>
             <li><a href="./file-upload.php" class="px-3 py-2"><i class="fa-solid fa-chart-simple"></i>賣家藝術品上傳</a></li>
             <!-- <li><a href="" class="px-3 py-2"><i class="fa-solid fa-layer-group"></i>Integrations</a></li> -->

@@ -52,7 +52,7 @@ if(isset($_SESSION["user"])){
     <div class="vh-100 d-flex justify-content-center align-items-center">
         <div class="login-panel text-center">
             <!-- <img class="logo mb-3" src="/images/bootstrap-logo.svg" alt=""> -->
-            <h1>Please sign in</h1>
+            <h1>買家登入</h1>
             <?php if(isset($_SESSION["error"]) && $_SESSION["error"]["times"]>=5): ?>
               <div class="text-center h3">
                 您已超過登入錯誤次數，請稍後再登入

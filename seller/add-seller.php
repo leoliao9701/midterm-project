@@ -1,3 +1,15 @@
+<?php
+
+session_start();
+
+if(!isset($_SESSION["seller"])){
+  header("location: login.php");
+}
+//如果登出，回到login這一頁
+
+
+
+?>
 <!doctype html>
 <html lang="en">
 

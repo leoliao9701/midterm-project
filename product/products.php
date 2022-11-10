@@ -1,6 +1,11 @@
 <?php
 require_once("../db2-connect.php");
 
+session_start();
+if(!isset($_SESSION["seller"])){
+  header("location:../seller/login.php");
+}
+
 if (isset($_GET["search"])) {
   $search = $_GET["search"];
   $sql = "SELECT * FROM product WHERE `product`.`name` LIKE '%$search%'  ORDER BY `product`.`id` ASC";
@@ -56,20 +61,21 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
 <body>
   <div class="container">
-    <div class="py-2 d-flex justify-content-end ">
-      <a class="btn btn-info" href="../seller/file-upload.php">新增商品</a>
+    <div class="py-2 d-flex justify-content-between ">
+    <a class="btn btn-dark" href="../seller/dashboard.php">回首頁</a>
+      <a class="btn btn-dark" href="../seller/file-upload.php">新增商品</a>
     </div>
     <div class="py-2">
       <form action="products.php" method="get">
         <div class="input-group">
           <input type="text" class="form-control" name="search">
-          <button type="submit" class="btn btn-info">作品名稱搜尋</button>
+          <button type="submit" class="btn btn-dark">作品名稱搜尋</button>
         </div>
       </form>
     </div>
     <?php if (isset($_GET["search"])) : ?>
       <div class="py-2">
-        <a class="btn btn-info" href="products.php">回商品列表</a>
+        <a class="btn btn-dark" href="products.php">回商品列表</a>
       </div>
       <h1><?= $_GET["search"] ?> 的搜尋結果</h1>
     <?php endif; ?>
@@ -126,7 +132,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
 
               <td>
-                <a class="btn btn-info" href="product_page.php?id=<?= $row["id"] ?>">檢視</a>
+                <a class="btn btn-dark" href="product_page.php?id=<?= $row["id"] ?>">檢視</a>
                 <a class="btn btn-danger" href="delete-product.php?id=<?= $row["id"] ?>">刪除</a>
               </td>
             </tr>

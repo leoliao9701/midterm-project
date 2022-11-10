@@ -3,7 +3,7 @@
 session_start();
 
 if(!isset($_SESSION["user"])){
-  header("location: login.php");
+  header("location: ./user/login.php");
 }
 //如果登出，回到login這一頁
 

@@ -28,7 +28,7 @@ if (isset($_GET["search"])) {
   $page_start = ($page - 1) * $per_page;
 
 
-  $sql = "SELECT * FROM `product` ORDER BY `product`.`create_time` DESC
+  $sql = "SELECT * FROM `product` ORDER BY `product`.`id` DESC
   LIMIT $page_start, $per_page";
 
 

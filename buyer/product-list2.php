@@ -57,13 +57,13 @@ if (isset($_GET["category"])) {
   $sql = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC LIMIT $page_start, $per_page";
   $sqlAll = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC";
   $resultAll = $conn->query($sqlAll);
-  $userCount = $resultAll->num_rows;
+  $sellerCount = $resultAll->num_rows;
 } else {
   $sql = "SELECT * FROM `product` ORDER BY `product`.`create_time` DESC
   LIMIT $page_start, $per_page";
   $sqlAll = "SELECT * FROM `product` ORDER BY `product`.`id` ASC ";
   $resultAll = $conn->query($sqlAll);
-  $userCount = $resultAll->num_rows;
+  $sellerCount = $resultAll->num_rows;
 }
 // 
 
@@ -73,7 +73,7 @@ if (isset($_GET["category"])) {
 $result = $conn->query($sql);
 
 //計算頁數
-$totalPage = ceil($userCount / $per_page);
+$totalPage = ceil($sellerCount / $per_page);
 $totalPage_category =
 
   $rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -171,11 +171,11 @@ $totalPage_category =
       <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-4 text" href="">藝拍</a>
       <div class="nav">
         <a class="nav-link active" aria-current="page" href="#">首頁</a>
-        <a class="nav-link" href="../product/product-list2.php">藝術品</a>
+        <a class="nav-link" href="/seller/product-list2.php">藝術品</a>
         <a class="nav-link" href="../seller/sellers.php">畫家</a>
-        <a class="nav-link" href="../user/users.php">會員</a>
+        <a class="nav-link" href="../seller/sellers.php">會員</a>
         <a class="nav-link" href="../product/order-list.php">訂單</a>
-        <a class="nav-link" href="../user/product-list2.php">展覽空間</a>
+        <a class="nav-link" href="../seller/product-list2.php">展覽空間</a>
       </div>
       <div class="position-absolute top-0 end-0">
         <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
@@ -184,15 +184,15 @@ $totalPage_category =
     <aside class="left-aside position-fixed bg-dark border-end">
       <nav class="aside-menu">
         <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
-        Welcome <?= $_SESSION["user"]["account"] ?> !
+        Welcome <?= $_SESSION["seller"]["account"] ?> !
       </div> -->
         <ul class="list-unstyled">
           <h1 class="py-2 d-flex justify-content-center text-white">會員</h1>
           <hr class="text-white">
-          <li><a href="../user/users.php" class="px-3 py-2"> <i class="fa-solid fa-gauge fa-fw"></i>會員資料</a></li>
+          <li><a href="../seller/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-gauge fa-fw"></i>會員資料</a></li>
           <li><a href="../product/order-list.php" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>訂單管理</a></li>
-          <li><a href="" class="px-3 py-2"><i class="fa-solid fa-user"></i>折扣卷</a></li>
-          <li><a href="../product/product-list2.php" class="px-3 py-2"><i class="fa-solid fa-cart-shopping"></i>藝術品</a></li>
+          <li><a href="" class="px-3 py-2"><i class="fa-solid fa-seller"></i>折扣卷</a></li>
+          <li><a href="../seller/product-list2.php" class="px-3 py-2"><i class="fa-solid fa-cart-shopping"></i>藝術品</a></li>
           <li><a href="" class="px-3 py-2"><i class="fa-solid fa-chart-simple"></i>我的收藏</a></li>
         </ul>
 
@@ -245,7 +245,7 @@ $totalPage_category =
           <div class="py-2 text-end">
             共<?= $productCount ?>項
           </div>
-          <?php if ($userCount > 0) : ?>
+          <?php if ($sellerCount > 0) : ?>
             <div class="row d-flex flex-wrap">
               <?php foreach ($rows as $row) :
               ?>
@@ -254,7 +254,7 @@ $totalPage_category =
                   <div class="card position-relative">
                     <a class="like position-absolute"></a>
                     <figure class="ratio ratio-16x9">
-                      <img class="object-cover" src="./images/<?= $row["images"] ?>" alt="">
+                      <img class="object-cover" src="../product/images/<?=$row["images"] ?>" alt="">
                     </figure>
                     <div class="px-2 pb-3">
                       <div class="pb-2 text-primary">

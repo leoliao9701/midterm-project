@@ -1,15 +1,3 @@
-<?php
-
-session_start();
-
-if(!isset($_SESSION["seller"])){
-  header("location: login.php");
-}
-//如果登出，回到login這一頁
-
-
-
-?>
 <!doctype html>
 <html lang="en">
 
@@ -24,12 +12,30 @@ if(!isset($_SESSION["seller"])){
     integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
 </head>
+<style>
+   body{
+    background-image: url(https://images.pexels.com/photos/2249961/pexels-photo-2249961.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
+    background-size:cover cover;
+    background-repeat:no-repeat;
+    background-position:center center;
+   
+  }
+  .wrap{
+    padding:10px;
+    margin:50px auto;
+    width:500px;
+    height:400px;
+    background-Color: rgba(254,223,225,0.5);
+    border-radius:5pt;
+  }
+</style>
 
 <body>
   <!-- 新增資料頁面 -->
   <div class="container">
-    <div class="py-2"><a class="btn btn-dark" href="sellers.php">seller List</a></div>
-    <form action="doInsert.php" method="post">
+    <div class="wrap">
+    <div class="py-2"><a class="btn btn-dark" href="../user/sellers.php">seller List</a></div>
+    <form action="./seller-doInsert.php" method="post">
       
         <div class="mb-2">
             <label for="account">Account</label>
@@ -49,6 +55,7 @@ if(!isset($_SESSION["seller"])){
         </div>
         <button class="btn btn-dark" type="submit">送出</button>
     </form>
+    </div>
   </div>
 </body>
 

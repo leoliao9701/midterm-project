@@ -9,7 +9,7 @@ $sql="UPDATE users SET valid=0 WHERE id='$id'";
 // echo $sql;
 if ($conn->query($sql) === TRUE) {
     echo "刪除成功";
-    header("location: users.php");
+    header("location: ../user/buyers.php");
 } else {
     echo "刪除資料錯誤: " . $conn->error;
 }

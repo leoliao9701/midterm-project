@@ -36,7 +36,7 @@ $row=$result->fetch_assoc();
 <body>
   <div class="container">
     <div class="py-2">
-        <a class="btn btn-dark" href="products.php">回到商品列表</a>
+        <a class="btn btn-dark" href="../user/products.php">回到商品列表</a>
     </div>
     <?php if($userCount==0): ?>
         商品不存在

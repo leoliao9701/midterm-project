@@ -1,21 +1,32 @@
 <?php
 session_start();
-
-if(!isset($_SESSION["user"])){
-  header("location: login.php");
+if(!isset($_GET["id"])){
+    echo "使用者不存在";
+    exit;
 }
-//如果登出，回到login這一頁
 
+$id=$_GET["id"];
+
+
+require_once("../db2-connect.php");
+
+$sql="SELECT * FROM users WHERE id='$id' AND valid=1";
+$result = $conn->query($sql);
+$userCount=$result->num_rows;
+
+$row=$result->fetch_assoc();
+
+// var_dump($row);
+// exit;
 
 
 ?>
-
 
 <!doctype html>
 <html lang="en">
 
 <head>
-  <title>dashboard</title>
+  <title><?=$row["name"]?></title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -81,18 +92,20 @@ if(!isset($_SESSION["user"])){
             padding-top: 54px;
         }
     </style>
+    </style>
+    </style>
 </head>
 
 <body>
-  <nav class="main-nav d-flex bg-dark fixed-top shadow">
+<nav class="main-nav d-flex bg-dark fixed-top shadow">
     <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-4 text" href="">藝拍</a>
     <div class="nav">
       <a class="nav-link" aria-current="page" href="#">首頁</a>
-      <a class="nav-link" href="../product/product-list2.php">藝術品</a>
-      <a class="nav-link" href="../seller/sellers.php">畫家</a>
+      <a class="nav-link" href="#">藝術品</a>
+      <a class="nav-link" href="#">畫家</a>
       <a class="nav-link active" href="../user/dashboard.php">會員</a>
-      <a class="nav-link" href="../product/order-list.php">訂單</a>
-      <a class="nav-link" href="../user/product-list2.php">展覽空間</a>
+      <a class="nav-link" href="#">訂單</a>
+      <a class="nav-link" href="#">展覽空間</a>
     </div>
     <div class="position-absolute top-0 end-0">
       <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
@@ -100,14 +113,14 @@ if(!isset($_SESSION["user"])){
   </nav>
   <aside class="left-aside position-fixed bg-dark border-end">
     <nav class="aside-menu">
-      <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
+      <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center">
         Welcome <?=$_SESSION["user"]["account"]?> !
       </div> -->
       <ul class="list-unstyled">
           <h1 class="py-2 d-flex justify-content-center text-white">會員</h1>
           <hr class="text-white">
-            <li class="active"><a href="../user/users.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>會員資料列表</a></li>
-            <li><a href="../user/user.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>               
+            <li><a href="../user/users.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>會員資料列表</a></li>
+            <li class="active"><a href="../user/user.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>               
             <li><a href="../user/user-order-detail.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>個人訂單檢視</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
@@ -117,10 +130,52 @@ if(!isset($_SESSION["user"])){
   </aside>
   <main class="main-content">
     <div class="d-flex justify-content-between">
-        <h1>主選單</h1>
+        <h3>變更密碼</h3>
     
     </div>
-        
+    <div class="container">
+    
+    <?php if($userCount==0): ?>
+        使用者不存在
+    <?php else: ?>
+    <div class="py-2">
+        <a class="btn btn-secondary" href="buyer.php?id=<?=$row["id"]?>">回使用者</a>
+    </div>
+    <form action="doUpdate-password.php" method="post">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <input type="hidden" name="id" value="<?=$row["id"]?>">
+                    <td>id</td>
+                    <td>
+                        <?=$row["id"]?>
+                    </td>
+                </tr>
+                <tr>
+                    <input type="hidden" name="name" value="<?=$row["name"]?>">
+                    <td>姓名</td>
+                    <td>
+                        <?=$row["name"]?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>password</td>
+                    <td>
+                        <input type="text" class="form-control" value="password" name="password">
+                    </td>
+                </tr>
+                <tr>
+                    <td>repassword</td>
+                    <td>
+                        <input type="text" class="form-control" value="repassword" name="repassword">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-secondary" type="submit">送出</button>
+    </form>
+    <?php endif ?>
+  </div>    
    
    
 
@@ -166,7 +221,7 @@ if(!isset($_SESSION["user"])){
   );
   </script>
 
-
+  
 </body>
 
 </html>

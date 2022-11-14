@@ -2,14 +2,14 @@
 require_once("../db2-connect.php");
 session_start();
 
-if(!isset($_SESSION["user"])){
-  header("location: login.php");
-}
+// if(!isset($_SESSION["seller"])){
+//   header("location: login.php");
+// }
 // $page=$_GET["page"];
 
 if(isset($_GET["search"])){
   $search=$_GET["search"];
-  $sql="SELECT * FROM users WHERE account LIKE '%$search%' AND valid=1 ORDER BY created_at DESC";
+  $sql="SELECT * FROM sellers WHERE account LIKE '%$search%' AND valid=1 ORDER BY created_at DESC";
   $result=$conn->query($sql);
   $userCount=$result->num_rows;
 
@@ -20,14 +20,14 @@ if(isset($_GET["search"])){
     $page=1; 
   }
 
-  $sqlAll="SELECT * FROM users WHERE valid=1 ";
+  $sqlAll="SELECT * FROM sellers WHERE valid=1 ";
   $resultAll=$conn->query($sqlAll);
   $userCount=$resultAll->num_rows;
   
   $per_page=5;
   $page_start=($page-1)*$per_page;
 
-  $sql="SELECT * FROM users WHERE valid=1 ORDER BY created_at DESC LIMIT $page_start, $per_page";
+  $sql="SELECT * FROM sellers WHERE valid=1 ORDER BY created_at DESC LIMIT $page_start, $per_page";
 
   $result=$conn->query($sql);
 
@@ -46,7 +46,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
 <html lang="en">
 
 <head>
-  <title>users</title>
+  <title>sellers</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -117,12 +117,12 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
 <nav class="main-nav d-flex bg-dark fixed-top shadow">
     <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-4 text" href="">藝拍</a>
     <div class="nav">
-      <a class="nav-link" aria-current="page" href="#">首頁</a>
-      <a class="nav-link" href="../product/product-list2.php">藝術品</a>
+      <a class="nav-link" aria-current="page" href="../seller/dashboard.php">首頁</a>
+      <a class="nav-link" href="../seller/product-list2.php">藝術品</a>
       <a class="nav-link" href="../seller/sellers.php">畫家</a>
-      <a class="nav-link active" href="../user/dashboard.php">會員</a>
+      <a class="nav-link active" href="../seller/dashboard.php">會員</a>
       <a class="nav-link" href="../product/order-list.php">訂單</a>
-      <a class="nav-link" href="../user/product-list2.php">展覽空間</a>
+      <a class="nav-link" href="../seller/product-list2.php">展覽空間</a>
     </div>
     <div class="position-absolute top-0 end-0">
       <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
@@ -131,13 +131,17 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
   <aside class="left-aside position-fixed bg-dark border-end">
     <nav class="aside-menu">
         <ul class="list-unstyled">
+        <a href="#" class=" align-items-center link-dark text-decoration-none ">
+          <img src="https://github.com/mdo.png" alt="" width="150" height="150" class="rounded-circle mx-auto">
+          <!--<strong>mdo</strong>-->
+        </a>
           <h1 class="py-2 d-flex justify-content-center text-white">會員</h1>
           <hr class="text-white">
-            <li class="active"><a href="../user/users.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>會員資料列表</a></li>
-            <li><a href="../user/user.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>               
-            <li><a href="../user/user-order-detail.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>個人訂單檢視</a></li>
-            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
-            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
+          <li ><a href="../user/buyers.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>買家資料列表</a></li>
+            <li class="active"><a href="../user/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>賣家資料列表</a></li>               
+            <li><a href="../user/products.php" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>藝術品列表</a></li>
+        
+            <li><a href="../user/order-list.php" class="px-3 py-2"><i class="fa-solid fa-heart"></i>訂單列表</a></li>
         </ul>
         
     </nav>
@@ -151,13 +155,12 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
     <div class="container">
     
     <div class="py-2 d-flex justify-content-between">
-      <a class="btn btn-secondary mx-2" href="./dashboard.php">Go Back</a>
-      <a class="btn btn-secondary mx-2" href="add-user.php">Add User</a>
+      <a class="btn btn-secondary mx-2" href="../seller/add-seller.php">Add Seller</a>
         
     </div>
 
     <div class="py-2">
-      <form action="users.php" method="get">
+      <form action="sellers.php" method="get">
         <div class="input-group">
           <input type="text" class="form-control" name="search">
           <button type="submit" class="btn btn-secondary">搜尋</button>
@@ -167,7 +170,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
 
     <?php if(isset($_GET["search"])): ?>
       <div class="py-2">
-        <a class="btn btn-secondary" href="users.php">回列表</a>
+        <a class="btn btn-secondary" href="sellers.php">回列表</a>
       </div>
       <h1><?=$_GET["search"]?>的搜尋結果</h1>
     <?php endif; ?>
@@ -196,8 +199,8 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
                 <td><?=$row["phone"]?></td>
                 <td><?=$row["email"]?></td>
                 <td>
-                  <a class="btn btn-secondary" href="user.php?id=<?=$row["id"]?>">檢視</a>
-                  <a class="btn btn-danger" href="delete-user.php?id=<?=$row["id"]?>">刪除</a>
+                  <a class="btn btn-secondary" href="../seller/seller.php?id=<?=$row["id"]?>">檢視</a>
+                  <a class="btn btn-danger" href="../seller/delete-seller.php?id=<?=$row["id"]?>">刪除</a>
                 </td>
               </tr>
               <?php endforeach; ?>
@@ -208,7 +211,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
     <nav aria-label="Page navigation example">
       <ul class="pagination">
         <?php for($i=1; $i<=$totalPage; $i++): ?>
-        <li class="page-item <?php if($i==$page)echo "active"; ?>"><a class="page-link" href="users.php?page=<?=$i?>"><?=$i?></a></li>
+        <li class="page-item <?php if($i==$page)echo "active"; ?>"><a class="page-link" href="sellers.php?page=<?=$i?>"><?=$i?></a></li>
         <?php endfor; ?>
       </ul>
     </nav>

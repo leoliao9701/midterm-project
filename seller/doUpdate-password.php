@@ -22,7 +22,7 @@ if($password != $repassword){  //不等於
 $password=md5($password);
 // echo "$password";
 
-$sql="UPDATE users SET password='$password' WHERE id='$id'";
+$sql="UPDATE sellers SET password='$password' WHERE id='$id'";
 
 if ($conn->query($sql) === TRUE) {
     echo "更新成功";
@@ -45,7 +45,7 @@ if ($conn->query($sql) === TRUE) {
 <body>
 
 <?php
-header("location: user.php?id=".$id);
+header("location: seller.php?id=".$id);
 ?>
 </body>
 </html>

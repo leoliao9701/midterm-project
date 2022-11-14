@@ -5,9 +5,7 @@ if(isset($_SESSION["seller"])){
 }
 
 
-
 ?>
-
 
 <!doctype html>
 <html lang="en">
@@ -22,7 +20,21 @@ if(isset($_SESSION["seller"])){
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
     integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <style>
-        
+
+  body{
+    background-image: url(https://images.pexels.com/photos/2249961/pexels-photo-2249961.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
+    background-size:cover cover;
+    background-repeat:no-repeat;
+    background-position:center center;
+  }
+  .wrap{
+    margin:0px auto;
+    margin-top:50px;
+    width:600px;
+    height:550px;
+    background-Color: rgba(254,223,225,0.5);
+    border-radius:5pt;
+  }
         .login-panel{
             width: 320px;
             /* background: #eee; */
@@ -49,6 +61,8 @@ if(isset($_SESSION["seller"])){
 </head>
 
 <body>
+  <div class="contanier">
+  <div class="wrap">
     <div class="vh-100 d-flex justify-content-center align-items-center">
         <div class="login-panel text-center">
             <!-- <img class="logo mb-3" src="/images/bootstrap-logo.svg" alt=""> -->
@@ -89,10 +103,10 @@ if(isset($_SESSION["seller"])){
                 </div>
             </div>
             <div class="d-grid mb-4" >
-                <button type="submit" class="btn btn-primary" type="button">登入</button>
+                <button type="submit" class="btn btn-dark" type="button">登入</button>
               </div>
             <div class="d-grid mb-4" >
-              <a href="./sign-up.php" class="btn btn-primary" type="button">註冊</a>
+              <a href="./sign-up.php" class="btn btn-dark" type="button">註冊</a>
             </div>
               </form>
               <?php endif; ?>
@@ -107,6 +121,7 @@ if(isset($_SESSION["seller"])){
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
     integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous">
   </script>
+  </div>
+  </div>
 </body>
-
 </html>

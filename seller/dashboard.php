@@ -1,9 +1,8 @@
 <?php
-
 session_start();
 
 if(!isset($_SESSION["seller"])){
-  header("location: /seller/login.php");
+  header("location: login.php");
 }
 //如果登出，回到login這一頁
 
@@ -41,7 +40,12 @@ if(!isset($_SESSION["seller"])){
         .main-nav .btn{
             border-radius: 0;
         }
-
+        .nav a{
+            color: gray;
+        }
+        .nav a:hover, .nav a.active{
+            color: white;
+        }
         .logo{
             width: var(--side-width);
         }
@@ -53,14 +57,21 @@ if(!isset($_SESSION["seller"])){
         }
         .aside-menu ul a{
             display: block;
-            color: #333;
+            color:  #666;
             text-decoration: none;
+            display: flex;
+            justify-content: center;
+            margin: 15px;
         }
-        .aside-menu a:hover{
-            color: #666;
+        .aside-menu a:hover, .aside-menu li.active a{
+            color: white;
+            background: cadetblue;
+            border-radius: 0.375rem;
+
         }
         .aside-menu a i{
             margin-right: 8px;
+            margin-top: 4px;
         }
         .aside-subtitle{
             font-size: 14px;
@@ -74,40 +85,47 @@ if(!isset($_SESSION["seller"])){
 
 <body>
   <nav class="main-nav d-flex bg-dark fixed-top shadow">
-    <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center logo flex-shrink-0" href="">藝拍</a>
-    <input type="text" class="form-control">
-    <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
+    <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-4 text" href="">藝拍</a>
+    <div class="nav">
+      <a class="nav-link" aria-current="page" href="../seller/dashboard.php">首頁</a>
+      <a class="nav-link" href="../seller/product-list2.php">藝術品</a>
+      <a class="nav-link" href="../seller/sellers.php">畫家</a>
+      <a class="nav-link active" href="../user/dashboard.php">會員</a>
+      <a class="nav-link" href="../product/order-list.php">訂單</a>
+      <a class="nav-link" href="../seller/product-list2.php">展覽空間</a>
+    </div>
+    <div class="position-absolute top-0 end-0">
+    <a class="btn btn-dark text-nowrap" href="#">進入個人頁面</a>
+      <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
+    </div>
   </nav>
-  <aside class="left-aside position-fixed bg-light border-end">
+  <aside class="left-aside position-fixed bg-dark border-end">
     <nav class="aside-menu">
-      <div class="pt-1 px-3 pb-2">
+      <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
         Welcome <?=$_SESSION["seller"]["account"]?> !
-      </div>
-        <ul class="list-unstyled">
-            <!-- <li><a href="" class="px-3 py-2"> <i class="fa-solid fa-gauge fa-fw"></i>Dashboard</a></li>             -->
-            <li><a href="../product/order-list.php" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>訂單管理</a></li>
-            <li><a href="../product/products.php" class="px-3 py-2"><i class="fa-solid fa-cart-shopping"></i>藝術品管理</a></li>
-            <li><a href="../seller/sellers.php" class="px-3 py-2"><i class="fa-solid fa-user"></i>賣家管理</a></li>
-            <li><a href="./file-upload.php" class="px-3 py-2"><i class="fa-solid fa-chart-simple"></i>賣家藝術品上傳</a></li>
-            <!-- <li><a href="" class="px-3 py-2"><i class="fa-solid fa-layer-group"></i>Integrations</a></li> -->
+      </div> -->
+      <ul class="list-unstyled">
+      <a href="#" class=" align-items-center link-dark text-decoration-none ">
+          <img src="https://github.com/mdo.png" alt="" width="150" height="150" class="rounded-circle mx-auto">
+          <!--<strong>mdo</strong>-->
+        </a>
+          <h1 class="py-2 d-flex justify-content-center text-white">會員</h1>
+          <hr class="text-white">
+            <li class="active"><a href="../seller/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>編輯個人頁面</a></li>
+            <li><a href="../seller/seller.php?id=<?=$_SESSION["seller"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>               
+            <li><a href="../user/user-order-detail.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>個人訂單檢視</a></li>
+            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
+            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
         </ul>
-        <!-- <div class="aside-subtitle px-3 text-secondary mb-4 d-flex justify-content-between">SAVED REPORTS <a role="button"><i class="fa-solid fa-plus"></i></a></div>
-
-        <ul class="list-unstyled">
-            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-file"></i>Current month</a></li>
-            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-file"></i>Last quarter</a></li>
-            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-file"></i>Social engagement</a></li>
-            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-file"></i>Year-end sale</a></li>
-        </ul> -->
+        
     </nav>
   </aside>
   <main class="main-content">
     <div class="d-flex justify-content-between">
-        <h1>主選單</h1>
-
-        
-    </div>
+        <h1> <?=$_SESSION["seller"]["name"]?> 的藝廊</h1>
    
+    </div>
+        
    
    
 

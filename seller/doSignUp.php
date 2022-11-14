@@ -9,6 +9,7 @@ $account=$_POST["account"];
 $password=$_POST["password"];
 $repassword=$_POST["repassword"];
 
+
 if(empty($name)){
     echo "請輸入姓名";
     exit;
@@ -44,9 +45,9 @@ if($password != $repassword){  //不等於
 $sql="SELECT * FROM sellers WHERE account='$account'";
 //先確認是否帳號已存在
 $result = $conn->query($sql);
-$sellerCount=$result->num_rows;
+$userCount=$result->num_rows;
 
-if($sellerCount>0){
+if($userCount>0){
     echo "該帳號已經存在";
     exit;
 }
@@ -54,8 +55,8 @@ $password=md5($password);
 //舊的加密方式 建議不要用 太容易破解
 
 $now=date('Y-m-d H:i:s');
-$sqlCreate="INSERT INTO sellers (name, phone, email, account, password, created_at, valid, introduce)
-VALUES ('$name','$phone','$email','$account', '$password', '$now', 1 ,0)";
+$sqlCreate="INSERT INTO sellers (name, phone, email, account, password, created_at, valid)
+VALUES ('$name','$phone','$email','$account', '$password', '$now', 1)";
 
 
 

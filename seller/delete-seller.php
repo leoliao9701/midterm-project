@@ -2,11 +2,6 @@
 //軟刪除 soft delete
 require_once("../db2-connect.php");
 
-if(!isset($_POST["seller"])){
-    echo "請循正常管道進入本頁";
-    exit;
-}
-
 $id=$_GET["id"];
 // $sql="DELETE FROM users WHERE id='$id'";
 $sql="UPDATE sellers SET valid=0 WHERE id='$id'";
@@ -14,7 +9,7 @@ $sql="UPDATE sellers SET valid=0 WHERE id='$id'";
 // echo $sql;
 if ($conn->query($sql) === TRUE) {
     echo "刪除成功";
-    header("location: sellers.php");
+    header("location: ../user/sellers.php");
 } else {
     echo "刪除資料錯誤: " . $conn->error;
 }

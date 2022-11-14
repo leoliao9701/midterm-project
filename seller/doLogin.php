@@ -23,12 +23,13 @@ if($sellerCount>0){
     unset($_SESSION["error"]);
      //登入成功後，把錯誤訊息刪掉
     $_SESSION["seller"]=[
+        "id"=>$row["id"],
         "account"=>$row["account"],
         "name"=>$row["name"],
         "email"=>$row["email"]
     ];
-    // var_dump($_SESSION["user"]);
-    // 把資料存入["user"]
+    // var_dump($_SESSION["seller"]);
+    // 把資料存入["seller"]
     header("location: dashboard.php");
 }else{
     //echo"登入失敗，請確認帳號或密碼"; //後端

@@ -23,6 +23,6 @@ if ($conn->query($sql) === TRUE) {
     echo "更新資料錯誤: " . $conn->error;
 }
 
-// header("location: edit-seller.php?id=".$id);
+header("location: edit-seller.php?id=".$id);
 
 

@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 if(!isset($_GET["id"])){
     echo "使用者不存在";
     exit;
@@ -92,7 +93,6 @@ $row=$result->fetch_assoc();
             padding-top: 54px;
         }
     </style>
-    </style>
 </head>
 
 <body>
@@ -101,10 +101,10 @@ $row=$result->fetch_assoc();
     <div class="nav">
       <a class="nav-link" aria-current="page" href="#">首頁</a>
       <a class="nav-link" href="../product/product-list2.php">藝術品</a>
-      <a class="nav-link" href="../seller/sellers.php">畫家</a>
-      <a class="nav-link active" href="../user/dashboard.php">會員</a>
+      <a class="nav-link" href="../seller/login.php">畫家</a>
+      <a class="nav-link active" href="../buyer/dashboard.php">會員</a>
       <a class="nav-link" href="../product/order-list.php">訂單</a>
-      <a class="nav-link" href="../user/product-list2.php">展覽空間</a>
+      <a class="nav-link" href="../buyer/product-list2.php">展覽空間</a>
     </div>
     <div class="position-absolute top-0 end-0">
       <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
@@ -118,9 +118,8 @@ $row=$result->fetch_assoc();
       <ul class="list-unstyled">
           <h1 class="py-2 d-flex justify-content-center text-white">會員</h1>
           <hr class="text-white">
-            <li><a href="../user/users.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>會員資料列表</a></li>
-            <li class="active"><a href="../user/user.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>               
-            <li><a href="../user/user-order-detail.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>個人訂單檢視</a></li>
+            <li class="active"><a href="../buyer/buyer.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>               
+            <li><a href="../buyer/buyer-order-detail.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>個人訂單檢視</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
         </ul>
@@ -129,52 +128,47 @@ $row=$result->fetch_assoc();
   </aside>
   <main class="main-content">
     <div class="d-flex justify-content-between">
-        <h3>編輯會員資料</h3>
+        <h3>個人資料</h3>
     
     </div>
+        
     <div class="container">
-    
+    <!-- <div class="py-2">
+        <a class="btn btn-secondary" href="users.php">User List</a>
+    </div> -->
     <?php if($userCount==0): ?>
         使用者不存在
     <?php else: ?>
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <td>id</td>
+                <td><?=$row["id"]?></td>
+            </tr>
+            <tr>
+                <td>姓名</td>
+                <td><?=$row["name"]?></td>
+            </tr>
+            <tr>
+                <td>phone</td>
+                <td><?=$row["phone"]?></td>
+            </tr>
+            <tr>
+                <td>email</td>
+                <td><?=$row["email"]?></td>
+            </tr>
+            <tr>
+                <td>Created At</td>
+                <td><?=$row["created_at"]?></td>
+            </tr>
+        </tbody>
+    </table>
     <div class="py-2">
-        <a class="btn btn-secondary" href="user.php?id=<?=$row["id"]?>">回使用者</a>
+        <a class="btn btn-secondary" href="edit-buyer.php?id=<?=$row["id"]?>">編輯使用者</a>
+        <a class="btn btn-secondary" href="password-edit-buyer.php?id=<?=$row["id"]?>">變更密碼</a>
     </div>
-    <form action="doUpdate.php" method="post">
-        <table class="table table-bordered">
-            <tbody>
-                <tr>
-                    <input type="hidden" name="id" value="<?=$row["id"]?>">
-                    <td>id</td>
-                    <td>
-                        <?=$row["id"]?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>姓名</td>
-                    <td>
-                        <input type="text" class="form-control" value="<?=$row["name"]?>" name="name">
-                    </td>
-                </tr>
-                <tr>
-                    <td>phone</td>
-                    <td>
-                        <input type="text" class="form-control" value="<?=$row["phone"]?>" name="phone">
-                    </td>
-                </tr>
-                <tr>
-                    <td>email</td>
-                    <td>
-                        <input type="text" class="form-control" value="<?=$row["email"]?>" name="email">
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <button class="btn btn-secondary" type="submit">送出</button>
-    </form>
     <?php endif ?>
-  </div>    
-   
+  </div>
    
 
   </main>
@@ -218,6 +212,9 @@ $row=$result->fetch_assoc();
     config
   );
   </script>
+
+
+
 
   
 </body>

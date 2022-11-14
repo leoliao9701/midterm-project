@@ -2,7 +2,8 @@
 require_once("../db2-connect.php");
 
 $id=$_GET["id"];
-$sql="DELETE FROM `product` WHERE `product`.`id` ='$id'";
+// $sql="DELETE FROM `product` WHERE `product`.`id` ='$id'";
+$sql="UPDATE `product` SET `product_status` = '0' WHERE `product`.`id` = '$id'";
 
 // echo $sql;
 if ($conn->query($sql) === TRUE) {
@@ -27,7 +28,7 @@ if ($conn->query($sql) === TRUE) {
 </head>
 
 <body>
-<a href="./product.php"  class="btn btn-info">返回商品列表</div>
+<a href="../user/products.php"  class="btn btn-dark">返回商品列表</div>
 </body>
 
 </html>

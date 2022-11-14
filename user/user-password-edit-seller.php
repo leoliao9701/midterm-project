@@ -1,52 +1,32 @@
 <?php
-require_once("../db2-connect.php");
 session_start();
-
-// if(!isset($_SESSION["user"])){
-//   header("location: login.php");
-// }
-// $page=$_GET["page"];
-
-if(isset($_GET["search"])){
-  $search=$_GET["search"];
-  $sql="SELECT * FROM users WHERE account LIKE '%$search%' AND valid=1 ORDER BY created_at DESC";
-  $result=$conn->query($sql);
-  $userCount=$result->num_rows;
-
-}else{
-  if(isset($_GET["page"])){
-    $page=$_GET["page"];
-  }else{
-    $page=1; 
-  }
-
-  $sqlAll="SELECT * FROM users WHERE valid=1 ";
-  $resultAll=$conn->query($sqlAll);
-  $userCount=$resultAll->num_rows;
-  
-  $per_page=5;
-  $page_start=($page-1)*$per_page;
-
-  $sql="SELECT * FROM users WHERE valid=1 ORDER BY created_at DESC LIMIT $page_start, $per_page";
-
-  $result=$conn->query($sql);
-
-  //計算頁數
-  $totalPage=ceil($userCount/$per_page);  //無條件進位
-
+if(!isset($_GET["id"])){
+    echo "使用者不存在";
+    exit;
 }
 
-$rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
+$id=$_GET["id"];
 
-// $rows2=$result->fetch_all(MYSQLI_NUM);
-// var_dump($rows2);
+
+require_once("../db2-connect.php");
+
+$sql="SELECT * FROM users WHERE id='$id' AND valid=1";
+$result = $conn->query($sql);
+$userCount=$result->num_rows;
+
+$row=$result->fetch_assoc();
+
+// var_dump($row);
 // exit;
+
+
 ?>
+
 <!doctype html>
 <html lang="en">
 
 <head>
-  <title>users</title>
+  <title><?=$row["name"]?></title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -98,6 +78,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
             color: white;
             background: cadetblue;
             border-radius: 0.375rem;
+
         }
         .aside-menu a i{
             margin-right: 8px;
@@ -111,18 +92,20 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
             padding-top: 54px;
         }
     </style>
+    </style>
+    </style>
 </head>
 
 <body>
 <nav class="main-nav d-flex bg-dark fixed-top shadow">
     <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-4 text" href="">藝拍</a>
     <div class="nav">
-      <a class="nav-link" aria-current="page" href="../user/buyers.php">首頁</a>
-      <a class="nav-link" href="../buyer/product-list2.php">藝術品</a>
-      <a class="nav-link" href="../seller/sellers.php">畫家</a>
-      <a class="nav-link active" href="../user/dashboard.php">會員</a>
-      <a class="nav-link" href="../product/order-list.php">訂單</a>
-      <a class="nav-link" href="../user/product-list2.php">展覽空間</a>
+      <a class="nav-link" aria-current="page" href="#">首頁</a>
+      <a class="nav-link" href="#">藝術品</a>
+      <a class="nav-link" href="#">畫家</a>
+      <a class="nav-link active" href="../seller/dashboard.php">會員</a>
+      <a class="nav-link" href="#">訂單</a>
+      <a class="nav-link" href="#">展覽空間</a>
     </div>
     <div class="position-absolute top-0 end-0">
       <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
@@ -130,12 +113,20 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
   </nav>
   <aside class="left-aside position-fixed bg-dark border-end">
     <nav class="aside-menu">
-        <ul class="list-unstyled">
+      <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center">
+        Welcome <?=$_SESSION["seller"]["account"]?> !
+      </div> -->
+      <ul class="list-unstyled">
+        <a href="#" class=" align-items-center link-dark text-decoration-none ">
+          <img src="https://github.com/mdo.png" alt="" width="150" height="150" class="rounded-circle mx-auto">
+          <!--<strong>mdo</strong>-->
+        </a>
           <h1 class="py-2 d-flex justify-content-center text-white">會員</h1>
           <hr class="text-white">
-            <li class="active"><a href="../user/buyers.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>買家資料列表</a></li>
-            <li><a href="../user/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>賣家資料列表</a></li>               
+          <li ><a href="../user/buyers.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>買家資料列表</a></li>
+            <li class="active"><a href="../user/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>賣家資料列表</a></li>               
             <li><a href="../user/products.php" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>藝術品列表</a></li>
+        
             <li><a href="../user/order-list.php" class="px-3 py-2"><i class="fa-solid fa-heart"></i>訂單列表</a></li>
         </ul>
         
@@ -143,77 +134,52 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
   </aside>
   <main class="main-content">
     <div class="d-flex justify-content-between">
-        <h3>會員資料管理</h3>
+        <h3>變更密碼</h3>
     
     </div>
-        
     <div class="container">
     
-    <div class="py-2 d-flex justify-content-between">
-    
-      <a class="btn btn-secondary mx-2" href="../buyer/add-buyer.php">Add Buyer</a>
-        
-    </div>
-
+    <?php if($userCount==0): ?>
+        使用者不存在
+    <?php else: ?>
     <div class="py-2">
-      <form action="buyers.php" method="get">
-        <div class="input-group">
-          <input type="text" class="form-control" name="search">
-          <button type="submit" class="btn btn-secondary">搜尋</button>
-        </div>
-      </form>
+        <a class="btn btn-secondary" href="seller.php?id=<?=$row["id"]?>">回使用者</a>
     </div>
-
-    <?php if(isset($_GET["search"])): ?>
-      <div class="py-2">
-        <a class="btn btn-secondary" href="buyers.php">回列表</a>
-      </div>
-      <h1><?=$_GET["search"]?>的搜尋結果</h1>
-    <?php endif; ?>
-    <div class="py-2"> 
-        共 <?=$userCount?> 人
-    </div>
-    <!-- <?php var_dump($row)?> -->
-    <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>id</th>
-                    <th>account</th>
-                    <th>name</th>
-                    <th>phone</th>
-                    <th>email</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <?php if($userCount>0): ?>
+    <form action="seller-doUpdate-password.php" method="post">
+        <table class="table table-bordered">
             <tbody>
-            <?php foreach($rows as $row): ?>
-              <tr>
-                <td><?=$row["id"]?></td>
-                <td><?=$row["account"]?></td>
-                <td><?=$row["name"]?></td>
-                <td><?=$row["phone"]?></td>
-                <td><?=$row["email"]?></td>
-                <td>
-                  <a class="btn btn-secondary" href="user-buyer.php?id=<?=$row["id"]?>">檢視</a>
-                  <a class="btn btn-danger" href="../buyer/delete-buyer.php?id=<?=$row["id"]?>">刪除</a>
-                </td>
-              </tr>
-              <?php endforeach; ?>
+                <tr>
+                    <input type="hidden" name="id" value="<?=$row["id"]?>">
+                    <td>id</td>
+                    <td>
+                        <?=$row["id"]?>
+                    </td>
+                </tr>
+                <tr>
+                    <input type="hidden" name="name" value="<?=$row["name"]?>">
+                    <td>姓名</td>
+                    <td>
+                        <?=$row["name"]?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>password</td>
+                    <td>
+                        <input type="text" class="form-control" value="password" name="password">
+                    </td>
+                </tr>
+                <tr>
+                    <td>repassword</td>
+                    <td>
+                        <input type="text" class="form-control" value="repassword" name="repassword">
+                    </td>
+                </tr>
             </tbody>
-            <?php endif; ?>
-    </table>
-    <?php if(!isset($_GET["search"])): ?>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <?php for($i=1; $i<=$totalPage; $i++): ?>
-        <li class="page-item <?php if($i==$page)echo "active"; ?>"><a class="page-link" href="buyers.php?page=<?=$i?>"><?=$i?></a></li>
-        <?php endfor; ?>
-      </ul>
-    </nav>
-    <?php endif ;?>
-  </div>
-
+        </table>
+        <button class="btn btn-secondary" type="submit">送出</button>
+    </form>
+    <?php endif ?>
+  </div>    
    
    
 

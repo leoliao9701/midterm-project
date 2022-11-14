@@ -199,7 +199,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
                 <td><?=$row["phone"]?></td>
                 <td><?=$row["email"]?></td>
                 <td>
-                  <a class="btn btn-secondary" href="../seller/seller.php?id=<?=$row["id"]?>">檢視</a>
+                  <a class="btn btn-secondary" href="user-seller.php?id=<?=$row["id"]?>">檢視</a>
                   <a class="btn btn-danger" href="../seller/delete-seller.php?id=<?=$row["id"]?>">刪除</a>
                 </td>
               </tr>

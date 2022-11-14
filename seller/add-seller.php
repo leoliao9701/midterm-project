@@ -34,8 +34,8 @@
   <!-- 新增資料頁面 -->
   <div class="container">
     <div class="wrap">
-    <div class="py-2"><a class="btn btn-dark" href="../user/sellers.php">seller List</a></div>
-    <form action="./seller-doInsert.php" method="post">
+    <div class="py-2"><a class="btn btn-dark" href="sellers.php">seller List</a></div>
+    <form action="doInsert.php" method="post">
       
         <div class="mb-2">
             <label for="account">Account</label>

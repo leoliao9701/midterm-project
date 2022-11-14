@@ -29,4 +29,4 @@ if ($conn->query($sql) === TRUE) {
 
 $conn->close();
 
-header("location: ../user/sellers.php");  //跳回原來頁面
+header("location: sellers.php");  //跳回原來頁面

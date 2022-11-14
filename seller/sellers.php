@@ -1,32 +1,52 @@
 <?php
+require_once("../db2-connect.php");
 session_start();
-if(!isset($_GET["id"])){
-    echo "使用者不存在";
-    exit;
+
+if(!isset($_SESSION["seller"])){
+  header("location: login.php");
+}
+// $page=$_GET["page"];
+
+if(isset($_GET["search"])){
+  $search=$_GET["search"];
+  $sql="SELECT * FROM sellers WHERE account LIKE '%$search%' AND valid=1 ORDER BY created_at DESC";
+  $result=$conn->query($sql);
+  $userCount=$result->num_rows;
+
+}else{
+  if(isset($_GET["page"])){
+    $page=$_GET["page"];
+  }else{
+    $page=1; 
+  }
+
+  $sqlAll="SELECT * FROM sellers WHERE valid=1 ";
+  $resultAll=$conn->query($sqlAll);
+  $userCount=$resultAll->num_rows;
+  
+  $per_page=5;
+  $page_start=($page-1)*$per_page;
+
+  $sql="SELECT * FROM sellers WHERE valid=1 ORDER BY created_at DESC LIMIT $page_start, $per_page";
+
+  $result=$conn->query($sql);
+
+  //計算頁數
+  $totalPage=ceil($userCount/$per_page);  //無條件進位
+
 }
 
-$id=$_GET["id"];
+$rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
 
-
-require_once("../db2-connect.php");
-
-$sql="SELECT * FROM sellers WHERE id='$id' AND valid=1";
-$result = $conn->query($sql);
-$userCount=$result->num_rows;
-
-$row=$result->fetch_assoc();
-
-// var_dump($row);
+// $rows2=$result->fetch_all(MYSQLI_NUM);
+// var_dump($rows2);
 // exit;
-
-
 ?>
-
 <!doctype html>
 <html lang="en">
 
 <head>
-  <title><?=$row["name"]?></title>
+  <title>sellers</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -90,8 +110,6 @@ $row=$result->fetch_assoc();
             margin-left: calc(var(--side-width) + 20px);
             padding-top: 54px;
         }
-        
-    </style>
     </style>
 </head>
 
@@ -102,35 +120,26 @@ $row=$result->fetch_assoc();
       <a class="nav-link" aria-current="page" href="../seller/dashboard.php">首頁</a>
       <a class="nav-link" href="../seller/seller-product-list.php">我的藝術品</a>
       <a class="nav-link" href="../seller/sellers.php">畫家</a>
-      <!-- <a class="nav-link active" href="../user/dashboard.php">會員</a> -->
-      <!--<a class="nav-link" href="../product/order-list.php">訂單</a>-->
-      <a class="nav-link" href="#">展覽空間</a>
+      <!-- <a class="nav-link active" href="../seller/dashboard.php">會員</a> -->
+      <!-- <a class="nav-link" href="../product/order-list.php">訂單</a> -->
+      <a class="nav-link" href="">展覽空間</a>
     </div>
     <div class="position-absolute top-0 end-0">
-    <a class="btn btn-dark text-nowrap" href="#">進入前台頁面</a>
-      <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
-    </div>
-  </nav>
-  <div class="position-absolute top-0 end-0">
-      <a class="btn btn-dark text-nowrap" href="#">進入個人頁面</a>
       <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
     </div>
   </nav>
   <aside class="left-aside position-fixed bg-dark border-end">
     <nav class="aside-menu">
-      <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
-        Welcome <?=$_SESSION["seller"]["account"]?> !
-      </div> -->
-      <ul class="list-unstyled">
-      <a href="#" class=" align-items-center link-dark text-decoration-none ">
+        <ul class="list-unstyled">
+        <a href="#" class=" align-items-center link-dark text-decoration-none ">
           <img src="https://github.com/mdo.png" alt="" width="110" height="110" class="rounded-circle mx-auto">
           <!--<strong>mdo</strong>-->
         </a>
           <h1 class="py-1 d-flex justify-content-center text-white">會員</h1>
           <hr class="text-white">
-            <li><a href="../seller/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-barcode"></i>編輯個人頁面</a></li>
-            <li class="active"><a href="../seller/seller.php?id=<?=$_SESSION["seller"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>               
-            <li><a href="../seller/order-list.php" class="px-3 py-2"><i class="fa-solid fa-user fa-fw"></i>訂單管理</a></li>            
+          <li class="active"><a href="#" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>編輯個人頁面</a></li>
+            <li><a href="../seller/seller.php?id=<?=$_SESSION["seller"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>               
+            <li><a href="../seller/order-list.php" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>訂單管理</a></li>
             <li><a href="../seller/file-upload.php" class="px-3 py-2"><i class="fa-solid fa-heart"></i>賣家藝術品上傳</a></li>  
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
@@ -140,67 +149,80 @@ $row=$result->fetch_assoc();
   </aside>
   <main class="main-content">
     <div class="d-flex justify-content-between">
-        <h3>編輯會員資料</h3>
+    <h3> <?=$_SESSION["seller"]["name"]?> 的藝廊</h3>
     
     </div>
+        
     <div class="container">
-    <?php if($userCount==0): ?>
-        使用者不存在
-    <?php else: ?>
-    <div class="py-2">
-        <a class="btn btn-dark" href="seller.php?id=<?=$row["id"]?>">回使用者</a>
-    </div>
-    <form action="doUpdate.php" method="post">
-        <table class="table table-bordered">
+    
+    <!-- <div class="py-2 d-flex justify-content-between">
+      <a class="btn btn-secondary mx-2" href="./dashboard.php">Go Back</a>
+      <a class="btn btn-secondary mx-2" href="add-seller.php">Add Seller</a>
+        
+    </div> -->
+
+    <!-- <div class="py-2">
+      <form action="sellers.php" method="get">
+        <div class="input-group">
+          <input type="text" class="form-control" name="search">
+          <button type="submit" class="btn btn-secondary">搜尋</button>
+        </div>
+      </form>
+    </div> -->
+
+    <!-- <?php if(isset($_GET["search"])): ?>
+      <div class="py-2">
+        <a class="btn btn-secondary" href="sellers.php">回列表</a>
+      </div>
+      <h1><?=$_GET["search"]?>的搜尋結果</h1>
+    <?php endif; ?> -->
+    <!-- <div class="py-2"> 
+        共 <?=$userCount?> 人
+    </div> -->
+    <!-- <?php var_dump($row)?> -->
+    <!-- <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>account</th>
+                    <th>name</th>
+                    <th>phone</th>
+                    <th>email</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <?php if($userCount>0): ?>
             <tbody>
-                <tr>
-                    <input type="hidden" name="id" value="<?=$row["id"]?>">
-                    <td>id</td>
-                    <td>
-                        <?=$row["id"]?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>帳號</td>
-                    <td><input type="text" class="form-control" value="<?=$row["account"]?>" name="account"></td>
-                </tr>
-                <tr>
-                    <td>姓名</td>
-                    <td>
-                        <input type="text" class="form-control" value="<?=$row["name"]?>" name="name">
-                    </td>
-                </tr>
-                <tr>
-                    <td>電話</td>
-                    <td>
-                        <input type="text" class="form-control" value="<?=$row["phone"]?>" name="phone">
-                    </td>
-                </tr>
-                <tr>
-                    <td>email</td>
-                    <td>
-                        <input type="text" class="form-control" value="<?=$row["email"]?>" name="email">
-                    </td>
-                </tr>
-                <tr>
-                    <td>introduce</td>
-                    <td>
-                        <input type="text" class="form-control " value="<?=$row["introduce"]?>" name="introduce">
-                    </td>
-                </tr>
-                <tr>
-                    <td>社群網站連結</td>
-                    <td>
-                        <input type="text" class="form-control " value="<?=$row["social"]?>" name="social">
-                    </td>
-                </tr>
+            <?php foreach($rows as $row): ?>
+              <tr>
+                <td><?=$row["id"]?></td>
+                <td><?=$row["account"]?></td>
+                <td><?=$row["name"]?></td>
+                <td><?=$row["phone"]?></td>
+                <td><?=$row["email"]?></td>
+                <td>
+                  <a class="btn btn-secondary" href="seller.php?id=<?=$row["id"]?>">檢視</a>
+                  <a class="btn btn-danger" href="delete-seller.php?id=<?=$row["id"]?>">刪除</a>
+                </td>
+              </tr>
+              <?php endforeach; ?>
             </tbody>
-        </table>
-        <button class="btn btn-dark" type="submit">送出</button>
-       
-    </form>
-    <?php endif ?>
-  </div>    
+            <?php endif; ?>
+    </table> -->
+    <!--  <?php if(!isset($_GET["search"])): ?>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <?php for($i=1; $i<=$totalPage; $i++): ?>
+        <li class="page-item <?php if($i==$page)echo "active"; ?>"><a class="page-link" href="sellers.php?page=<?=$i?>"><?=$i?></a></li>
+        <?php endfor; ?> -->
+      </ul>
+    </nav>
+    <?php endif ;?> 
+  </div>
+
+   
+   
+
   </main>
     
   <!-- Bootstrap JavaScript Libraries -->
@@ -242,5 +264,8 @@ $row=$result->fetch_assoc();
     config
   );
   </script>
+
+  
 </body>
+
 </html>

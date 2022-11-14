@@ -29,9 +29,8 @@ if(isset($_SESSION["seller"])){
   }
   .wrap{
     margin:0px auto;
-    margin-top:50px;
-    width:600px;
-    height:550px;
+    width:500px;
+    background-position:center center;
     background-Color: rgba(254,223,225,0.5);
     border-radius:5pt;
   }
@@ -112,7 +111,7 @@ if(isset($_SESSION["seller"])){
               <?php endif; ?>
               <div class="">© 2017–2022</div>
         </div>
-    </div>
+    </div> 
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
     integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous">

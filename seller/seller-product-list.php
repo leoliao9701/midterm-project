@@ -2,7 +2,7 @@
 require_once("../db2-connect.php");
 
 session_start();
-if (!isset($_SESSION["seller"])) {
+if (!isset($_SESSION["user"])) {
   header("location: login.php");
 }
 $category = "";
@@ -57,23 +57,20 @@ if (isset($_GET["category"])) {
   $sql = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC LIMIT $page_start, $per_page";
   $sqlAll = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC";
   $resultAll = $conn->query($sqlAll);
-  $sellerCount = $resultAll->num_rows;
+  $userCount = $resultAll->num_rows;
 } else {
   $sql = "SELECT * FROM `product` ORDER BY `product`.`create_time` DESC
   LIMIT $page_start, $per_page";
   $sqlAll = "SELECT * FROM `product` ORDER BY `product`.`id` ASC ";
   $resultAll = $conn->query($sqlAll);
-  $sellerCount = $resultAll->num_rows;
+  $userCount = $resultAll->num_rows;
 }
 // 
-
-
-
 
 $result = $conn->query($sql);
 
 //計算頁數
-$totalPage = ceil($sellerCount / $per_page);
+$totalPage = ceil($userCount / $per_page);
 $totalPage_category =
 
   $rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -86,7 +83,7 @@ $totalPage_category =
 <html lang="en">
 
 <head>
-  <title>Product List</title>
+  <title>Seller-product-list</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -166,16 +163,15 @@ $totalPage_category =
 
 <body>
   <!--  style="border: 1px solid red ;"檢查邊框 -->
-  <main class="">
     <nav class="main-nav d-flex bg-dark fixed-top shadow">
       <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-4 text" href="">藝拍</a>
       <div class="nav">
-        <a class="nav-link active" aria-current="page" href="#">首頁</a>
-        <a class="nav-link" href="/seller/product-list2.php">藝術品</a>
-        <a class="nav-link" href="../seller/sellers.php">畫家</a>
-        <a class="nav-link" href="../seller/sellers.php">會員</a>
-        <a class="nav-link" href="../product/order-list.php">訂單</a>
-        <a class="nav-link" href="../seller/product-list2.php">展覽空間</a>
+        <a class="nav-link active" aria-current="page" href="../seller/dashboard.php">首頁</a>
+        <a class="nav-link" href="../seller/seller-product-list.php">我的藝術品</a>
+        <!-- <a class="nav-link" href="../seller/sellers.php">畫家</a>
+        <a class="nav-link" href="../user/users.php">會員</a> -->
+        <a class="nav-link" href="../seller/order-list.php">訂單</a>
+        <a class="nav-link" href="">展覽空間</a>
       </div>
       <div class="position-absolute top-0 end-0">
         <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
@@ -184,17 +180,22 @@ $totalPage_category =
     <aside class="left-aside position-fixed bg-dark border-end">
       <nav class="aside-menu">
         <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
-        Welcome <?= $_SESSION["seller"]["account"] ?> !
+        Welcome <?= $_SESSION["user"]["account"] ?> !
       </div> -->
-        <ul class="list-unstyled">
-          <h1 class="py-2 d-flex justify-content-center text-white">會員</h1>
+      <ul class="list-unstyled">
+        <a href="#" class=" align-items-center link-dark text-decoration-none ">
+          <img src="https://github.com/mdo.png" alt="" width="110" height="110" class="rounded-circle mx-auto">
+          <!--<strong>mdo</strong>-->
+        </a>
+          <h1 class="py-1 d-flex justify-content-center text-white">會員</h1>
           <hr class="text-white">
-          <li><a href="../seller/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-gauge fa-fw"></i>會員資料</a></li>
-          <li><a href="../product/order-list.php" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>訂單管理</a></li>
-          <li><a href="" class="px-3 py-2"><i class="fa-solid fa-seller"></i>折扣卷</a></li>
-          <li><a href="../seller/product-list2.php" class="px-3 py-2"><i class="fa-solid fa-cart-shopping"></i>藝術品</a></li>
-          <li><a href="" class="px-3 py-2"><i class="fa-solid fa-chart-simple"></i>我的收藏</a></li>
-        </ul>
+            <li class="active"><a href="../seller/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>編輯個人頁面</a></li>
+            <li><a href="../seller/seller.php?id=<?=$_SESSION["seller"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>         
+            <li><a href="../seller/order-list.php" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>訂單管理</a></li>
+            <li><a href="../seller/file-upload.php" class="px-3 py-2"><i class="fa-solid fa-heart"></i>賣家藝術品上傳</a></li>      
+            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
+            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
+      </ul>
 
       </nav>
     </aside>
@@ -207,18 +208,18 @@ $totalPage_category =
 
           <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link <?php if (!isset($_GET["category"])) echo "active"; ?>" aria-current="page" href="product-list2.php">全部</a>
+              <a class="nav-link <?php if (!isset($_GET["category"])) echo "active"; ?>" aria-current="page" href="seller-product-list.php">全部</a>
             </li>
             <!--  -->
             <?php foreach ($rowsCategory as $category) : ?>
               <li class="nav-item">
-                <a class="nav-link" <?php if (isset($_GET["category"]) && $_GET["category"] == $category["id"]) echo "active"; ?> href="product-list2.php?category=<?= $category["id"] ?>"> <?= $category["name"] ?> </a>
+                <a class="nav-link" <?php if (isset($_GET["category"]) && $_GET["category"] == $category["id"]) echo "active"; ?> href="seller-product-list.php?category=<?= $category["id"] ?>"> <?= $category["name"] ?> </a>
               </li>
             <?php endforeach; ?>
             <!--  -->
           </ul>
           <div class="py-2">
-            <form action="product-list2.php">
+            <form action="seller-product-list.php">
               <div class="row align-items-center g-2">
                 <?php if (isset($_GET["min"])) : ?>
                   <div class="col-auto">
@@ -245,7 +246,7 @@ $totalPage_category =
           <div class="py-2 text-end">
             共<?= $productCount ?>項
           </div>
-          <?php if ($sellerCount > 0) : ?>
+          <?php if ($userCount > 0) : ?>
             <div class="row d-flex flex-wrap">
               <?php foreach ($rows as $row) :
               ?>
@@ -254,11 +255,11 @@ $totalPage_category =
                   <div class="card position-relative">
                     <a class="like position-absolute"></a>
                     <figure class="ratio ratio-16x9">
-                      <img class="object-cover" src="../product/images/<?=$row["images"] ?>" alt="">
+                      <img class="object-cover" src="../product/images/<?= $row["images"] ?>" alt="">
                     </figure>
                     <div class="px-2 pb-3">
                       <div class="pb-2 text-primary">
-                        <a href="product-list2.php?category=<?= $row["category"] ?>">
+                        <a href="seller-product-list.php?category=<?= $row["category"] ?>">
                           <?php
                           if ($row["category"] == "1") {
                             echo "ink";
@@ -301,7 +302,7 @@ $totalPage_category =
             <?php
                 if ($i == $page) echo "active";
             ?>">
-                  <a class="page-link" href="product-list2.php?category=<?= $_GET["category"] ?>&page=<?= $i ?>"><?= $i ?></a>
+                  <a class="page-link" href="seller-product-list.php?category=<?= $_GET["category"] ?>&page=<?= $i ?>"><?= $i ?></a>
                 </li>
               <?php endfor; ?>
             </ul>
@@ -314,7 +315,7 @@ $totalPage_category =
             <?php
                 if ($i == $page) echo "active";
             ?>">
-                  <a class="page-link" href="product-list2.php?page=<?= $i ?>"><?= $i ?></a>
+                  <a class="page-link" href="seller-product-list.php?page=<?= $i ?>"><?= $i ?></a>
                 </li>
               <?php endfor; ?>
             </ul>
@@ -327,7 +328,7 @@ $totalPage_category =
 
     </main>
 
-    <footer class="footer">
+    <!-- <footer class="footer">
       <div class="container-fruid d-flex justify-content-center">
         <div class="menu list-unstyled inline-flex">
 
@@ -347,7 +348,7 @@ $totalPage_category =
       </div>
 
 
-    </footer>
+    </footer> -->
 
 </body>
 

@@ -14,11 +14,11 @@ $id = $_GET["id"];
 //   exit;
 // }
 $sql = "SELECT user_order.*, users.account, product.price, product.name AS product_id FROM user_order
-JOIN users ON user_order.user_id = users.id
+JOIN users ON user_order.seller_id = users.id
 JOIN product ON user_order.product_id = product.id
 
-WHERE user_order.id=$id
-ORDER BY user_order.id DESC";
+WHERE seller_order.id=$id
+ORDER BY seller_order.id DESC";
 
 $result = $conn->query($sql);
 // $productCount = $result->num_rows;
@@ -119,22 +119,21 @@ $row = $result->fetch_assoc();
     <nav class="main-nav d-flex bg-dark fixed-top shadow">
         <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-4 text" href="">藝拍</a>
         <div class="nav">
-            <a class="nav-link" aria-current="page" href="../seller/dashboard.php">首頁</a>
+            <a class="nav-link" aria-current="page" href="../seller/dashboard.php#">首頁</a>
             <a class="nav-link" href="../product/product-list2.php">藝術品</a>
             <a class="nav-link" href="../seller/sellers.php">畫家</a>
-            <a class="nav-link active" href="../user/dashboard.php">會員</a>
+            <a class="nav-link active" href="../seller/dashboard.php">會員</a>
             <a class="nav-link" href="../product/order-list.php">訂單</a>
             <a class="nav-link" href="../user/product-list2.php">展覽空間</a>
         </div>
         <div class="position-absolute top-0 end-0">
-        <a class="btn btn-dark text-nowrap" href="#">進入個人頁面</a>
-        <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
+            <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
         </div>
     </nav>
     <aside class="left-aside position-fixed bg-dark border-end">
         <nav class="aside-menu">
             <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
-        Welcome <?= $_SESSION["user"]["account"] ?> !
+        Welcome <?= $_SESSION["seller"]["account"] ?> !
       </div> -->
       <ul class="list-unstyled">
       <a href="#" class=" align-items-center link-dark text-decoration-none ">
@@ -142,18 +141,17 @@ $row = $result->fetch_assoc();
           <!--<strong>mdo</strong>-->
         </a>
           <h1 class="py-2 d-flex justify-content-center text-white">會員</h1>
-
           <hr class="text-white">
-            <li><a href="../seller/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>編輯個人頁面</a></li>
+            <li><a href="../seller/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>會員資料列表</a></li>
             <li><a href="../seller/seller.php?id=<?=$_SESSION["seller"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>               
-            <li class="active"><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>訂單管理</a></li>
+            <li class="active"><a href="../user/user-order-detail.php?id=<?=$_SESSION["seller"]["id"]?>" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>訂單檢視</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
         </ul>
 
         </nav>
     </aside>
-    <!-- <main class="main-content">
+    <main class="main-content">
         <div class="d-flex justify-content-between">
             <h1>個人訂單檢視</h1>
 
@@ -165,7 +163,7 @@ $row = $result->fetch_assoc();
                     <th>id</th>
                     <td><?= $row["id"] ?></td>
                 </tr> -->
-                <!-- <tr>
+                <tr>
                     <th>訂購日期</th>
                     <td><?= $row["order_date"] ?></td>
                 </tr>
@@ -190,8 +188,8 @@ $row = $result->fetch_assoc();
                     <td><?= $row["price"] * $row["amount"] ?></td>
                 </tr>
             </table>
-        </div> -->
-    </main> -->
+        </div>
+    </main>
 
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous">

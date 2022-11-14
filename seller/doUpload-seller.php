@@ -12,23 +12,22 @@ $amount=$_POST["amount"];
 $author=$_POST["author"];
 $detailed=$_POST["detailed"];
 $sell_id=$_POST["sell_id"];
-$images=$_FILES["file0"]["tmp_name"];
+$images=$_FILES["images"];
 // $imagesName=$_POST["imagesName"];
 // echo $category;
 
 if(empty($name or $category or $price or $amount or $author or $detailed or $sell_id)){
     echo "請輸入資料";
-}elseif(empty($images)){
+}elseif(isset($images)){
     echo "請選擇照片";
 }else{
-
-    if($_FILES["file0"]["error"]==0){
+    if($_FILES["images"]["error"]==0){
         // echo $_FILES["images"]["name"];
-        if(move_uploaded_file($_FILES["file0"]["tmp_name"], "../images/".$_FILES["file0"]["name"])){
+        if(move_uploaded_file($_FILES["images"]["tmp_name"], "../images/".$_FILES["images"]["name"])){
             echo "upload success!<br>";
             $now=date('Y-m-d H:i:s');
             
-            $fileName=$_FILES["file0"]["name"];
+            $fileName=$_FILES["images"]["name"];
             
             // var_dump ($category);
     
@@ -54,7 +53,7 @@ if(empty($name or $category or $price or $amount or $author or $detailed or $sel
 <html lang="en">
 
 <head>
-  <title>doUpload</title>
+  <title>doUpload-seller</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -66,8 +65,8 @@ if(empty($name or $category or $price or $amount or $author or $detailed or $sel
 </head>
 
 <body>
-    <a class="btn btn-info" href="products.php">返回商品清單</a>
-    <a class="btn btn-info" href="file-upload.php">返回新增商品</a>
+    <a class="btn btn-dark" href="product-list2.php">返回商品清單</a>
+    <a class="btn btn-dark" href="file-upload.php">返回新增商品</a>
 
 
 </body>

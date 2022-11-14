@@ -17,14 +17,15 @@ $sql = "SELECT user_order.*, users.account, product.price, product.name AS produ
 JOIN users ON user_order.user_id = users.id
 JOIN product ON user_order.product_id = product.id
 
-WHERE user_order.id=$id
-ORDER BY user_order.id DESC";
+WHERE user_order.user_id=$id
+ORDER BY user_order.user_id DESC";
 
 $result = $conn->query($sql);
 // $productCount = $result->num_rows;
-$row = $result->fetch_assoc();
+$rows = $result->fetch_all(MYSQLI_ASSOC);
 
-
+// var_dump($rows);
+// exit;
 
 
 ?>
@@ -117,24 +118,21 @@ $row = $result->fetch_assoc();
 
 <body>
     <nav class="main-nav d-flex bg-dark fixed-top shadow">
-        <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-4 text" href="">藝拍</a>
-        <div class="nav">
+        <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-3 text" href="">藝拍</a>
+        <!-- <div class="nav">
             <a class="nav-link" aria-current="page" href="#">首頁</a>
             <a class="nav-link" href="../product/product-list2.php">藝術品</a>
             <a class="nav-link" href="../seller/sellers.php">畫家</a>
             <a class="nav-link active" href="../buyer/dashboard.php">會員</a>
             <a class="nav-link" href="../product/order-list.php">訂單</a>
             <a class="nav-link" href="../buyer/product-list2.php">展覽空間</a>
-        </div>
+        </div> -->
         <div class="position-absolute top-0 end-0">
             <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
         </div>
     </nav>
     <aside class="left-aside position-fixed bg-dark border-end">
         <nav class="aside-menu">
-            <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
-        Welcome <?= $_SESSION["user"]["account"] ?> !
-      </div> -->
       <ul class="list-unstyled">
           <h1 class="py-2 d-flex justify-content-center text-white">會員</h1>
           <hr class="text-white">
@@ -142,57 +140,46 @@ $row = $result->fetch_assoc();
             <li class="active"><a href="../buyer/buyer-order-detail.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>個人訂單檢視</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
-        </ul>
+            <li><a href="./product-list2.php" class="px-3 py-2"><i class="fa-solid fa-heart"></i>藝術品</a></li>
+      </ul>
 
         </nav>
     </aside>
     <main class="main-content">
         <div class="d-flex justify-content-between">
-            <h1>個人訂單檢視</h1>
+            <h3>個人訂單檢視</h3>
 
         </div>
 
-        <div class="container">
-            <table class="table">
-                <!-- <tr>
-                    <th>id</th>
-                    <td><?= $row["id"] ?></td>
-                </tr> -->
-                <tr>
-                    <th>訂購日期</th>
-                    <td><?= $row["order_date"] ?></td>
-                </tr>
-                <tr>
-                    <th>訂購者</th>
-                    <td><?= $row["account"] ?></td>
-                </tr>
-                <tr>
-                    <th>品名</th>
-                    <td><?= $row["product_id"] ?></td>
-                </tr>
-                <tr>
-                    <th>單價</th>
-                    <td><?= $row["price"] ?></td>
-                </tr>
-                <tr>
-                    <th>數量</th>
-                    <td><?= $row["amount"] ?></td>
-                </tr>
-                <tr>
-                    <th>總價</th>
-                    <td><?= $row["price"] * $row["amount"] ?></td>
-                </tr>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>訂單編號</th>
+                        <th>訂購日期</th>
+                        <th>訂購者</th>
+                        <th>品名</th>
+                        <th>單價</th>
+                        <th>數量</th>
+                        <th>總價</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <?php foreach ($rows as $row) : ?>
+                        <tr>
+                            <td><?= $row["id"] ?></td>
+                            <td><?= $row["order_date"] ?></td>
+                            <td><?= $row["account"] ?></td>
+                            <td><?= $row["product_id"] ?></td>
+                            <td><?= $row["price"] ?></td>
+                            <td><?= $row["amount"] ?></td>
+                            <td><?= $row["price"] * $row["amount"] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
             </table>
         </div>
-
-
-
-
-
-
-
-
-
 
     </main>
 

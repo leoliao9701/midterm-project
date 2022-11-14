@@ -97,15 +97,15 @@ $row=$result->fetch_assoc();
 
 <body>
 <nav class="main-nav d-flex bg-dark fixed-top shadow">
-    <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-4 text" href="">藝拍</a>
-    <div class="nav">
+    <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-3 text" href="./dashboard.php">藝拍</a>
+    <!-- <div class="nav">
       <a class="nav-link" aria-current="page" href="#">首頁</a>
       <a class="nav-link" href="../product/product-list2.php">藝術品</a>
       <a class="nav-link" href="../seller/login.php">畫家</a>
       <a class="nav-link active" href="../buyer/dashboard.php">會員</a>
       <a class="nav-link" href="../product/order-list.php">訂單</a>
       <a class="nav-link" href="../buyer/product-list2.php">展覽空間</a>
-    </div>
+    </div> -->
     <div class="position-absolute top-0 end-0">
       <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
     </div>
@@ -122,7 +122,8 @@ $row=$result->fetch_assoc();
             <li><a href="../buyer/buyer-order-detail.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>個人訂單檢視</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
-        </ul>
+            <li><a href="./product-list2.php" class="px-3 py-2"><i class="fa-solid fa-heart"></i>藝術品</a></li>
+      </ul>
         
     </nav>
   </aside>

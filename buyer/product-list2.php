@@ -98,6 +98,11 @@ $totalPage_category =
       height: 300vh;
     }
 
+    a{
+      text-decoration: none;
+      color: black;
+    }
+
     :root {
       --side-width: 260px;
     }
@@ -161,6 +166,10 @@ $totalPage_category =
       margin-left: calc(var(--side-width) + 20px);
       padding-top: 54px;
     }
+    .page-style a{
+      color: black;
+    }
+   
   </style>
 </head>
 
@@ -307,7 +316,7 @@ $totalPage_category =
             </ul>
           </nav>
         <?php else : ?>
-          <nav aria-label="Page navigation example">
+          <nav class="d-flex justify-content-center py-5 page-style">
             <ul class="pagination">
               <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
                 <li class="page-item 

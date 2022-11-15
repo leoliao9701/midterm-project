@@ -23,7 +23,7 @@ if(isset($_SESSION["user"])){
     integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <style>
         body { 
-          background-image: url(../images/25.jpg);
+          background-image: url(./images/1bg.jpg);
           background-size: cover;
         }
         .login-panel{

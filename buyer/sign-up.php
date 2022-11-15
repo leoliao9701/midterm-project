@@ -12,7 +12,7 @@
     <style>
         body {
 
-            background-image: url(../images/25.jpg);
+            background-image: url(./images/1bg.jpg);
             background-size: cover;
             color: white;
         }

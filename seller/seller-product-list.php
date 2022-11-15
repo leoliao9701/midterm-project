@@ -2,7 +2,7 @@
 require_once("../db2-connect.php");
 
 session_start();
-if (!isset($_SESSION["user"])) {
+if (!isset($_SESSION["seller"])) {
   header("location: login.php");
 }
 $category = "";
@@ -90,6 +90,7 @@ $totalPage_category =
 
   <!-- Bootstrap CSS v5.2.1 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <link rel="stylesheet" href="/fontawesome-free-6.2.0-web/css/all.min.css">
   <style>
     body {
       height: 300vh;
@@ -178,27 +179,27 @@ $totalPage_category =
       </div>
     </nav>
     <aside class="left-aside position-fixed bg-dark border-end">
-      <nav class="aside-menu">
-        <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
-        Welcome <?= $_SESSION["user"]["account"] ?> !
-      </div> -->
-      <ul class="list-unstyled">
-        <a href="#" class=" align-items-center link-dark text-decoration-none ">
-          <img src="https://github.com/mdo.png" alt="" width="110" height="110" class="rounded-circle mx-auto">
-          <!--<strong>mdo</strong>-->
-        </a>
-          <h1 class="py-1 d-flex justify-content-center text-white">會員</h1>
-          <hr class="text-white">
-            <li class="active"><a href="../seller/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>編輯個人頁面</a></li>
-            <li><a href="../seller/seller.php?id=<?=$_SESSION["seller"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>         
-            <li><a href="../seller/order-list.php" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>訂單管理</a></li>
-            <li><a href="../seller/file-upload.php" class="px-3 py-2"><i class="fa-solid fa-heart"></i>賣家藝術品上傳</a></li>      
-            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
-            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
-      </ul>
+            <nav class="aside-menu">
+                <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
+Welcome <?= $_SESSION["seller"]["account"] ?> !
+</div> -->
+                <ul class="list-unstyled">
+                    <a href="#" class=" align-items-center link-dark text-decoration-none ">
+                        <img src="https://github.com/mdo.png" alt="" width="110" height="110" class="rounded-circle mx-auto">
+                        <!--<strong>mdo</strong>-->
+                    </a>
+                    <h1 class="py-1 d-flex justify-content-center text-white">會員</h1>
+                    <hr class="text-white">
+                    <li><a href="../seller/sellers.php" class="px-3 py-2"><i class="fa-solid fa-user fa-fw"></i>編輯個人頁面</a></li>
+                    <li><a href="../seller/seller.php?id=<?= $_SESSION["seller"]["id"] ?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>
+                    <li><a href="../seller/order-list.php" class="px-3 py-2"><i class="fa-solid fa-rectangle-list"></i>訂單管理</a></li>
+                    <li class="active"><a href="../seller/file-upload.php" class="px-3 py-2"><i class="fa-solid fa-upload"></i>賣家藝術品上傳</a></li>
+                    <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
+                    <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
+                </ul>
 
-      </nav>
-    </aside>
+            </nav>
+        </aside>
     <main class="main-content">
       <div class="d-flex justify-content-between">
         <h1>主選單</h1>

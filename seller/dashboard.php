@@ -88,7 +88,7 @@ if(!isset($_SESSION["seller"])){
     <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-4 text" href="">藝拍</a>
     <div class="nav">
       <a class="nav-link" aria-current="page" href="../seller/dashboard.php">首頁</a>
-      <a class="nav-link" href="../seller/seller-product-list.php">我的藝術品</a>
+      <a class="nav-link" href="./seller-product-list.php">我的藝術品</a>
       <a class="nav-link" href="../seller/sellers.php">畫家</a>
       <!-- <a class="nav-link active" href="../user/dashboard.php">會員</a> -->
       <!--<a class="nav-link" href="../product/order-list.php">訂單</a>-->

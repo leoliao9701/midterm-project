@@ -69,6 +69,6 @@ if ($conn->query($sqlCreate) === TRUE) {
 
 $conn->close();
 
-header("location: users.php");
+header("location: dashboard.php");
 
 ?>

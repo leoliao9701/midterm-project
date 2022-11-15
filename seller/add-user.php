@@ -1,32 +1,11 @@
 <?php
 session_start();
-if(!isset($_GET["id"])){
-    echo "使用者不存在";
-    exit;
-}
-
-$id=$_GET["id"];
-
-
-require_once("../db2-connect.php");
-
-$sql="SELECT * FROM users WHERE id='$id' AND valid=1";
-$result = $conn->query($sql);
-$userCount=$result->num_rows;
-
-$row=$result->fetch_assoc();
-
-// var_dump($row);
-// exit;
-
-
 ?>
-
 <!doctype html>
 <html lang="en">
 
 <head>
-  <title><?=$row["name"]?></title>
+  <title>add user</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -35,7 +14,7 @@ $row=$result->fetch_assoc();
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
     integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <link rel="stylesheet" href="/fontawesome-free-6.2.0-web/css/all.min.css">
-    <style>
+  <style>
         body{
             height: 300vh;
         }
@@ -92,20 +71,21 @@ $row=$result->fetch_assoc();
             padding-top: 54px;
         }
     </style>
-    </style>
+
+
 </head>
 
 <body>
 <nav class="main-nav d-flex bg-dark fixed-top shadow">
-    <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-3 text" href="">藝拍</a>
+    <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-4 text" href="">藝拍</a>
     <div class="nav">
-            <a class="nav-link" href="#">首頁</a>
-            <a class="nav-link" href="../buyer/buyer-product-list.php">藝術品參觀</a>
-            <!-- <a class="nav-link" href="../seller/sellers.php">畫家</a>
-            <a class="nav-link active" href="../buyer/dashboard.php">會員</a>
-            <a class="nav-link" href="../product/order-list.php">訂單</a> -->
-            <a class="nav-link" href="#">展覽空間</a>
-        </div>
+      <a class="nav-link" aria-current="page" href="#">首頁</a>
+      <a class="nav-link" href="../product/product-list2.php">藝術品</a>
+      <a class="nav-link" href="../seller/sellers.php">畫家</a>
+      <a class="nav-link active" href="../user/dashboard.php">會員</a>
+      <a class="nav-link" href="../product/order-list.php">訂單</a>
+      <a class="nav-link" href="../user/product-list2.php">展覽空間</a>
+    </div>
     <div class="position-absolute top-0 end-0">
       <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
     </div>
@@ -116,66 +96,46 @@ $row=$result->fetch_assoc();
         Welcome <?=$_SESSION["user"]["account"]?> !
       </div> -->
       <ul class="list-unstyled">
-      <a href="#" class=" align-items-center link-dark text-decoration-none ">
-          <img src="./images/a.jpg" alt="" width="110" height="110" class="rounded-circle mx-auto">
-        </a>
           <h1 class="py-2 d-flex justify-content-center text-white">會員</h1>
           <hr class="text-white">
-            <li class="active"><a href="../buyer/buyer.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>               
-            <li><a href="../buyer/buyer-order-detail.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>個人訂單檢視</a></li>
+            <li class="active"><a href="../user/users.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>會員資料列表</a></li>
+            <li><a href="../user/user.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>               
+            <li><a href="../user/user-order-detail.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>個人訂單檢視</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
-      </ul>
+        </ul>
         
     </nav>
   </aside>
   <main class="main-content">
     <div class="d-flex justify-content-between">
-        <h3>編輯會員資料</h3>
+        <h3>新增會員</h3>
     
     </div>
-    <div class="container">
-    
-    <?php if($userCount==0): ?>
-        使用者不存在
-    <?php else: ?>
-    <div class="py-2">
-        <a class="btn btn-secondary" href="../buyer/buyer.php?id=<?=$row["id"]?>">回使用者</a>
-    </div>
-    <form action="./doUpdate.php" method="post">
-        <table class="table table-bordered">
-            <tbody>
-                <tr>
-                    <input type="hidden" name="id" value="<?=$row["id"]?>">
-                    <td>id</td>
-                    <td>
-                        <?=$row["id"]?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>姓名</td>
-                    <td>
-                        <input type="text" class="form-control" value="<?=$row["name"]?>" name="name">
-                    </td>
-                </tr>
-                <tr>
-                    <td>phone</td>
-                    <td>
-                        <input type="text" class="form-control" value="<?=$row["phone"]?>" name="phone">
-                    </td>
-                </tr>
-                <tr>
-                    <td>email</td>
-                    <td>
-                        <input type="text" class="form-control" value="<?=$row["email"]?>" name="email">
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- 新增資料頁面 -->
+  <div class="container">
+    <div class="py-2"><a class="btn btn-secondary" href="users.php">User List</a></div>
+    <form action="doInsert.php" method="post">
+      
+        <div class="mb-2">
+            <label for="account">Account</label>
+            <input type="text" class="form-control" id="account" name="account">
+        </div>
+        <div class="mb-2">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name">
+        </div>
+        <div class="mb-2">
+            <label for="phone">phone</label>
+            <input type="text" class="form-control" id="phone" name="phone">
+        </div>
+        <div class="mb-2">
+            <label for="email">email</label>
+            <input type="text" class="form-control" id="email" name="email">
+        </div>
         <button class="btn btn-secondary" type="submit">送出</button>
     </form>
-    <?php endif ?>
-  </div>    
+  </div>   
    
    
 

@@ -11,16 +11,7 @@ $resultCategory = $conn->query($sqlCategory);
 $rowsCategory = $resultCategory->fetch_all(MYSQLI_ASSOC);
 
 
-if (isset($_GET["min"])) {
-  $min = $_GET["min"];
-  $max = $_GET["max"];
-
-  if (empty($min)) $min = 0;
-  if (empty($max)) $max = 99999;
-
-  $sql = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id
-    WHERE price >= $min AND price <=$max";
-} else {
+//  else {
   if (isset($_GET["category"])) {
     $category = $_GET["category"];
 
@@ -30,14 +21,10 @@ if (isset($_GET["min"])) {
     $sql = "SELECT product.*, category.name AS category_name FROM product
         JOIN category ON product.category = category.id";
   }
-  //$sqlCategory_id = "SELECT * FROM category WHERE `category` = 1 ORDER BY id ASC";
-
-}
-
+ 
 
 $result = $conn->query($sql);
-$productCount = $result->num_rows;
-$rows = $result->fetch_all(MYSQLI_ASSOC);
+
 
 
 // 頁數
@@ -54,29 +41,43 @@ $page_start = ($page - 1) * $per_page;
 // 分類頁面ＳＱＬ
 if (isset($_GET["category"])) {
   $pageCategory = $_GET["category"];
-  $sql = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC LIMIT $page_start, $per_page";
+  $sql2 = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC LIMIT $page_start, $per_page";
   $sqlAll = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC";
+  $result = $conn->query($sql2);
   $resultAll = $conn->query($sqlAll);
-  $sellerCount = $resultAll->num_rows;
+  $userCount = $resultAll->num_rows;
+
+}elseif (isset($_GET["min"])) {
+    $min = $_GET["min"];
+    $max = $_GET["max"];
+  
+    if (empty($min)) $min = 0;
+    if (empty($max)) $max = 99999;
+  
+    $sql2 = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max ORDER BY product.price";
+    $sqlAll = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max";
+      
+      
+    $result = $conn->query($sql2);
+      $resultAll = $conn->query($sqlAll);
+      $userCount = $resultAll->num_rows;
+      // var_dump($userCount);
+// exit;
 } else {
-  $sql = "SELECT * FROM `product` ORDER BY `product`.`create_time` DESC
+  $sql2 = "SELECT * FROM `product` ORDER BY `product`.`create_time` DESC
   LIMIT $page_start, $per_page";
   $sqlAll = "SELECT * FROM `product` ORDER BY `product`.`id` ASC ";
+  $result = $conn->query($sql2);
   $resultAll = $conn->query($sqlAll);
-  $sellerCount = $resultAll->num_rows;
+  $userCount = $resultAll->num_rows;
 }
 // 
+$rows = $result->fetch_all(MYSQLI_ASSOC);
+$productCount = $result->num_rows;
 
-
-
-
-$result = $conn->query($sql);
 
 //計算頁數
-$totalPage = ceil($sellerCount / $per_page);
-$totalPage_category =
-
-  $rows = $result->fetch_all(MYSQLI_ASSOC);
+$totalPage = ceil($userCount / $per_page);
 
 // var_dump($rows);
 // exit;
@@ -86,13 +87,14 @@ $totalPage_category =
 <html lang="en">
 
 <head>
-  <title>Product List</title>
+  <title>Buyer-product-list</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS v5.2.1 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <link rel="stylesheet" href="/fontawesome-free-6.2.0-web/css/all.min.css">
   <style>
     body {
       height: 300vh;
@@ -100,7 +102,7 @@ $totalPage_category =
 
     a{
       text-decoration: none;
-      color: black;
+      color: #444;
     }
 
     :root {
@@ -166,26 +168,18 @@ $totalPage_category =
       margin-left: calc(var(--side-width) + 20px);
       padding-top: 54px;
     }
-    .page-style a{
-      color: black;
-    }
-   
   </style>
 </head>
 
 <body>
   <!--  style="border: 1px solid red ;"檢查邊框 -->
-  <main class="">
-    <nav class="main-nav d-flex bg-dark fixed-top shadow">
+  <nav class="main-nav d-flex bg-dark fixed-top shadow">
       <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-4 text" href="">藝拍</a>
       <div class="nav">
-        <a class="nav-link active" aria-current="page" href="#">首頁</a>
-        <a class="nav-link" href="/seller/product-list2.php">藝術品</a>
-        <a class="nav-link" href="../seller/sellers.php">畫家</a>
-        <a class="nav-link" href="../seller/sellers.php">會員</a>
-        <a class="nav-link" href="../product/order-list.php">訂單</a>
-        <a class="nav-link" href="../seller/product-list2.php">展覽空間</a>
-      </div>
+            <a class="nav-link" href="#">首頁</a>
+            <a class="nav-link" href="../buyer/buyer-product-list.php">藝術品參觀</a>
+            <a class="nav-link" href="#">展覽空間</a>
+        </div>
       <div class="position-absolute top-0 end-0">
         <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
       </div>
@@ -193,17 +187,19 @@ $totalPage_category =
     <aside class="left-aside position-fixed bg-dark border-end">
       <nav class="aside-menu">
         <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
-        Welcome <?= $_SESSION["seller"]["account"] ?> !
+        Welcome <?= $_SESSION["user"]["account"] ?> !
       </div> -->
-        <ul class="list-unstyled">
+      <ul class="list-unstyled">
+      <a href="#" class=" align-items-center link-dark text-decoration-none ">
+          <img src="./images/a.jpg" alt="" width="110" height="110" class="rounded-circle mx-auto">
+        </a>
           <h1 class="py-2 d-flex justify-content-center text-white">會員</h1>
           <hr class="text-white">
-          <li><a href="../seller/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-gauge fa-fw"></i>會員資料</a></li>
-          <li><a href="../product/order-list.php" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>訂單管理</a></li>
-          <li><a href="" class="px-3 py-2"><i class="fa-solid fa-seller"></i>折扣卷</a></li>
-          <li><a href="../seller/product-list2.php" class="px-3 py-2"><i class="fa-solid fa-cart-shopping"></i>藝術品</a></li>
-          <li><a href="" class="px-3 py-2"><i class="fa-solid fa-chart-simple"></i>我的收藏</a></li>
-        </ul>
+            <li class="active"><a href="../buyer/buyer.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>               
+            <li><a href="../buyer/buyer-order-detail.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>個人訂單檢視</a></li>
+            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
+            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
+      </ul>
 
       </nav>
     </aside>
@@ -216,22 +212,22 @@ $totalPage_category =
 
           <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link <?php if (!isset($_GET["category"])) echo "active"; ?>" aria-current="page" href="product-list2.php">全部</a>
+              <a class="nav-link <?php if (!isset($_GET["category"])) echo "active"; ?>" aria-current="page" href="buyer-product-list.php">全部</a>
             </li>
             <!--  -->
             <?php foreach ($rowsCategory as $category) : ?>
               <li class="nav-item">
-                <a class="nav-link" <?php if (isset($_GET["category"]) && $_GET["category"] == $category["id"]) echo "active"; ?> href="product-list2.php?category=<?= $category["id"] ?>"> <?= $category["name"] ?> </a>
+                <a class="nav-link" <?php if (isset($_GET["category"]) && $_GET["category"] == $category["id"]) echo "active"; ?> href="buyer-product-list.php?category=<?= $category["id"] ?>"> <?= $category["name"] ?> </a>
               </li>
             <?php endforeach; ?>
             <!--  -->
           </ul>
           <div class="py-2">
-            <form action="product-list2.php">
+            <form action="buyer-product-list.php" method="GET">
               <div class="row align-items-center g-2">
                 <?php if (isset($_GET["min"])) : ?>
                   <div class="col-auto">
-                    <a class="btn btn-info" href="product-list2.php">Back</a>
+                    <a class="btn btn-dark" href="./buyer-product-list.php">Back</a>
                   </div>
                 <?php endif; ?>
                 <div class="col-auto">
@@ -245,16 +241,18 @@ $totalPage_category =
                   <input type="number" class="form-control text-center" name="max" placeholder="輸入最大金額" value="<?php
                                                                                                                 if (isset($_GET["max"])) echo $price; ?>">
                 </div>
+                
                 <div class="col-auto">
                   <button class="btn btn-dark" type="submit">篩選</button>
                 </div>
               </div>
             </form>
+            <?php ?>
           </div>
           <div class="py-2 text-end">
             共<?= $productCount ?>項
           </div>
-          <?php if ($sellerCount > 0) : ?>
+          <?php if ($userCount > 0) : ?>
             <div class="row d-flex flex-wrap">
               <?php foreach ($rows as $row) :
               ?>
@@ -263,11 +261,11 @@ $totalPage_category =
                   <div class="card position-relative">
                     <a class="like position-absolute"></a>
                     <figure class="ratio ratio-16x9">
-                      <img class="object-cover" src="../product/images/<?=$row["images"] ?>" alt="">
+                      <img class="object-cover" src="../product/images/<?= $row["images"] ?>" alt="">
                     </figure>
                     <div class="px-2 pb-3">
                       <div class="pb-2 text-primary">
-                        <a href="product-list2.php?category=<?= $row["category"] ?>">
+                        <a href="buyer-product-list.php?category=<?= $row["category"] ?>">
                           <?php
                           if ($row["category"] == "1") {
                             echo "ink";
@@ -310,20 +308,33 @@ $totalPage_category =
             <?php
                 if ($i == $page) echo "active";
             ?>">
-                  <a class="page-link" href="product-list2.php?category=<?= $_GET["category"] ?>&page=<?= $i ?>"><?= $i ?></a>
+                  <a class="page-link" href="buyer-product-list.php?category=<?= $_GET["category"] ?>&page=<?= $i ?>"><?= $i ?></a>
                 </li>
               <?php endfor; ?>
             </ul>
           </nav>
-        <?php else : ?>
-          <nav class="d-flex justify-content-center py-5 page-style">
+          <?php elseif ((isset($_GET["min"]))&&(isset($_GET["max"]))) : ?>
+          <nav aria-label="Page navigation example">
             <ul class="pagination">
               <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
                 <li class="page-item 
             <?php
                 if ($i == $page) echo "active";
             ?>">
-                  <a class="page-link" href="product-list2.php?page=<?= $i ?>"><?= $i ?></a>
+                  <a class="page-link" href="buyer-product-list.php?min=<?= $_GET["min"] ?>&max=<?= $_GET["max"] ?>&page=<?= $i ?>"><?= $i ?></a>
+                </li>
+              <?php endfor; ?>
+            </ul>
+          </nav>
+        <?php else : ?>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                <li class="page-item 
+            <?php
+                if ($i == $page) echo "active";
+            ?>">
+                  <a class="page-link" href="buyer-product-list.php?page=<?= $i ?>"><?= $i ?></a>
                 </li>
               <?php endfor; ?>
             </ul>
@@ -336,7 +347,7 @@ $totalPage_category =
 
     </main>
 
-    <footer class="footer">
+    <!-- <footer class="footer">
       <div class="container-fruid d-flex justify-content-center">
         <div class="menu list-unstyled inline-flex">
 
@@ -356,7 +367,7 @@ $totalPage_category =
       </div>
 
 
-    </footer>
+    </footer> -->
 
 </body>
 

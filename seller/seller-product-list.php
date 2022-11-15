@@ -11,16 +11,7 @@ $resultCategory = $conn->query($sqlCategory);
 $rowsCategory = $resultCategory->fetch_all(MYSQLI_ASSOC);
 
 
-if (isset($_GET["min"])) {
-  $min = $_GET["min"];
-  $max = $_GET["max"];
-
-  if (empty($min)) $min = 0;
-  if (empty($max)) $max = 99999;
-
-  $sql = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id
-    WHERE price >= $min AND price <=$max";
-} else {
+//  else {
   if (isset($_GET["category"])) {
     $category = $_GET["category"];
 
@@ -30,14 +21,10 @@ if (isset($_GET["min"])) {
     $sql = "SELECT product.*, category.name AS category_name FROM product
         JOIN category ON product.category = category.id";
   }
-  //$sqlCategory_id = "SELECT * FROM category WHERE `category` = 1 ORDER BY id ASC";
-
-}
-
+ 
 
 $result = $conn->query($sql);
-$productCount = $result->num_rows;
-$rows = $result->fetch_all(MYSQLI_ASSOC);
+
 
 
 // 頁數
@@ -54,26 +41,43 @@ $page_start = ($page - 1) * $per_page;
 // 分類頁面ＳＱＬ
 if (isset($_GET["category"])) {
   $pageCategory = $_GET["category"];
-  $sql = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC LIMIT $page_start, $per_page";
+  $sql2 = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC LIMIT $page_start, $per_page";
   $sqlAll = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC";
+  $result = $conn->query($sql2);
   $resultAll = $conn->query($sqlAll);
   $userCount = $resultAll->num_rows;
+
+}elseif (isset($_GET["min"])) {
+    $min = $_GET["min"];
+    $max = $_GET["max"];
+  
+    if (empty($min)) $min = 0;
+    if (empty($max)) $max = 99999;
+  
+    $sql2 = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max ORDER BY product.price";
+    $sqlAll = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max";
+      
+      
+    $result = $conn->query($sql2);
+      $resultAll = $conn->query($sqlAll);
+      $userCount = $resultAll->num_rows;
+      // var_dump($userCount);
+// exit;
 } else {
-  $sql = "SELECT * FROM `product` ORDER BY `product`.`create_time` DESC
+  $sql2 = "SELECT * FROM `product` ORDER BY `product`.`create_time` DESC
   LIMIT $page_start, $per_page";
   $sqlAll = "SELECT * FROM `product` ORDER BY `product`.`id` ASC ";
+  $result = $conn->query($sql2);
   $resultAll = $conn->query($sqlAll);
   $userCount = $resultAll->num_rows;
 }
 // 
+$rows = $result->fetch_all(MYSQLI_ASSOC);
+$productCount = $result->num_rows;
 
-$result = $conn->query($sql);
 
 //計算頁數
 $totalPage = ceil($userCount / $per_page);
-$totalPage_category =
-
-  $rows = $result->fetch_all(MYSQLI_ASSOC);
 
 // var_dump($rows);
 // exit;
@@ -94,6 +98,11 @@ $totalPage_category =
   <style>
     body {
       height: 300vh;
+    }
+
+    a{
+      text-decoration: none;
+      color: #444;
     }
 
     :root {
@@ -220,11 +229,11 @@ Welcome <?= $_SESSION["seller"]["account"] ?> !
             <!--  -->
           </ul>
           <div class="py-2">
-            <form action="seller-product-list.php">
+            <form action="seller-product-list.php" method="GET">
               <div class="row align-items-center g-2">
                 <?php if (isset($_GET["min"])) : ?>
                   <div class="col-auto">
-                    <a class="btn btn-info" href="product-list2.php">Back</a>
+                    <a class="btn btn-dark" href="./seller-product-list.php">Back</a>
                   </div>
                 <?php endif; ?>
                 <div class="col-auto">
@@ -238,11 +247,13 @@ Welcome <?= $_SESSION["seller"]["account"] ?> !
                   <input type="number" class="form-control text-center" name="max" placeholder="輸入最大金額" value="<?php
                                                                                                                 if (isset($_GET["max"])) echo $price; ?>">
                 </div>
+                
                 <div class="col-auto">
                   <button class="btn btn-dark" type="submit">篩選</button>
                 </div>
               </div>
             </form>
+            <?php ?>
           </div>
           <div class="py-2 text-end">
             共<?= $productCount ?>項
@@ -304,6 +315,19 @@ Welcome <?= $_SESSION["seller"]["account"] ?> !
                 if ($i == $page) echo "active";
             ?>">
                   <a class="page-link" href="seller-product-list.php?category=<?= $_GET["category"] ?>&page=<?= $i ?>"><?= $i ?></a>
+                </li>
+              <?php endfor; ?>
+            </ul>
+          </nav>
+          <?php elseif ((isset($_GET["min"]))&&(isset($_GET["max"]))) : ?>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                <li class="page-item 
+            <?php
+                if ($i == $page) echo "active";
+            ?>">
+                  <a class="page-link" href="seller-product-list.php?min=<?= $_GET["min"] ?>&max=<?= $_GET["max"] ?>&page=<?= $i ?>"><?= $i ?></a>
                 </li>
               <?php endfor; ?>
             </ul>

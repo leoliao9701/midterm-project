@@ -10,7 +10,7 @@ $id=$_GET["id"];
 
 require_once("../db2-connect.php");
 
-$sql="SELECT * FROM sellers WHERE id='$id' AND valid=1";
+$sql="SELECT * FROM users WHERE id='$id' AND valid=1";
 $result = $conn->query($sql);
 $userCount=$result->num_rows;
 
@@ -78,6 +78,7 @@ $row=$result->fetch_assoc();
             color: white;
             background: cadetblue;
             border-radius: 0.375rem;
+
         }
         .aside-menu a i{
             margin-right: 8px;
@@ -90,7 +91,6 @@ $row=$result->fetch_assoc();
             margin-left: calc(var(--side-width) + 20px);
             padding-top: 54px;
         }
-        
     </style>
     </style>
 </head>
@@ -99,39 +99,28 @@ $row=$result->fetch_assoc();
 <nav class="main-nav d-flex bg-dark fixed-top shadow">
     <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-4 text" href="">藝拍</a>
     <div class="nav">
-      <a class="nav-link" aria-current="page" href="../seller/dashboard.php">首頁</a>
-      <a class="nav-link" href="../seller/seller-product-list.php">我的藝術品</a>
+      <a class="nav-link" aria-current="page" href="#">首頁</a>
+      <a class="nav-link" href="../product/product-list2.php">藝術品</a>
       <a class="nav-link" href="../seller/sellers.php">畫家</a>
-      <!-- <a class="nav-link active" href="../user/dashboard.php">會員</a> -->
-      <!--<a class="nav-link" href="../product/order-list.php">訂單</a>-->
-      <a class="nav-link" href="#">展覽空間</a>
+      <a class="nav-link active" href="../user/dashboard.php">會員</a>
+      <a class="nav-link" href="../product/order-list.php">訂單</a>
+      <a class="nav-link" href="../user/product-list2.php">展覽空間</a>
     </div>
     <div class="position-absolute top-0 end-0">
-    <a class="btn btn-dark text-nowrap" href="#">進入前台頁面</a>
-      <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
-    </div>
-  </nav>
-  <div class="position-absolute top-0 end-0">
-      <a class="btn btn-dark text-nowrap" href="#">進入個人頁面</a>
       <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
     </div>
   </nav>
   <aside class="left-aside position-fixed bg-dark border-end">
     <nav class="aside-menu">
       <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
-        Welcome <?=$_SESSION["seller"]["account"]?> !
+        Welcome <?=$_SESSION["user"]["account"]?> !
       </div> -->
       <ul class="list-unstyled">
-      <a href="#" class=" align-items-center link-dark text-decoration-none ">
-          <img src="https://github.com/mdo.png" alt="" width="110" height="110" class="rounded-circle mx-auto">
-          <!--<strong>mdo</strong>-->
-        </a>
-          <h1 class="py-1 d-flex justify-content-center text-white">會員</h1>
+          <h1 class="py-2 d-flex justify-content-center text-white">會員</h1>
           <hr class="text-white">
-            <li><a href="../seller/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-barcode"></i>編輯個人頁面</a></li>
-            <li class="active"><a href="../seller/seller.php?id=<?=$_SESSION["seller"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>               
-            <li><a href="../seller/order-list.php" class="px-3 py-2"><i class="fa-solid fa-rectangle-list"></i>訂單管理</a></li>            
-            <li><a href="../seller/file-upload.php" class="px-3 py-2"><i class="fa-solid fa-upload"></i>賣家藝術品上傳</a></li> 
+            <li><a href="../user/users.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>會員資料列表</a></li>
+            <li class="active"><a href="../user/user.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>               
+            <li><a href="../user/user-order-detail.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>個人訂單檢視</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
         </ul>
@@ -144,13 +133,14 @@ $row=$result->fetch_assoc();
     
     </div>
     <div class="container">
+    
     <?php if($userCount==0): ?>
         使用者不存在
     <?php else: ?>
     <div class="py-2">
-        <a class="btn btn-dark" href="seller.php?id=<?=$row["id"]?>">回使用者</a>
+        <a class="btn btn-secondary" href="user.php?id=<?=$row["id"]?>">回使用者</a>
     </div>
-    <form action="./doUpdate.php" method="post">
+    <form action="doUpdate.php" method="post">
         <table class="table table-bordered">
             <tbody>
                 <tr>
@@ -161,17 +151,13 @@ $row=$result->fetch_assoc();
                     </td>
                 </tr>
                 <tr>
-                    <td>帳號</td>
-                    <td><input type="text" class="form-control" value="<?=$row["account"]?>" name="account"></td>
-                </tr>
-                <tr>
                     <td>姓名</td>
                     <td>
                         <input type="text" class="form-control" value="<?=$row["name"]?>" name="name">
                     </td>
                 </tr>
                 <tr>
-                    <td>電話</td>
+                    <td>phone</td>
                     <td>
                         <input type="text" class="form-control" value="<?=$row["phone"]?>" name="phone">
                     </td>
@@ -182,25 +168,16 @@ $row=$result->fetch_assoc();
                         <input type="text" class="form-control" value="<?=$row["email"]?>" name="email">
                     </td>
                 </tr>
-                <tr>
-                    <td>introduce</td>
-                    <td>
-                        <input type="text" class="form-control " value="<?=$row["introduce"]?>" name="introduce">
-                    </td>
-                </tr>
-                <tr>
-                    <td>社群網站連結</td>
-                    <td>
-                        <input type="text" class="form-control " value="<?=$row["social"]?>" name="social">
-                    </td>
-                </tr>
             </tbody>
         </table>
-        <button class="btn btn-dark" type="submit">送出</button>
-       
+        <button class="btn btn-dark" type="submit"> 
+        送出</button>
     </form>
     <?php endif ?>
   </div>    
+   
+   
+
   </main>
     
   <!-- Bootstrap JavaScript Libraries -->
@@ -242,5 +219,8 @@ $row=$result->fetch_assoc();
     config
   );
   </script>
+
+  
 </body>
+
 </html>

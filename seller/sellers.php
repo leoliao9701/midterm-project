@@ -6,20 +6,15 @@ if (!isset($_SESSION["seller"])) {
   header("location: login.php");
 }
 
-if (isset($_GET["introduce"])) {
-  $introduce = $_GET["introduce"];
-  $whereClause = "WHERE seller_introduce = '$introduce'";
-}
+
+
 $category = "";
 $sqlCategory = "SELECT * FROM category  ORDER BY id ASC";
 $resultCategory = $conn->query($sqlCategory);
 $rowsCategory = $resultCategory->fetch_all(MYSQLI_ASSOC);
 
 
-
-
-
-  $sql = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id";
+$sql = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id";
 
   if (isset($_GET["category"])) {
     $category = $_GET["category"];
@@ -203,8 +198,8 @@ $totalPage_category =
           <hr class="text-white">
             <li class="active"><a href="../seller/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>編輯個人頁面</a></li>
             <li><a href="../seller/seller.php?id=<?=$_SESSION["seller"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>         
-            <li><a href="../seller/order-list.php" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>訂單管理</a></li>
-            <li><a href="../seller/file-upload.php" class="px-3 py-2"><i class="fa-solid fa-heart"></i>上架藝術品</a></li>      
+            <li><a href="../seller/order-list.php" class="px-3 py-2"><i class="fa-solid fa-rectangle-list"></i>訂單管理</a></li>
+            <li class="active"><a href="../seller/file-upload.php" class="px-3 py-2"><i class="fa-solid fa-upload"></i>賣家藝術品上傳</a></li>  
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
       </ul>
@@ -212,12 +207,12 @@ $totalPage_category =
       </nav>
     </aside>
     <main class="main-content">
-    <section class="py-5 text-center container">
+  <section class="py-5 text-center container">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1><?=$_SESSION["seller"]["name"]?> Studio</h1>
       </div>
-        <p><?=$_SESSION["seller"]["introduce"]?></p>
+        <h2><?=$_SESSION["seller"]["introduce"]?></h2>
       </div>
     </div>
   </section>

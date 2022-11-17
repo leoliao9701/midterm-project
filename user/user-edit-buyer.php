@@ -116,6 +116,9 @@ $row=$result->fetch_assoc();
         Welcome <?=$_SESSION["user"]["account"]?> !
       </div> -->
       <ul class="list-unstyled">
+        <a href="#" class=" align-items-center link-dark text-decoration-none ">
+            <img src="../buyer/images/a.jpg" alt="" width="110" height="110" class="rounded-circle mx-auto">
+            </a>
           <h1 class="py-2 d-flex justify-content-center text-white">會員</h1>
           <hr class="text-white">
             <li class="active"><a href="../user/buyers.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>買家資料列表</a></li>
@@ -137,7 +140,7 @@ $row=$result->fetch_assoc();
         使用者不存在
     <?php else: ?>
     <div class="py-2">
-        <a class="btn btn-secondary" href="user-buyer.php?id=<?=$row["id"]?>">回使用者</a>
+        <a class="btn btn-dark" href="user-buyer.php?id=<?=$row["id"]?>">返回買家個人資料</a>
     </div>
     <form action="doUpdate.php" method="post">
         <table class="table table-bordered">
@@ -169,7 +172,7 @@ $row=$result->fetch_assoc();
                 </tr>
             </tbody>
         </table>
-        <button class="btn btn-secondary" type="submit">送出</button>
+        <button class="btn btn-dark" type="submit">送出</button>
     </form>
     <?php endif ?>
   </div>    

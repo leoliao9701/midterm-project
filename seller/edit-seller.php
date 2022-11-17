@@ -130,8 +130,8 @@ $row=$result->fetch_assoc();
           <hr class="text-white">
             <li><a href="../seller/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-barcode"></i>編輯個人頁面</a></li>
             <li class="active"><a href="../seller/seller.php?id=<?=$_SESSION["seller"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>               
-            <li><a href="../seller/order-list.php" class="px-3 py-2"><i class="fa-solid fa-rectangle-list"></i>訂單管理</a></li>            
-            <li><a href="../seller/file-upload.php" class="px-3 py-2"><i class="fa-solid fa-upload"></i>賣家藝術品上傳</a></li> 
+            <li><a href="../seller/order-list.php" class="px-3 py-2"><i class="fa-solid fa-user fa-fw"></i>訂單管理</a></li>            
+            <li><a href="../seller/file-upload.php" class="px-3 py-2"><i class="fa-solid fa-heart"></i>賣家藝術品上傳</a></li>  
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
             <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
         </ul>
@@ -150,7 +150,7 @@ $row=$result->fetch_assoc();
     <div class="py-2">
         <a class="btn btn-dark" href="seller.php?id=<?=$row["id"]?>">回使用者</a>
     </div>
-    <form action="./doUpdate.php" method="post">
+    <form action="doUpdate.php" method="post">
         <table class="table table-bordered">
             <tbody>
                 <tr>

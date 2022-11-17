@@ -142,7 +142,7 @@ $row=$result->fetch_assoc();
         使用者不存在
     <?php else: ?>
     <div class="py-2">
-        <a class="btn btn-secondary" href="user-seller.php?id=<?=$row["id"]?>">回使用者</a>
+        <a class="btn btn-dark" href="user-seller.php?id=<?=$row["id"]?>">返回賣家個人資料</a>
     </div>
     <form action="seller-doUpdate.php" method="post">
         <table class="table table-bordered">
@@ -174,7 +174,7 @@ $row=$result->fetch_assoc();
                 </tr>
             </tbody>
         </table>
-        <button class="btn btn-secondary" type="submit">送出</button>
+        <button class="btn btn-dark" type="submit">送出</button>
     </form>
     <?php endif ?>
   </div>    

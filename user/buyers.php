@@ -46,7 +46,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
 <html lang="en">
 
 <head>
-  <title>users</title>
+  <title>買家列表</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -131,6 +131,9 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
   <aside class="left-aside position-fixed bg-dark border-end">
     <nav class="aside-menu">
         <ul class="list-unstyled">
+          <a href="#" class=" align-items-center link-dark text-decoration-none ">
+            <img src="../buyer/images/a.jpg" alt="" width="110" height="110" class="rounded-circle mx-auto">
+          </a>
           <h1 class="py-2 d-flex justify-content-center text-white">會員</h1>
           <hr class="text-white">
             <li class="active"><a href="../user/buyers.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>買家資料列表</a></li>
@@ -151,7 +154,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
     
     <div class="py-2 d-flex justify-content-between">
     
-      <a class="btn btn-secondary mx-2" href="../buyer/add-buyer.php">Add Buyer</a>
+      <a class="btn btn-dark mx-2" href="./add-buyer.php">Add Buyer</a>
         
     </div>
 
@@ -159,14 +162,14 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
       <form action="buyers.php" method="get">
         <div class="input-group">
           <input type="text" class="form-control" name="search">
-          <button type="submit" class="btn btn-secondary">搜尋</button>
+          <button type="submit" class="btn btn-dark">搜尋</button>
         </div>
       </form>
     </div>
 
     <?php if(isset($_GET["search"])): ?>
       <div class="py-2">
-        <a class="btn btn-secondary" href="buyers.php">回列表</a>
+        <a class="btn btn-dark" href="buyers.php">回列表</a>
       </div>
       <h1><?=$_GET["search"]?>的搜尋結果</h1>
     <?php endif; ?>
@@ -195,7 +198,7 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
                 <td><?=$row["phone"]?></td>
                 <td><?=$row["email"]?></td>
                 <td>
-                  <a class="btn btn-secondary" href="user-buyer.php?id=<?=$row["id"]?>">檢視</a>
+                  <a class="btn btn-dark" href="user-buyer.php?id=<?=$row["id"]?>">檢視</a>
                   <a class="btn btn-danger" href="../buyer/delete-buyer.php?id=<?=$row["id"]?>">刪除</a>
                 </td>
               </tr>

@@ -18,7 +18,7 @@ $now=date('Y-m-d H:i:s');
 
 // echo "$name, $phone, $email, $now";
 
-$sql="INSERT INTO sellers (account, password,name, phone, email, created_at, valid)
+$sql="INSERT INTO users (account,password, name, phone, email, created_at, valid)
 VALUES ('$account','$password','$name', '$phone', '$email', '$now', 1)";
 
 if ($conn->query($sql) === TRUE) {
@@ -30,4 +30,4 @@ if ($conn->query($sql) === TRUE) {
 
 $conn->close();
 
-header("location: sellers.php");  //跳回原來頁面
+header("location: ../user/buyers.php");  //跳回原來頁面

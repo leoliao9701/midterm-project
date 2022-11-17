@@ -5,7 +5,8 @@ session_start();
 if (!isset($_SESSION["seller"])) {
   header("location: login.php");
 }
-
+if(!isset($_GET["id"])){
+}
 
 
 $category = "";
@@ -13,66 +14,12 @@ $sqlCategory = "SELECT * FROM category  ORDER BY id ASC";
 $resultCategory = $conn->query($sqlCategory);
 $rowsCategory = $resultCategory->fetch_all(MYSQLI_ASSOC);
 
+$result = $conn->query( "SELECT * FROM product WHERE sell_id= 1" );
 
-$sql = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id";
-
-  if (isset($_GET["category"])) {
-    $category = $_GET["category"];
-
-    $sql = "SELECT product.*, category.name AS category_name FROM product
-        JOIN category ON product.category = category.id WHERE product.category=$category";
-  } else {
-    $sql = "SELECT product.*, category.name AS category_name FROM product
-        JOIN category ON product.category = category.id";
-  }
-  //$sqlCategory_id = "SELECT * FROM category WHERE `category` = 1 ORDER BY id ASC";
-
-
-
-
-$result = $conn->query($sql);
 $productCount = $result->num_rows;
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 
-
-// 頁數
-
-
-if (isset($_GET["page"])) {
-  $page = $_GET["page"];
-} else {
-  $page = 1;
-}
-$per_page = 10;
-// $page=1;
-$page_start = ($page - 1) * $per_page;
-// 分類頁面ＳＱＬ
-if (isset($_GET["category"])) {
-  $pageCategory = $_GET["category"];
-  $sql = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC LIMIT $page_start, $per_page";
-  $sqlAll = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC";
-  $resultAll = $conn->query($sqlAll);
-  $userCount = $resultAll->num_rows;
-} else {
-  $sql = "SELECT * FROM `product` ORDER BY `product`.`create_time` DESC
-  LIMIT $page_start, $per_page";
-  $sqlAll = "SELECT * FROM `product` ORDER BY `product`.`id` ASC ";
-  $resultAll = $conn->query($sqlAll);
-  $userCount = $resultAll->num_rows;
-}
-// 
-
-$result = $conn->query($sql);
-
-//計算頁數
-$totalPage = ceil($userCount / $per_page);
-$totalPage_category =
-
-  $rows = $result->fetch_all(MYSQLI_ASSOC);
-
-// var_dump($rows);
-// exit;
-
+$introduce = $conn->query( "SELECT introduce FROM sellers WHERE 20" );
 ?>
 
 <!doctype html>
@@ -85,8 +32,8 @@ $totalPage_category =
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS v5.2.1 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   <link rel="stylesheet" href="/fontawesome-free-6.2.0-web/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   <style>
         body{
             height: 300vh;
@@ -177,7 +124,7 @@ $totalPage_category =
         <a class="nav-link" href="../seller/seller-product-list.php">我的藝術品</a>
         <!-- <a class="nav-link" href="../seller/sellers.php">畫家</a>
         <a class="nav-link" href="../user/users.php">會員</a> -->
-        <a class="nav-link" href="../seller/order-list.php">訂單</a>
+        <a class="nav-link" href="../seller/order-list.php">畫家</a>
         <a class="nav-link" href="">展覽空間</a>
       </div>
       <div class="position-absolute top-0 end-0">
@@ -187,43 +134,42 @@ $totalPage_category =
     <aside class="left-aside position-fixed bg-dark border-end">
       <nav class="aside-menu">
         <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
-        Welcome <?= $_SESSION["user"]["account"] ?> !
+        Welcome <?= $_SESSION["seller"]["account"] ?> !
       </div> -->
       <ul class="list-unstyled">
-        <a href="#" class=" align-items-center link-dark text-decoration-none ">
-          <img src="https://github.com/mdo.png" alt="" width="110" height="110" class="rounded-circle mx-auto">
-          <!--<strong>mdo</strong>-->
-        </a>
-          <h1 class="py-1 d-flex justify-content-center text-white">會員</h1>
-          <hr class="text-white">
-            <li class="active"><a href="../seller/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>編輯個人頁面</a></li>
-            <li><a href="../seller/seller.php?id=<?=$_SESSION["seller"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>         
-            <li><a href="../seller/order-list.php" class="px-3 py-2"><i class="fa-solid fa-rectangle-list"></i>訂單管理</a></li>
-            <li class="active"><a href="../seller/file-upload.php" class="px-3 py-2"><i class="fa-solid fa-upload"></i>賣家藝術品上傳</a></li>  
-            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
-            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
-      </ul>
+                    <a href="#" class=" align-items-center link-dark text-decoration-none ">
+                        <img src="https://github.com/mdo.png" alt="" width="110" height="110" class="rounded-circle mx-auto">
+                        <!--<strong>mdo</strong>-->
+                    </a>
+                    <h1 class="py-1 d-flex justify-content-center text-white">Studio</h1>
+                    <hr class="text-white">
+                    <li class="active"><a href="../seller/sellers.php" class="px-3 py-2"><i class="fa-solid fa-user fa-fw"></i>編輯個人頁面</a></li>
+                    <li><a href="../seller/seller.php?id=<?=$_SESSION["seller"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>         
+                    <li><a href="./order-list.php" class="px-3 py-2"><i class="fa-solid fa-rectangle-list"></i>訂單管理</a></li>
+                    <li ><a href="../seller/file-upload.php" class="px-3 py-2"><i class="fa-solid fa-upload"></i>上架藝術品</a></li>
+                    <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
+                    <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
+                </ul>
 
       </nav>
     </aside>
     <main class="main-content">
-  <section class="py-5 text-center container">
+    <section class="py-5 text-center container">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1><?=$_SESSION["seller"]["name"]?> Studio</h1>
-      </div>
-        <h2><?=$_SESSION["seller"]["introduce"]?></h2>
-      </div>
+      <!-- </div>
+        <p><?=$row["introduce"]?></p>
+      </div> -->
     </div>
   </section>
 
   <div class="album py-5 bg-light">
     <div class="container">
       <h2 class="mb-4">最新上架</h2>
-          <?php if ($userCount > 0) : ?>
+         
             <div class="row d-flex flex-wrap">
-              <?php foreach ($rows as $row) :
-              ?>
+              <?php foreach ($rows as $row) :?>
                 <div class="col-lg-3 col-md-6 py-3">
                   <div class="card position-relative">
                     <a class="like position-absolute"></a>
@@ -261,7 +207,7 @@ $totalPage_category =
                 </div>
               <?php endforeach; ?>
             </div>
-          <?php endif; ?>
+         
 
         </div>
         <!-- 頁碼選單 -->

@@ -155,22 +155,22 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
     <div class="container">
     
     <div class="py-2 d-flex justify-content-between">
-      <a class="btn btn-secondary mx-2" href="../seller/add-seller.php">Add Seller</a>
+      <a class="btn btn-dark mx-2" href="./add-user.php">新增賣家</a>
         
     </div>
 
     <div class="py-2">
-      <form action="sellers.php" method="get">
+      <form action="./sellers.php" method="get">
         <div class="input-group">
           <input type="text" class="form-control" name="search">
-          <button type="submit" class="btn btn-secondary">搜尋</button>
+          <button type="submit" class="btn btn-dark">搜尋</button>
         </div>
       </form>
     </div>
 
     <?php if(isset($_GET["search"])): ?>
       <div class="py-2">
-        <a class="btn btn-secondary" href="sellers.php">回列表</a>
+        <a class="btn btn-dark" href="sellers.php">回列表</a>
       </div>
       <h1><?=$_GET["search"]?>的搜尋結果</h1>
     <?php endif; ?>
@@ -199,8 +199,8 @@ $rows=$result->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
                 <td><?=$row["phone"]?></td>
                 <td><?=$row["email"]?></td>
                 <td>
-                  <a class="btn btn-secondary" href="user-seller.php?id=<?=$row["id"]?>">檢視</a>
-                  <a class="btn btn-danger" href="../seller/delete-seller.php?id=<?=$row["id"]?>">刪除</a>
+                  <a class="btn btn-dark" href="user-seller.php?id=<?=$row["id"]?>">檢視</a>
+                  <a class="btn btn-danger" href="./delete-seller.php?id=<?=$row["id"]?>">刪除</a>
                 </td>
               </tr>
               <?php endforeach; ?>

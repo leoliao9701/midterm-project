@@ -123,7 +123,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                 <a class="nav-link" href="../seller/product-list2.php">展覽空間</a>
             </div>
             <div class="position-absolute top-0 end-0">
-                <a class="btn btn-dark text-nowrap" href="#">進入個人頁面</a>
+                <a class="btn btn-dark text-nowrap" href="#">進入個人前台頁面</a>
                 <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
             </div>
         </nav>
@@ -137,19 +137,19 @@ Welcome <?= $_SESSION["seller"]["account"] ?> !
                         <img src="https://github.com/mdo.png" alt="" width="110" height="110" class="rounded-circle mx-auto">
                         <!--<strong>mdo</strong>-->
                     </a>
-                    <h1 class="py-1 d-flex justify-content-center text-white">會員</h1>
+                    <h1 class="py-1 d-flex justify-content-center text-white">Studio</h1>
                     <hr class="text-white">
                     <li><a href="../seller/sellers.php" class="px-3 py-2"><i class="fa-solid fa-user fa-fw"></i>編輯個人頁面</a></li>
-                    <li><a href="../seller/seller.php?id=<?= $_SESSION["seller"]["id"] ?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>
+                    <li><a href="../seller/seller.php?id=<?=$_SESSION["seller"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>         
                     <li><a href="../seller/order-list.php" class="px-3 py-2"><i class="fa-solid fa-rectangle-list"></i>訂單管理</a></li>
-                    <li class="active"><a href="../seller/file-upload.php" class="px-3 py-2"><i class="fa-solid fa-upload"></i>賣家藝術品上傳</a></li>
+                    <li class="active"><a href="../seller/file-upload.php" class="px-3 py-2"><i class="fa-solid fa-upload"></i>上架藝術品</a></li>
                     <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
                     <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
                 </ul>
 
             </nav>
         </aside>
-        <div class="container py-3">
+        <div class="container">
             <a class="btn btn-dark" href="seller-product-list.php">回商品列表</a>
             <form action="doUpload-seller.php" method="post" enctype="multipart/form-data">
                 <div class="mb-2 py-2">

@@ -90,45 +90,42 @@ if(!isset($_SESSION["seller"])){
 
 <body>
 
-  <nav class="main-nav d-flex bg-dark fixed-top shadow">
-    <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-4 text" href="">藝拍</a>
-    <div class="nav">
-      <a class="nav-link" aria-current="page" href="../seller/dashboard.php">首頁</a>
-      <a class="nav-link" href="../seller/seller-product-list.php">我的藝術品</a>
-      <a class="nav-link" href="../seller/sellers.php">畫家</a>
-      <!-- <a class="nav-link active" href="../user/dashboard.php">會員</a> -->
-      <!--<a class="nav-link" href="../product/order-list.php">訂單</a>-->
-      <a class="nav-link" href="">展覽空間</a>
-    </div>
-    <div class="position-absolute top-0 end-0">
-    <a class="btn btn-dark text-nowrap" href="#">進入前台個人頁面</a>
-      <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
-    </div>
-  </nav>
-
-
-  <aside class="left-aside position-fixed bg-dark border-end">
-    <nav class="aside-menu">
-      <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
-        Welcome <?=$_SESSION["seller"]["account"]?> !
+<nav class="main-nav d-flex bg-dark fixed-top shadow">
+      <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-4 text" href="">藝拍</a>
+      <div class="nav">
+        <a class="nav-link active" aria-current="page" href="../seller/dashboard.php">首頁</a>
+        <a class="nav-link" href="../seller/seller-product-list.php">我的藝術品</a>
+        <!-- <a class="nav-link" href="../seller/sellers.php">畫家</a>
+        <a class="nav-link" href="../user/users.php">會員</a> -->
+        <a class="nav-link" href="../seller/order-list.php">畫家</a>
+        <a class="nav-link" href="">展覽空間</a>
+      </div>
+      <div class="position-absolute top-0 end-0">
+        <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
+      </div>
+    </nav>
+    <aside class="left-aside position-fixed bg-dark border-end">
+      <nav class="aside-menu">
+        <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
+        Welcome <?= $_SESSION["user"]["account"] ?> !
       </div> -->
       <ul class="list-unstyled">
-        <a href="#" class=" align-items-center link-dark text-decoration-none ">
-          <img src="https://github.com/mdo.png" alt="" width="110" height="110" class="rounded-circle mx-auto">
-          <!--<strong>mdo</strong>-->
-        </a>
-          <h1 class="py-1 d-flex justify-content-center text-white">Studio</h1>
-          <hr class="text-white">
-            <li class="active"><a href="../seller/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>編輯個人頁面</a></li>
-            <li><a href="../seller/seller.php?id=<?=$_SESSION["seller"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>         
-            <li><a href="../seller/order-list.php" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>訂單管理</a></li>
-            <li><a href="../seller/file-upload.php" class="px-3 py-2"><i class="fa-solid fa-heart"></i>上架藝術品</a></li>      
-            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
-            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
-      </ul>
-        
-    </nav>
-  </aside>
+                    <a href="#" class=" align-items-center link-dark text-decoration-none ">
+                        <img src="https://github.com/mdo.png" alt="" width="110" height="110" class="rounded-circle mx-auto">
+                        <!--<strong>mdo</strong>-->
+                    </a>
+                    <h1 class="py-1 d-flex justify-content-center text-white">Studio</h1>
+                    <hr class="text-white">
+                    <li class="active"><a href="../seller/sellers.php" class="px-3 py-2"><i class="fa-solid fa-user fa-fw"></i>編輯個人頁面</a></li>
+                    <li><a href="../seller/seller.php?id=<?=$_SESSION["seller"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>         
+                    <li><a href="./order-list.php" class="px-3 py-2"><i class="fa-solid fa-rectangle-list"></i>訂單管理</a></li>
+                    <li ><a href="../seller/file-upload.php" class="px-3 py-2"><i class="fa-solid fa-upload"></i>上架藝術品</a></li>
+                    <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
+                    <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
+                </ul>
+
+      </nav>
+    </aside>
 
   <main class="main-content">
   <div class="d-flex justify-content-between">

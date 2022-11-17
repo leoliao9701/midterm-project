@@ -92,17 +92,13 @@ session_start();
   </nav>
   <aside class="left-aside position-fixed bg-dark border-end">
     <nav class="aside-menu">
-      <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
-        Welcome <?=$_SESSION["user"]["account"]?> !
-      </div> -->
-      <ul class="list-unstyled">
+        <ul class="list-unstyled">
           <h1 class="py-2 d-flex justify-content-center text-white">會員</h1>
           <hr class="text-white">
-            <li class="active"><a href="../user/users.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>會員資料列表</a></li>
-            <li><a href="../user/user.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>               
-            <li><a href="../user/user-order-detail.php?id=<?=$_SESSION["user"]["id"]?>" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>個人訂單檢視</a></li>
-            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
-            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
+            <li class="active"><a href="../user/buyers.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>買家資料列表</a></li>
+            <li><a href="../user/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>賣家資料列表</a></li>               
+            <li ><a href="../user/products.php" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>藝術品列表</a></li>
+            <li><a href="../user/order-list.php" class="px-3 py-2"><i class="fa-solid fa-heart"></i>訂單列表</a></li>
         </ul>
         
     </nav>
@@ -114,7 +110,7 @@ session_start();
     </div>
     <!-- 新增資料頁面 -->
   <div class="container">
-    <div class="py-2"><a class="btn btn-secondary" href="users.php">User List</a></div>
+    <div class="py-2"><a class="btn btn-dark" href="buyers.php">回買家列表</a></div>
     <form action="buyer-doInsert.php" method="post">
       
         <div class="mb-2">
@@ -134,10 +130,10 @@ session_start();
             <input type="text" class="form-control" id="email" name="email">
         </div>
         <div class="mb-2">
-            <label for="email">password</label>
+            <label for="password">password</label>
             <input type="password" class="form-control" id="password" name="password">
         </div>
-        <button class="btn btn-secondary" type="submit">送出</button>
+        <button class="btn btn-dark" type="submit">送出</button>
     </form>
   </div>   
    

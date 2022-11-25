@@ -112,10 +112,14 @@ $row=$result->fetch_assoc();
   </nav>
   <aside class="left-aside position-fixed bg-dark border-end">
     <nav class="aside-menu">
+    
       <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
         Welcome <?=$_SESSION["user"]["account"]?> !
       </div> -->
       <ul class="list-unstyled">
+        <a href="#" class=" align-items-center link-dark text-decoration-none ">
+            <img src="../buyer/images/a.jpg" alt="" width="110" height="110" class="rounded-circle mx-auto">
+          </a>
           <h1 class="py-2 d-flex justify-content-center text-white">會員</h1>
           <hr class="text-white">
             <li class="active"><a href="../user/buyers.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>買家資料列表</a></li>
@@ -134,7 +138,7 @@ $row=$result->fetch_assoc();
         
     <div class="container">
     <!-- <div class="py-2">
-        <a class="btn btn-secondary" href="users.php">User List</a>
+        <a class="btn btn-dark" href="users.php">User List</a>
     </div> -->
     <?php if($userCount==0): ?>
         使用者不存在
@@ -164,8 +168,8 @@ $row=$result->fetch_assoc();
         </tbody>
     </table>
     <div class="py-2">
-        <a class="btn btn-secondary" href="user-edit-buyer.php?id=<?=$row["id"]?>">編輯使用者</a>
-        <a class="btn btn-secondary" href="user-password-edit-buyer.php?id=<?=$row["id"]?>">變更密碼</a>
+        <a class="btn btn-dark" href="user-edit-buyer.php?id=<?=$row["id"]?>">編輯買家資料</a>
+        <a class="btn btn-dark" href="user-password-edit-buyer.php?id=<?=$row["id"]?>">變更密碼</a>
     </div>
     <?php endif ?>
   </div>

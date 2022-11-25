@@ -120,7 +120,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <nav class="main-nav d-flex bg-dark fixed-top shadow">
         <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-3 text" href="">藝拍</a>
         <div class="nav">
-            <a class="nav-link" href="#">首頁</a>
+            <a class="nav-link" href="../buyer/buyer.php?id=<?=$_SESSION["user"]["id"]?>">首頁</a>
             <a class="nav-link" href="../buyer/buyer-product-list.php">藝術品參觀</a>
             <!-- <a class="nav-link" href="../seller/sellers.php">畫家</a>
             <a class="nav-link active" href="../buyer/dashboard.php">會員</a>

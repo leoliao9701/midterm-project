@@ -4,6 +4,7 @@ if(isset($_SESSION["seller"])){
     header("location: dashboard.php");
 }
 
+// session_unset();
 
 ?>
 
@@ -22,8 +23,8 @@ if(isset($_SESSION["seller"])){
     <style>
 
   body{
-    background-image: url(https://images.pexels.com/photos/2249961/pexels-photo-2249961.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
-    background-size:cover cover;
+    background-image: url(https://images.pexels.com/photos/1463517/pexels-photo-1463517.jpeg?auto=compress&cs=tinysrgb&w=800);
+    background-size:cover;
     background-repeat:no-repeat;
     background-position:center center;
   }
@@ -31,7 +32,7 @@ if(isset($_SESSION["seller"])){
     margin:0px auto;
     width:500px;
     background-position:center center;
-    background-Color: rgba(254,223,225,0.5);
+    background-Color: rgba(255,255,255,0.5);
     border-radius:5pt;
   }
         .login-panel{

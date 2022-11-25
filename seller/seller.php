@@ -91,7 +91,6 @@ $row=$result->fetch_assoc();
             margin-left: calc(var(--side-width) + 20px);
             padding-top: 54px;
         }
-      
     </style>
 </head>
 
@@ -107,7 +106,7 @@ $row=$result->fetch_assoc();
       <a class="nav-link" href="../seller/product-list2.php">展覽空間</a>
     </div>
     <div class="position-absolute top-0 end-0">
-      <a class="btn btn-dark text-nowrap" href="#">進入個人頁面</a>
+      <a class="btn btn-dark text-nowrap" href="#">進入個人前台頁面</a>
       <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
     </div>
   </nav>
@@ -117,35 +116,35 @@ $row=$result->fetch_assoc();
         Welcome <?=$_SESSION["seller"]["account"]?> !
       </div> -->
       <ul class="list-unstyled">
-      <a href="#" class=" align-items-center link-dark text-decoration-none ">
-          <img src="https://github.com/mdo.png" alt="" width="110" height="110" class="rounded-circle mx-auto">
-          <!--<strong>mdo</strong>-->
-        </a>
-          <h1 class="py-1 d-flex justify-content-center text-white">會員</h1>
-          <hr class="text-white">
-            <li><a href="../seller/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>編輯個人頁面</a></li>
-            <li class="active"><a href="../seller/seller.php?id=<?=$_SESSION["seller"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>               
-            <li><a href="../seller/order-list.php" class="px-3 py-2"><i class="fa-solid fa-rectangle-list"></i>訂單管理</a></li>            
-            <li><a href="../seller/file-upload.php" class="px-3 py-2"><i class="fa-solid fa-upload"></i>賣家藝術品上傳</a></li>  
-            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
-            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
-        </ul>
+                    <a href="#" class=" align-items-center link-dark text-decoration-none ">
+                        <img src="https://github.com/mdo.png" alt="" width="110" height="110" class="rounded-circle mx-auto">
+                        <!--<strong>mdo</strong>-->
+                    </a>
+                    <h1 class="py-1 d-flex justify-content-center text-white">Studio</h1>
+                    <hr class="text-white">
+                    <li ><a href="../seller/sellers.php" class="px-3 py-2"><i class="fa-solid fa-user fa-fw"></i>編輯個人頁面</a></li>
+                    <li class="active"><a href="../seller/seller.php?id=<?=$_SESSION["seller"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>         
+                    <li><a href="../seller/order-list.php" class="px-3 py-2"><i class="fa-solid fa-rectangle-list"></i>訂單管理</a></li>
+                    <li ><a href="../seller/file-upload.php" class="px-3 py-2"><i class="fa-solid fa-upload"></i>上架藝術品</a></li>
+                    <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
+                    <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
+                </ul>
         
     </nav>
   </aside>
   <main class="main-content">
-    <div class="d-flex justify-content-between py-2">
-        <h3>個人資料</h3>
+    <div class="d-flex justify-content-between">
+        <h1>個人資料</h1>
     </div>
         
-    <div class="container py-2">
+    <div class="container">
     <!-- <div class="py-2">
         <a class="btn btn-dark" href="users.php">User List</a>
     </div> -->
     <?php if($userCount==0): ?>
         使用者不存在
     <?php else: ?>
-    <table class="table table-bordered ">
+    <table class="table table-bordered" >
         <tbody>
             <tr>
                 <td>id</td>
@@ -177,9 +176,9 @@ $row=$result->fetch_assoc();
             </tr>
         </tbody>
     </table>
-    <div class=" d-flex justify-content-center">
-        <a class="mx-2 btn btn-dark" href="edit-seller.php?id=<?=$row["id"]?>">編輯使用者</a>
-        <a class="mx-2 btn btn-dark" href="password-edit-seller.php?id=<?=$row["id"]?>">變更密碼</a>
+    <div class="py-2">
+        <a class="btn btn-dark" href="edit-seller.php?id=<?=$row["id"]?>">編輯使用者</a>
+        <a class="btn btn-dark" href="password-edit-seller.php?id=<?=$row["id"]?>">變更密碼</a>
     </div>
     <?php endif ?>
   </div>

@@ -39,7 +39,7 @@ $row = $result->fetch_assoc();
             商品不存在
         <?php else : ?>
             <div class="py-2">
-                <a class="btn btn-dark" href="products.php?id=<?= $row["id"] ?>">回商品列表</a>
+                <a class="btn btn-dark" href="../product/product_page.php?id=<?= $row["id"] ?>">回商品資料</a>
             </div>
             <form action="doEdit.php" method="post" enctype="multipart/form-data">
                 <table class="table table-bordered">

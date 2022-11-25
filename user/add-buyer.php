@@ -1,32 +1,11 @@
 <?php
 session_start();
-if(!isset($_GET["id"])){
-    echo "使用者不存在";
-    exit;
-}
-
-$id=$_GET["id"];
-
-
-require_once("../db2-connect.php");
-
-$sql="SELECT * FROM users WHERE id='$id' AND valid=1";
-$result = $conn->query($sql);
-$userCount=$result->num_rows;
-
-$row=$result->fetch_assoc();
-
-// var_dump($row);
-// exit;
-
-
 ?>
-
 <!doctype html>
 <html lang="en">
 
 <head>
-  <title><?=$row["name"]?></title>
+  <title>add user</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -35,7 +14,7 @@ $row=$result->fetch_assoc();
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
     integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <link rel="stylesheet" href="/fontawesome-free-6.2.0-web/css/all.min.css">
-    <style>
+  <style>
         body{
             height: 300vh;
         }
@@ -92,7 +71,8 @@ $row=$result->fetch_assoc();
             padding-top: 54px;
         }
     </style>
-    </style>
+
+
 </head>
 
 <body>
@@ -112,18 +92,12 @@ $row=$result->fetch_assoc();
   </nav>
   <aside class="left-aside position-fixed bg-dark border-end">
     <nav class="aside-menu">
-      <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
-        Welcome <?=$_SESSION["user"]["account"]?> !
-      </div> -->
-      <ul class="list-unstyled">
-        <a href="#" class=" align-items-center link-dark text-decoration-none ">
-            <img src="../buyer/images/a.jpg" alt="" width="110" height="110" class="rounded-circle mx-auto">
-            </a>
+        <ul class="list-unstyled">
           <h1 class="py-2 d-flex justify-content-center text-white">會員</h1>
           <hr class="text-white">
             <li class="active"><a href="../user/buyers.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>買家資料列表</a></li>
             <li><a href="../user/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>賣家資料列表</a></li>               
-            <li><a href="../user/products.php" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>藝術品列表</a></li>
+            <li ><a href="../user/products.php" class="px-3 py-2"><i class="fa-regular fa-file-lines fa-fw"></i>藝術品列表</a></li>
             <li><a href="../user/order-list.php" class="px-3 py-2"><i class="fa-solid fa-heart"></i>訂單列表</a></li>
         </ul>
         
@@ -131,51 +105,37 @@ $row=$result->fetch_assoc();
   </aside>
   <main class="main-content">
     <div class="d-flex justify-content-between">
-        <h3>編輯會員資料</h3>
+        <h3>新增會員</h3>
     
     </div>
-    <div class="container">
-    
-    <?php if($userCount==0): ?>
-        使用者不存在
-    <?php else: ?>
-    <div class="py-2">
-        <a class="btn btn-dark" href="user-buyer.php?id=<?=$row["id"]?>">返回買家個人資料</a>
-    </div>
-    <form action="doUpdate.php" method="post">
-        <table class="table table-bordered">
-            <tbody>
-                <tr>
-                    <input type="hidden" name="id" value="<?=$row["id"]?>">
-                    <td>id</td>
-                    <td>
-                        <?=$row["id"]?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>姓名</td>
-                    <td>
-                        <input type="text" class="form-control" value="<?=$row["name"]?>" name="name">
-                    </td>
-                </tr>
-                <tr>
-                    <td>phone</td>
-                    <td>
-                        <input type="text" class="form-control" value="<?=$row["phone"]?>" name="phone">
-                    </td>
-                </tr>
-                <tr>
-                    <td>email</td>
-                    <td>
-                        <input type="text" class="form-control" value="<?=$row["email"]?>" name="email">
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- 新增資料頁面 -->
+  <div class="container">
+    <div class="py-2"><a class="btn btn-dark" href="buyers.php">回買家列表</a></div>
+    <form action="buyer-doInsert.php" method="post">
+      
+        <div class="mb-2">
+            <label for="account">Account</label>
+            <input type="text" class="form-control" id="account" name="account">
+        </div>
+        <div class="mb-2">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name">
+        </div>
+        <div class="mb-2">
+            <label for="phone">phone</label>
+            <input type="text" class="form-control" id="phone" name="phone">
+        </div>
+        <div class="mb-2">
+            <label for="email">email</label>
+            <input type="text" class="form-control" id="email" name="email">
+        </div>
+        <div class="mb-2">
+            <label for="password">password</label>
+            <input type="password" class="form-control" id="password" name="password">
+        </div>
         <button class="btn btn-dark" type="submit">送出</button>
     </form>
-    <?php endif ?>
-  </div>    
+  </div>   
    
    
 

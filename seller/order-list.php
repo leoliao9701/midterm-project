@@ -69,27 +69,27 @@ $page_start = ($page - 1) * $per_page;
 
 
 
-if(isset($_GET["status"])){
-    $status=$_GET["status"];
-//如果有運送分頁
-$sqlPage = "SELECT user_order.*, users.account, product.price, product.name AS product_name FROM user_order JOIN users ON user_order.user_id = users.id
+if (isset($_GET["status"])) {
+    $status = $_GET["status"];
+    //如果有運送分頁
+    $sqlPage = "SELECT user_order.*, users.account, product.price, product.name AS product_name FROM user_order JOIN users ON user_order.user_id = users.id
 JOIN product ON user_order.product_id = product.id WHERE user_order.order_status= '$status' ORDER BY user_order.order_date DESC LIMIT {$page_start}, {$per_page}";
-//分頁數量
-$sqlAll = "SELECT user_order.*, users.account, product.price, product.name AS product_name FROM user_order JOIN users ON user_order.user_id = users.id
+    //分頁數量
+    $sqlAll = "SELECT user_order.*, users.account, product.price, product.name AS product_name FROM user_order JOIN users ON user_order.user_id = users.id
 JOIN product ON user_order.product_id = product.id WHERE user_order.order_status= '$status' ORDER BY user_order.order_date DESC";
- $resultAll = $conn->query($sqlAll);
- $userCount = $resultAll->num_rows;
-//存在日期篩選
-}else if(isset($_GET["startDate"])){
-$startDate=$_GET["startDate"];
-$sqlPage = "SELECT user_order.*, users.account, product.price, product.name AS product_name FROM user_order JOIN users ON user_order.user_id = users.id
-JOIN product ON user_order.product_id = product.id $whereClause ORDER BY user_order.order_date DESC LIMIT {$page_start}, {$per_page}"; 
-$sqlAll = "SELECT user_order.*, users.account, product.price, product.name AS product_name FROM user_order JOIN users ON user_order.user_id = users.id
+    $resultAll = $conn->query($sqlAll);
+    $userCount = $resultAll->num_rows;
+    //存在日期篩選
+} else if (isset($_GET["startDate"])) {
+    $startDate = $_GET["startDate"];
+    $sqlPage = "SELECT user_order.*, users.account, product.price, product.name AS product_name FROM user_order JOIN users ON user_order.user_id = users.id
+JOIN product ON user_order.product_id = product.id $whereClause ORDER BY user_order.order_date DESC LIMIT {$page_start}, {$per_page}";
+    $sqlAll = "SELECT user_order.*, users.account, product.price, product.name AS product_name FROM user_order JOIN users ON user_order.user_id = users.id
 JOIN product ON user_order.product_id = product.id $whereClause ORDER BY user_order.order_date DESC";
- $resultAll = $conn->query($sqlAll);
- $userCount = $resultAll->num_rows;
-}else{
-$sqlPage = "SELECT user_order.*, users.account, product.price, product.name AS product_name FROM user_order JOIN users ON user_order.user_id = users.id
+    $resultAll = $conn->query($sqlAll);
+    $userCount = $resultAll->num_rows;
+} else {
+    $sqlPage = "SELECT user_order.*, users.account, product.price, product.name AS product_name FROM user_order JOIN users ON user_order.user_id = users.id
 JOIN product ON user_order.product_id = product.id $whereClause ORDER BY user_order.order_date DESC LIMIT {$page_start}, {$per_page}";
 }
 
@@ -113,124 +113,134 @@ $rows = $resultPage->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS v5.2.1 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="stylesheet" href="/fontawesome-free-6.2.0-web/css/all.min.css">
-    <Style>
-        body {
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <style>
+        body{
             height: 300vh;
         }
-
-        :root {
+        :root{
             --side-width: 260px;
         }
-
-        .main-nav .form-control {
+        .main-nav .form-control{
             background: #444;
             border: none;
             color: #fff;
             border-radius: 0;
         }
-
-        .main-nav .btn {
+        .main-nav .btn{
             border-radius: 0;
         }
-
-        .nav a {
+        .nav a{
             color: gray;
         }
-
-        .nav a:hover {
+        .nav a:hover, .nav a.active{
             color: white;
         }
-
-        .logo {
+        .logo{
             width: var(--side-width);
         }
-
-        .left-aside {
+        .left-aside{
             width: var(--side-width);
-            height: 100vh;
+            height: 100vh; 
             padding-top: 54px;
             overflow: auto;
         }
-
-        .aside-menu ul a {
+        .aside-menu ul a{
             display: block;
-            color: #666;
+            color:  #666;
             text-decoration: none;
             display: flex;
             justify-content: center;
             margin: 15px;
         }
-
-        .aside-menu a:hover {
+        .aside-menu a:hover, .aside-menu li.active a{
             color: white;
             background: cadetblue;
             border-radius: 0.375rem;
-
         }
-
-        .aside-menu a i {
+        .aside-menu a i{
             margin-right: 8px;
             margin-top: 4px;
         }
-
-        .aside-subtitle {
+        .aside-subtitle{
             font-size: 14px;
         }
-
-        .main-content {
+        .main-content{
             margin-left: calc(var(--side-width) + 20px);
             padding-top: 54px;
         }
-    </Style>
+        
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+      section{
+        background-image :url(https://images.pexels.com/photos/750913/pexels-photo-750913.jpeg?auto=compress&cs=tinysrgb&w=800);
+        background-position:center center;
+        background-repeat:no-repeat;
+        background-size:cover
+      }
+      h2{
+        text-align:center;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
 </head>
 
 <body>
     <!--  style="border: 1px solid red ;"檢查邊框 -->
     <nav class="main-nav d-flex bg-dark fixed-top shadow">
-    <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-4 text" href="">藝拍</a>
-    <div class="nav">
-      <a class="nav-link" aria-current="page" href="../seller/dashboard.php">首頁</a>
-      <a class="nav-link" href="../seller/seller-product-list.php">我的藝術品</a>
-      <a class="nav-link" href="../seller/sellers.php">畫家</a>
-      <!-- <a class="nav-link active" href="../seller/dashboard.php">會員</a> -->
-      <!-- <a class="nav-link" href="../product/order-list.php">訂單</a> -->
-      <a class="nav-link" href="">展覽空間</a>
-    </div>
-    <div class="position-absolute top-0 end-0">
-      <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
-    </div>
-  </nav>
-    
+      <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-4 text" href="">藝拍</a>
+      <div class="nav">
+        <a class="nav-link active" aria-current="page" href="../seller/dashboard.php">首頁</a>
+        <a class="nav-link" href="../seller/seller-product-list.php">我的藝術品</a>
+        <!-- <a class="nav-link" href="../seller/sellers.php">畫家</a>
+        <a class="nav-link" href="../user/users.php">會員</a> -->
+        <a class="nav-link" href="../seller/order-list.php">畫家</a>
+        <a class="nav-link" href="">展覽空間</a>
+      </div>
+      <div class="position-absolute top-0 end-0">
+        <a class="btn btn-dark text-nowrap" href="logout.php">Sign out</a>
+      </div>
+    </nav>
     <aside class="left-aside position-fixed bg-dark border-end">
-    <nav class="aside-menu">
-      <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
-        Welcome <?=$_SESSION["seller"]["account"]?> !
+      <nav class="aside-menu">
+        <!-- <div class="pt-2 px-3 pb-2 d-flex justify-content-center text-white">
+        Welcome <?= $_SESSION["seller"]["account"] ?> !
       </div> -->
       <ul class="list-unstyled">
-      <a href="#" class=" align-items-center link-dark text-decoration-none ">
-          <img src="https://github.com/mdo.png" alt="" width="110" height="110" class="rounded-circle mx-auto">
-          <!--<strong>mdo</strong>-->
-        </a>
-          <h1 class="py-1 d-flex justify-content-center text-white">會員</h1>
-          <hr class="text-white">
-            <li><a href="../seller/sellers.php" class="px-3 py-2"> <i class="fa-solid fa-user fa-fw"></i>編輯個人頁面</a></li>
-            <li class="active"><a href="../seller/seller.php?id=<?=$_SESSION["seller"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>               
-            <li><a href="../seller/order-list.php" class="px-3 py-2"><i class="fa-solid fa-rectangle-list"></i>訂單管理</a></li>            
-            <li><a href="../seller/file-upload.php" class="px-3 py-2"><i class="fa-solid fa-upload"></i>賣家藝術品上傳</a></li>  
-            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
-            <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
-        </ul>
-        
-    </nav>
-  </aside>
+                    <a href="#" class=" align-items-center link-dark text-decoration-none ">
+                        <img src="https://github.com/mdo.png" alt="" width="110" height="110" class="rounded-circle mx-auto">
+                        <!--<strong>mdo</strong>-->
+                    </a>
+                    <h1 class="py-1 d-flex justify-content-center text-white">Studio</h1>
+                    <hr class="text-white">
+                    <li ><a href="./sellers.php" class="px-3 py-2"><i class="fa-solid fa-user fa-fw"></i>編輯個人頁面</a></li>
+                    <li><a href="../seller/seller.php?id=<?=$_SESSION["seller"]["id"]?>" class="px-3 py-2"> <i class="fa-solid fa-face-smile fa-fw"></i>會員個人資料</a></li>       
+                    <li class="active"><a href="./order-list.php" class="px-3 py-2"><i class="fa-solid fa-rectangle-list"></i>訂單管理</a></li>
+                    <li ><a href="./file-upload.php" class="px-3 py-2"><i class="fa-solid fa-upload"></i>上架藝術品</a></li>
+                    <li><a href="" class="px-3 py-2"><i class="fa-solid fa-barcode"></i>折扣卷</a></li>
+                    <li><a href="" class="px-3 py-2"><i class="fa-solid fa-heart"></i>我的收藏</a></li>
+                </ul>
+
+      </nav>
+    </aside>
     <!-- 右主畫面 -->
     <main class="main-content">
         <div class="d-flex justify-content-between">
             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">
                 <div class="container">
-                    <?php if (isset($_GET["date"]) || isset($_GET["product_id"]) || isset($_GET["user_id"]) || isset($_GET["startDate"]) ||isset($_GET["status"])): ?>
+                    <?php if (isset($_GET["date"]) || isset($_GET["product_id"]) || isset($_GET["user_id"]) || isset($_GET["startDate"]) || isset($_GET["status"])) : ?>
                         <div class="py-2">
                             <a class="btn btn-dark" href="order-list.php">返回</a>
                         </div>
@@ -264,7 +274,7 @@ $rows = $resultPage->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
                                     <option value="">請選擇出貨狀態</option>
                                     <?php foreach ($rowsStatus as $status) : ?>
                                         <option value="<?= $status["id"] ?>"><?= $status["name"] ?></option>
-                                        
+
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -361,7 +371,7 @@ $rows = $resultPage->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
                                             </a>
                                         </td> -->
                                     </tr>
-                                <?php endforeach; ?>                                
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
@@ -371,28 +381,28 @@ $rows = $resultPage->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
         </div>
         <!-- 頁面選單 -->
         <div class="pagination-container justify-content-end">
-        <?php if (isset($_GET["status"])) : ?>
-          <nav aria-label="Page navigation example">
-            <ul class="pagination">
-              <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                <li class="page-item 
-            <?php
-                if ($i == $page) echo "active";
-            ?>">
-                  <a class="page-link" href="order-list.php?status=<?= $_GET["status"] ?>&page=<?= $i ?>"><?= $i ?></a>
-                </li>
-              <?php endfor; ?>
-            </ul>
-          </nav>
-          <?php exit; ?>
-          <?php endif; ?>
-
-          <?php if (!isset($_GET["startDate"])) : ?>
+            <?php if (isset($_GET["status"])) : ?>
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                            <li class="page-item <?php if ($i == $page) echo "active"; ?>"><a class="page-link" href="order-list.php?page=<?php echo $i;?>">
-                                <?= $i ?></a></li>
+                            <li class="page-item 
+            <?php
+                            if ($i == $page) echo "active";
+            ?>">
+                                <a class="page-link" href="order-list.php?status=<?= $_GET["status"] ?>&page=<?= $i ?>"><?= $i ?></a>
+                            </li>
+                        <?php endfor; ?>
+                    </ul>
+                </nav>
+                <?php exit; ?>
+            <?php endif; ?>
+
+            <?php if (!isset($_GET["startDate"])) : ?>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                            <li class="page-item <?php if ($i == $page) echo "active"; ?>"><a class="page-link" href="order-list.php?page=<?php echo $i; ?>">
+                                    <?= $i ?></a></li>
                         <?php endfor; ?>
                     </ul>
                 </nav>
@@ -403,14 +413,14 @@ $rows = $resultPage->fetch_all(MYSQLI_ASSOC);  //關聯式陣列
                         <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
                             <li class="page-item 
                                 <?php if ($i == $page) echo "active"; ?>">
-                                <a class="page-link" href="order-list.php?startDate=<?php echo $_GET["startDate"];?>&endDate=<?php echo $_GET["endDate"];?>&page=<?php echo $i;?>">
-                                <?= $i ?> 
+                                <a class="page-link" href="order-list.php?startDate=<?php echo $_GET["startDate"]; ?>&endDate=<?php echo $_GET["endDate"]; ?>&page=<?php echo $i; ?>">
+                                    <?= $i ?>
                                 </a>
                             </li>
                         <?php endfor; ?>
                     </ul>
                 </nav>
-            
+
 
 
 

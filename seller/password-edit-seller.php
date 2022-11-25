@@ -10,7 +10,7 @@ $id=$_GET["id"];
 
 require_once("../db2-connect.php");
 
-$sql="SELECT * FROM users WHERE id='$id' AND valid=1";
+$sql="SELECT * FROM sellers WHERE id='$id' AND valid=1";
 $result = $conn->query($sql);
 $userCount=$result->num_rows;
 
@@ -139,7 +139,7 @@ $row=$result->fetch_assoc();
         使用者不存在
     <?php else: ?>
     <div class="py-2">
-        <a class="btn btn-secondary" href="seller.php?id=<?=$row["id"]?>">回使用者</a>
+        <a class="btn btn-dark" href="seller.php?id=<?=$row["id"]?>">回使用者</a>
     </div>
     <form action="doUpdate-password.php" method="post">
         <table class="table table-bordered">
@@ -161,18 +161,18 @@ $row=$result->fetch_assoc();
                 <tr>
                     <td>password</td>
                     <td>
-                        <input type="text" class="form-control" value="password" name="password">
+                        <input type="password" class="form-control" placeholder="請輸入密碼" name="password">
                     </td>
                 </tr>
                 <tr>
                     <td>repassword</td>
                     <td>
-                        <input type="text" class="form-control" value="repassword" name="repassword">
+                        <input type="password" class="form-control" placeholder="請再次輸入密碼" name="repassword">
                     </td>
                 </tr>
             </tbody>
         </table>
-        <button class="btn btn-secondary" type="submit">送出</button>
+        <button class="btn btn-dark" type="submit">送出</button>
     </form>
     <?php endif ?>
   </div>    

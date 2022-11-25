@@ -139,11 +139,14 @@ $row=$result->fetch_assoc();
         
     <div class="container">
     <!-- <div class="py-2">
-        <a class="btn btn-secondary" href="users.php">User List</a>
+        <a class="btn btn-dark" href="users.php">User List</a>
     </div> -->
     <?php if($userCount==0): ?>
         使用者不存在
     <?php else: ?>
+      <div class="py-2">
+        <a class="btn btn-dark" href="./sellers.php?id=<?=$row["id"]?>">返回賣家列表</a>
+    </div>
     <table class="table table-bordered">
         <tbody>
             <tr>
@@ -168,9 +171,10 @@ $row=$result->fetch_assoc();
             </tr>
         </tbody>
     </table>
+
     <div class="py-2">
-        <a class="btn btn-secondary" href="user-edit-seller.php?id=<?=$row["id"]?>">編輯使用者</a>
-        <a class="btn btn-secondary" href="user-password-edit-seller.php?id=<?=$row["id"]?>">變更密碼</a>
+        <a class="btn btn-dark" href="user-edit-seller.php?id=<?=$row["id"]?>">編輯使用者</a>
+        <a class="btn btn-dark" href="user-password-edit-seller.php?id=<?=$row["id"]?>">變更密碼</a>
     </div>
     <?php endif ?>
   </div>

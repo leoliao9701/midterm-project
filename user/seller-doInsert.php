@@ -18,6 +18,8 @@ $now=date('Y-m-d H:i:s');
 
 // echo "$name, $phone, $email, $now";
 
+$password=md5($password);
+
 $sql="INSERT INTO sellers (account, password,name, phone, email, created_at, valid)
 VALUES ('$account','$password','$name', '$phone', '$email', '$now', 1)";
 

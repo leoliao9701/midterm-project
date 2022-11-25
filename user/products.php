@@ -51,6 +51,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS v5.2.1 -->
+  <link rel="stylesheet" href="/fontawesome-free-6.2.0-web/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
   <style>
         body{
@@ -141,9 +142,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
   </aside>
   <main class="main-content">
     <div class="d-flex justify-content-between">
-        <h3>會員資料管理</h3>
-    
-    </div>
+
     <div class="container">
       <div class="py-5 d-flex justify-content-end">
         <a class="btn btn-dark" href="./file-upload.php">新增商品</a>

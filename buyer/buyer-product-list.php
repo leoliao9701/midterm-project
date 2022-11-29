@@ -11,19 +11,6 @@ $resultCategory = $conn->query($sqlCategory);
 $rowsCategory = $resultCategory->fetch_all(MYSQLI_ASSOC);
 
 
-//  else {
-  // if (isset($_GET["category"])) {
-  //   $category = $_GET["category"];
-
-  //   $sql = "//SELECT product.*, category.name AS category_name FROM product
-  //       JOIN category ON product.category = category.id WHERE product.category=$category";
-  // } else {
-  //   $sql = "//SELECT product.*, category.name AS category_name FROM product
-  //       JOIN category ON product.category = category.id";
-  // }
- 
-
-// $result = $conn->query($sql);
 
 
 
@@ -233,6 +220,7 @@ $totalPage = ceil($userCount / $per_page);
             <!--  -->
           </ul>
           <div class="py-2">
+            <!-- 表單 -->
             <form action="buyer-product-list.php" method="GET">
               <div class="row align-items-center g-2">
                 <?php if (isset($_GET["min"])) : ?>

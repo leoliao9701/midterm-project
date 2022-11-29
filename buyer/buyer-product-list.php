@@ -3,7 +3,7 @@ require_once("../db2-connect.php");
 
 session_start();
 if (!isset($_SESSION["user"])) {
-  header("location: login.php");
+  // header("location: login.php");
 }
 $category = "";
 $sqlCategory = "SELECT * FROM category  ORDER BY id ASC";
@@ -12,18 +12,18 @@ $rowsCategory = $resultCategory->fetch_all(MYSQLI_ASSOC);
 
 
 //  else {
-  if (isset($_GET["category"])) {
-    $category = $_GET["category"];
+  // if (isset($_GET["category"])) {
+  //   $category = $_GET["category"];
 
-    $sql = "SELECT product.*, category.name AS category_name FROM product
-        JOIN category ON product.category = category.id WHERE product.category=$category";
-  } else {
-    $sql = "SELECT product.*, category.name AS category_name FROM product
-        JOIN category ON product.category = category.id";
-  }
+  //   $sql = "//SELECT product.*, category.name AS category_name FROM product
+  //       JOIN category ON product.category = category.id WHERE product.category=$category";
+  // } else {
+  //   $sql = "//SELECT product.*, category.name AS category_name FROM product
+  //       JOIN category ON product.category = category.id";
+  // }
  
 
-$result = $conn->query($sql);
+// $result = $conn->query($sql);
 
 
 
@@ -36,33 +36,44 @@ if (isset($_GET["page"])) {
   $page = 1;
 }
 $per_page = 10;
-// $page=1;
 $page_start = ($page - 1) * $per_page;
 // 分類頁面ＳＱＬ
 if (isset($_GET["category"])) {
   $pageCategory = $_GET["category"];
-  $sql2 = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC LIMIT $page_start, $per_page";
-  $sqlAll = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC";
+
+    // 多項篩選
+    if(isset($_GET["min"])){
+      $min = $_GET["min"];
+      $max = $_GET["max"];
+      if (empty($min)) $min = 0;
+      if (empty($max)) $max = 99999;
+      $sql2 = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " AND `product`.`price`>=$min AND `product`.`price`<=$max ORDER BY `product`.`price` DESC LIMIT $page_start, $per_page";
+      $sqlAll = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC";
+    }else{
+      $sql2 = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC LIMIT $page_start, $per_page";
+      $sqlAll = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC";
+    }
+  
   $result = $conn->query($sql2);
   $resultAll = $conn->query($sqlAll);
   $userCount = $resultAll->num_rows;
-
+  
+// 價錢分類
 }elseif (isset($_GET["min"])) {
-    $min = $_GET["min"];
-    $max = $_GET["max"];
+  $min = $_GET["min"];
+  $max = $_GET["max"];
   
-    if (empty($min)) $min = 0;
-    if (empty($max)) $max = 99999;
+  if (empty($min)) $min = 0;
+  if (empty($max)) $max = 99999;
   
-    $sql2 = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max ORDER BY product.price";
-    $sqlAll = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max";
+  $sql2 = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max ORDER BY product.price";
+  $sqlAll = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max";
       
       
-    $result = $conn->query($sql2);
-      $resultAll = $conn->query($sqlAll);
-      $userCount = $resultAll->num_rows;
-      // var_dump($userCount);
-// exit;
+  $result = $conn->query($sql2);
+  $resultAll = $conn->query($sqlAll);
+  $userCount = $resultAll->num_rows;
+//全部
 } else {
   $sql2 = "SELECT * FROM `product` ORDER BY `product`.`create_time` DESC
   LIMIT $page_start, $per_page";
@@ -172,7 +183,6 @@ $totalPage = ceil($userCount / $per_page);
 </head>
 
 <body>
-  <!--  style="border: 1px solid red ;"檢查邊框 -->
   <nav class="main-nav d-flex bg-dark fixed-top shadow">
       <a class="text-nowrap px-3 text-white text-decoration-none d-flex align-items-center justify-content-center logo flex-shrink-0 fs-4 text" href="">藝拍</a>
       <div class="nav">
@@ -232,14 +242,14 @@ $totalPage = ceil($userCount / $per_page);
                 <?php endif; ?>
                 <div class="col-auto">
                   <input type="number" class="form-control text-center" name="min" placeholder="輸入最小金額" value="<?php
-                                                                                                                if (isset($_GET["min"])) echo $price; ?>">
+                  if (isset($_GET["min"])) echo $price; ?>">
                 </div>
                 <div class="col-auto">
                   ~
                 </div>
                 <div class="col-auto">
                   <input type="number" class="form-control text-center" name="max" placeholder="輸入最大金額" value="<?php
-                                                                                                                if (isset($_GET["max"])) echo $price; ?>">
+                  if (isset($_GET["max"])) echo $price; ?>">
                 </div>
                 
                 <div class="col-auto">

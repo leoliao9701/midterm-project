@@ -42,13 +42,12 @@ if (isset($_GET["category"])) {
 } elseif (isset($_GET["min"])) {
   $min = $_GET["min"];
   $max = $_GET["max"];
-  $category_radio = $_GET["category-radio"];
-  if (empty($min)) {
-  }
-  $min = 0;
+  if (empty($min)) $min = 0;
   if (empty($max)) $max = 99999;
   // 多項篩選
   if (isset($category_radio)) {
+    $category_radio = $_GET["category-radio"];
+
     $sql2 = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max AND product.category = $category_radio ORDER BY product.price DESC
     LIMIT $page_start, $per_page";
 
@@ -234,13 +233,13 @@ $totalPage = ceil($userCount / $per_page);
                 </div>
               <?php endif; ?>
               <div class="col-auto">
-                <input type="number" class="form-control text-center" name="min" placeholder="輸入最小金額" value="<?php if (isset($_GET["min"])) echo $price; ?>">
+                <input type="number" class="form-control text-center" name="min" placeholder="輸入最小金額" value="<?php if (isset($_GET["min"])) echo $_GET["min"]; ?>">
               </div>
               <div class="col-auto">
                 ~
               </div>
               <div class="col-auto">
-                <input type="number" class="form-control text-center" name="max" placeholder="輸入最大金額" value="<?php if (isset($_GET["max"])) echo $price; ?>">
+                <input type="number" class="form-control text-center" name="max" placeholder="輸入最大金額" value="<?php if (isset($_GET["max"])) echo $_GET["max"]; ?>">
               </div>
               <div class="row-auto">
                 <input class="form-check-input" type="radio" name="category-radio" value="1">

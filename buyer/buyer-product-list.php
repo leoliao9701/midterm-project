@@ -49,10 +49,13 @@ if (isset($_GET["category"])) {
   if (empty($max)) $max = 99999;
   // 多項篩選
   if (isset($category_radio)) {
-    $sql2 = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max AND product.category = $category_radio ORDER BY product.price";
+    $sql2 = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max AND product.category = $category_radio ORDER BY product.price DESC
+    LIMIT $page_start, $per_page";
+
     $sqlAll = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max AND product.category = $category_radio";
   } else {
-    $sql2 = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max ORDER BY product.price";
+    $sql2 = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max ORDER BY product.price DESC
+    LIMIT $page_start, $per_page";
     $sqlAll = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max";
   }
 
@@ -231,15 +234,13 @@ $totalPage = ceil($userCount / $per_page);
                 </div>
               <?php endif; ?>
               <div class="col-auto">
-                <input type="number" class="form-control text-center" name="min" placeholder="輸入最小金額" value="<?php
-                                                                                                              if (isset($_GET["min"])) echo $price; ?>">
+                <input type="number" class="form-control text-center" name="min" placeholder="輸入最小金額" value="<?php if (isset($_GET["min"])) echo $price; ?>">
               </div>
               <div class="col-auto">
                 ~
               </div>
               <div class="col-auto">
-                <input type="number" class="form-control text-center" name="max" placeholder="輸入最大金額" value="<?php
-                                                                                                              if (isset($_GET["max"])) echo $price; ?>">
+                <input type="number" class="form-control text-center" name="max" placeholder="輸入最大金額" value="<?php if (isset($_GET["max"])) echo $price; ?>">
               </div>
               <div class="row-auto">
                 <input class="form-check-input" type="radio" name="category-radio" value="1">
@@ -337,18 +338,34 @@ $totalPage = ceil($userCount / $per_page);
           </ul>
         </nav>
       <?php elseif ((isset($_GET["min"])) && (isset($_GET["max"]))) : ?>
-        <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-              <li class="page-item 
-            <?php
-              if ($i == $page) echo "active";
-            ?>">
-                <a class="page-link" href="buyer-product-list.php?min=<?= $_GET["min"] ?>&max=<?= $_GET["max"] ?>&page=<?= $i ?>"><?= $i ?></a>
-              </li>
-            <?php endfor; ?>
-          </ul>
-        </nav>
+        <!-- 多項篩選 -->
+        <?php if(isset($_GET["category-radio"])) : ?>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                <li class="page-item 
+              <?php
+                if ($i == $page) echo "active";
+              ?>">
+                  <a class="page-link" href="buyer-product-list.php?min=<?= $_GET["min"] ?>&max=<?= $_GET["max"] ?>&category-radio=<?= $category_radio ?>&page=<?= $i ?>"><?= $i ?></a>
+                </li>
+              <?php endfor; ?>
+            </ul>
+          </nav>
+        <?php else : ?>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                <li class="page-item 
+              <?php
+                if ($i == $page) echo "active";
+              ?>">
+                  <a class="page-link" href="buyer-product-list.php?min=<?= $_GET["min"] ?>&max=<?= $_GET["max"] ?>&page=<?= $i ?>"><?= $i ?></a>
+                </li>
+              <?php endfor; ?>
+            </ul>
+          </nav>
+        <?php endif; ?>
       <?php else : ?>
         <nav aria-label="Page navigation example">
           <ul class="pagination">

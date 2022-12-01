@@ -240,11 +240,14 @@ $totalPage = ceil($userCount / $per_page);
           <!-- 表單 -->
           <form action="buyer-product-list.php" method="GET">
             <div class="row align-items-center g-2">
-              <?php if (isset($_GET["min"])) : ?>
+              <?php if ((isset($_GET["min"])) || (isset($_GET["max"]))) : ?>
                 <div class="col-auto">
                   <a class="btn btn-dark" href="./buyer-product-list.php">Back</a>
                 </div>
               <?php endif; ?>
+              <div class="row-auto">
+                <input type="text" class="form-control text-left" name="author" placeholder="輸入畫家名稱" value="<?php if (isset($_GET["author"])) echo $_GET["author"]; ?>">
+              </div>
               <div class="col-auto">
                 <input type="number" class="form-control text-center" name="min" placeholder="輸入最小金額" value="<?php if (isset($_GET["min"])) echo $_GET["min"]; ?>">
               </div>

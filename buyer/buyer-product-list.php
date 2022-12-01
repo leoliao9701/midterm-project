@@ -28,18 +28,11 @@ $page_start = ($page - 1) * $per_page;
 if (isset($_GET["category"])) {
   $pageCategory = $_GET["category"];
 
-  // 多項篩選
-  if (isset($_GET["min"])) {
-    $min = $_GET["min"];
-    $max = $_GET["max"];
-    if (empty($min)) $min = 0;
-    if (empty($max)) $max = 99999;
-    $sql2 = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " AND `product`.`price`>=$min AND `product`.`price`<=$max ORDER BY `product`.`price` DESC LIMIT $page_start, $per_page";
-    $sqlAll = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC";
-  } else {
-    $sql2 = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC LIMIT $page_start, $per_page";
-    $sqlAll = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC";
-  }
+
+
+  $sql2 = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC LIMIT $page_start, $per_page";
+  $sqlAll = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC";
+
 
   $result = $conn->query($sql2);
   $resultAll = $conn->query($sqlAll);
@@ -49,12 +42,21 @@ if (isset($_GET["category"])) {
 } elseif (isset($_GET["min"])) {
   $min = $_GET["min"];
   $max = $_GET["max"];
-
-  if (empty($min)) $min = 0;
+  $category_radio = $_GET["category-radio"];
+  if (empty($min)) {
+  }
+  $min = 0;
   if (empty($max)) $max = 99999;
+  // 多項篩選
+  if (isset($category_radio)) {
+    $sql2 = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max AND product.category = $category_radio ORDER BY product.price";
+    $sqlAll = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max AND product.category = $category_radio";
+  } else {
+    $sql2 = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max ORDER BY product.price";
+    $sqlAll = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max";
+  }
 
-  $sql2 = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max ORDER BY product.price";
-  $sqlAll = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max";
+
 
 
   $result = $conn->query($sql2);
@@ -240,18 +242,28 @@ $totalPage = ceil($userCount / $per_page);
                                                                                                               if (isset($_GET["max"])) echo $price; ?>">
               </div>
               <div class="row-auto">
-                  <input class="form-check-input" type="radio" name="category-radio" value="1">
-                  <label class="form-check-label" for="inlineRadio1">ink</label>
-                  <input class="form-check-input" type="radio" name="category-radio" value="2">
-                  <label class="form-check-label" for="inlineRadio1">collage</label>
-                  <input class="form-check-input" type="radio" name="category-radio" value="3">
-                  <label class="form-check-label" for="inlineRadio1">canvas</label>
-                  <input class="form-check-input" type="radio" name="category-radio" value="4">
-                  <label class="form-check-label" for="inlineRadio1">watercolor</label>
-                  <input class="form-check-input" type="radio" name="category-radio" value="5">
-                  <label class="form-check-label" for="inlineRadio1">Sculpture</label>
-                  <input class="form-check-input" type="radio" name="category-radio" value="5">
-                  <label class="form-check-label" for="inlineRadio1">digit</label>
+                <input class="form-check-input" type="radio" name="category-radio" value="1">
+                <label class="form-check-label" for="inlineRadio1">ink</label>
+
+
+                <input class="form-check-input" type="radio" name="category-radio" value="2">
+                <label class="form-check-label" for="inlineRadio1">collage</label>
+
+
+                <input class="form-check-input" type="radio" name="category-radio" value="3">
+                <label class="form-check-label" for="inlineRadio1">canvas</label>
+
+
+                <input class="form-check-input" type="radio" name="category-radio" value="4">
+                <label class="form-check-label" for="inlineRadio1">watercolor</label>
+
+
+                <input class="form-check-input" type="radio" name="category-radio" value="5">
+                <label class="form-check-label" for="inlineRadio1">Sculpture</label>
+
+
+                <input class="form-check-input" type="radio" name="category-radio" value="6">
+                <label class="form-check-label" for="inlineRadio1">digit</label>
               </div>
               <div class="row-auto">
                 <button class="btn btn-dark" type="submit">篩選</button>

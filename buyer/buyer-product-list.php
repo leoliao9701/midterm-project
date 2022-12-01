@@ -239,15 +239,19 @@ $totalPage = ceil($userCount / $per_page);
                 <input type="number" class="form-control text-center" name="max" placeholder="輸入最大金額" value="<?php
                                                                                                               if (isset($_GET["max"])) echo $price; ?>">
               </div>
-              <div class="col-auto">
-                <div class="form-check form-check-into">
+              <div class="row-auto">
                   <input class="form-check-input" type="radio" name="category-radio" value="1">
-                  <label class="form-check-label" for="inlineRadio1">水墨</label>
-                </div>
-                <div class="form-check form-check-into">
+                  <label class="form-check-label" for="inlineRadio1">ink</label>
                   <input class="form-check-input" type="radio" name="category-radio" value="2">
-                  <label class="form-check-label" for="inlineRadio1">拼貼</label>
-                </div>
+                  <label class="form-check-label" for="inlineRadio1">collage</label>
+                  <input class="form-check-input" type="radio" name="category-radio" value="3">
+                  <label class="form-check-label" for="inlineRadio1">canvas</label>
+                  <input class="form-check-input" type="radio" name="category-radio" value="4">
+                  <label class="form-check-label" for="inlineRadio1">watercolor</label>
+                  <input class="form-check-input" type="radio" name="category-radio" value="5">
+                  <label class="form-check-label" for="inlineRadio1">Sculpture</label>
+                  <input class="form-check-input" type="radio" name="category-radio" value="5">
+                  <label class="form-check-label" for="inlineRadio1">digit</label>
               </div>
               <div class="row-auto">
                 <button class="btn btn-dark" type="submit">篩選</button>

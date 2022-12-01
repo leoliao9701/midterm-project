@@ -24,14 +24,24 @@ if (isset($_GET["page"])) {
 }
 $per_page = 10;
 $page_start = ($page - 1) * $per_page;
+// 作者查詢
+if (isset($_GET["author"])) {
+  $author = $_GET["author"];
+  $sql2 = "SELECT * FROM `product` WHERE `product_status`=1 AND `product`.`author` LIKE '%$author%'  ORDER BY `product`.`create_time` DESC LIMIT $page_start, $per_page";
+  $sqlAll = "SELECT * FROM `product` WHERE `product_status`=1 AND `product`.`author` LIKE '%$author%'  ORDER BY `product`.`create_time` DESC";
+
+  $result = $conn->query($sql2);
+  $resultAll = $conn->query($sqlAll);
+  $userCount = $resultAll->num_rows;
+
 // 分類頁面ＳＱＬ
-if (isset($_GET["category"])) {
+}elseif (isset($_GET["category"])) {
   $pageCategory = $_GET["category"];
 
 
 
-  $sql2 = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC LIMIT $page_start, $per_page";
-  $sqlAll = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC";
+  $sql2 = "SELECT * FROM `product` WHERE `product_status`=1 AND `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC LIMIT $page_start, $per_page";
+  $sqlAll = "SELECT * FROM `product` WHERE `product_status`=1 AND `category` =  " . $_GET["category"] . " ORDER BY `product`.`create_time` DESC";
 
 
   $result = $conn->query($sql2);
@@ -43,8 +53,8 @@ if (isset($_GET["category"])) {
 
 
 
-  $sql2 = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category-radio"] . " ORDER BY `product`.`create_time` DESC LIMIT $page_start, $per_page";
-  $sqlAll = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category-radio"] . " ORDER BY `product`.`create_time` DESC";
+  $sql2 = "SELECT * FROM `product` WHERE `product_status`=1 AND `category` =  " . $_GET["category-radio"] . " ORDER BY `product`.`create_time` DESC LIMIT $page_start, $per_page";
+  $sqlAll = "SELECT * FROM `product` WHERE `product_status`=1 AND `category` =  " . $_GET["category-radio"] . " ORDER BY `product`.`create_time` DESC";
 
 
   $result = $conn->query($sql2);
@@ -61,14 +71,14 @@ if (isset($_GET["category"])) {
   if (isset($category_radio)) {
     $category_radio = $_GET["category-radio"];
 
-    $sql2 = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max AND product.category = $category_radio ORDER BY product.price DESC
+    $sql2 = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE `product_status`=1 AND product.price >= $min AND product.price <=$max AND product.category = $category_radio ORDER BY product.price DESC
     LIMIT $page_start, $per_page";
 
-    $sqlAll = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max AND product.category = $category_radio";
+    $sqlAll = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE `product_status`=1 AND product.price >= $min AND product.price <=$max AND product.category = $category_radio";
   } else {
-    $sql2 = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max ORDER BY product.price DESC
+    $sql2 = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE `product_status`=1 AND product.price >= $min AND product.price <=$max ORDER BY product.price DESC
     LIMIT $page_start, $per_page";
-    $sqlAll = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE product.price >= $min AND product.price <=$max";
+    $sqlAll = "SELECT product.*, category.name AS category_name FROM product JOIN category ON product.category = category.id WHERE `product_status`=1 AND product.price >= $min AND product.price <=$max";
   }
 
 
@@ -79,9 +89,9 @@ if (isset($_GET["category"])) {
   $userCount = $resultAll->num_rows;
   //全部
 } else {
-  $sql2 = "SELECT * FROM `product` ORDER BY `product`.`create_time` DESC
+  $sql2 = "SELECT * FROM `product` WHERE `product_status`=1 ORDER BY `product`.`create_time` DESC
   LIMIT $page_start, $per_page";
-  $sqlAll = "SELECT * FROM `product` ORDER BY `product`.`id` ASC ";
+  $sqlAll = "SELECT * FROM `product` WHERE `product_status`=1 ORDER BY `product`.`id` ASC ";
   $result = $conn->query($sql2);
   $resultAll = $conn->query($sqlAll);
   $userCount = $resultAll->num_rows;
@@ -237,6 +247,9 @@ $totalPage = ceil($userCount / $per_page);
           <!--  -->
         </ul>
         <div class="py-2">
+          <?php if(isset($_GET["author"])) : ?> 
+            <h1><?php echo $_GET["author"] ?> 的畫家搜尋結果</h1>
+          <?php endif ?>
           <!-- 表單 -->
           <form action="buyer-product-list.php" method="GET">
             <div class="row align-items-center g-2">

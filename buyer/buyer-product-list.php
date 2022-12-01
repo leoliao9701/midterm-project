@@ -38,6 +38,19 @@ if (isset($_GET["category"])) {
   $resultAll = $conn->query($sqlAll);
   $userCount = $resultAll->num_rows;
 
+}elseif (isset($_GET["category-radio"])) {
+  // $pageCategory = $_GET["category"];
+
+
+
+  $sql2 = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category-radio"] . " ORDER BY `product`.`create_time` DESC LIMIT $page_start, $per_page";
+  $sqlAll = "SELECT * FROM `product` WHERE `category` =  " . $_GET["category-radio"] . " ORDER BY `product`.`create_time` DESC";
+
+
+  $result = $conn->query($sql2);
+  $resultAll = $conn->query($sqlAll);
+  $userCount = $resultAll->num_rows;
+
   // 價錢分類
 } elseif (isset($_GET["min"])) {
   $min = $_GET["min"];
@@ -242,27 +255,27 @@ $totalPage = ceil($userCount / $per_page);
                 <input type="number" class="form-control text-center" name="max" placeholder="輸入最大金額" value="<?php if (isset($_GET["max"])) echo $_GET["max"]; ?>">
               </div>
               <div class="row-auto">
-                <input class="form-check-input" type="radio" name="category-radio" value="1">
+                <input class="form-check-input" type="radio" name="category-radio" value="1" <?php if(isset($_GET["category-radio"]) && (($_GET["category-radio"])=="1")) echo "checked"; ?>>
                 <label class="form-check-label" for="inlineRadio1">ink</label>
 
 
-                <input class="form-check-input" type="radio" name="category-radio" value="2">
+                <input class="form-check-input" type="radio" name="category-radio" value="2" <?php if(isset($_GET["category-radio"]) && (($_GET["category-radio"])=="2")) echo "checked"; ?>>
                 <label class="form-check-label" for="inlineRadio1">collage</label>
 
 
-                <input class="form-check-input" type="radio" name="category-radio" value="3">
+                <input class="form-check-input" type="radio" name="category-radio" value="3" <?php if(isset($_GET["category-radio"]) && (($_GET["category-radio"])=="3")) echo "checked"; ?>>
                 <label class="form-check-label" for="inlineRadio1">canvas</label>
 
 
-                <input class="form-check-input" type="radio" name="category-radio" value="4">
+                <input class="form-check-input" type="radio" name="category-radio" value="4" <?php if(isset($_GET["category-radio"]) && (($_GET["category-radio"])=="4")) echo "checked"; ?>>
                 <label class="form-check-label" for="inlineRadio1">watercolor</label>
 
 
-                <input class="form-check-input" type="radio" name="category-radio" value="5">
+                <input class="form-check-input" type="radio" name="category-radio" value="5" <?php if(isset($_GET["category-radio"]) && (($_GET["category-radio"])=="5")) echo "checked"; ?>>
                 <label class="form-check-label" for="inlineRadio1">Sculpture</label>
 
 
-                <input class="form-check-input" type="radio" name="category-radio" value="6">
+                <input class="form-check-input" type="radio" name="category-radio" value="6" <?php if(isset($_GET["category-radio"]) && (($_GET["category-radio"])=="6")) echo "checked"; ?>>
                 <label class="form-check-label" for="inlineRadio1">digit</label>
               </div>
               <div class="row-auto">
@@ -336,6 +349,7 @@ $totalPage = ceil($userCount / $per_page);
             <?php endfor; ?>
           </ul>
         </nav>
+      <!-- 價格篩選 -->
       <?php elseif ((isset($_GET["min"])) && (isset($_GET["max"]))) : ?>
         <!-- 多項篩選 -->
         <?php if(isset($_GET["category-radio"])) : ?>
@@ -346,7 +360,7 @@ $totalPage = ceil($userCount / $per_page);
               <?php
                 if ($i == $page) echo "active";
               ?>">
-                  <a class="page-link" href="buyer-product-list.php?min=<?= $_GET["min"] ?>&max=<?= $_GET["max"] ?>&category-radio=<?= $category_radio ?>&page=<?= $i ?>"><?= $i ?></a>
+                  <a class="page-link" href="buyer-product-list.php?min=<?= $_GET["min"] ?>&max=<?= $_GET["max"] ?>&category-radio=<?= $_GET["category-radio"] ?>&page=<?= $i ?>"><?= $i ?></a>
                 </li>
               <?php endfor; ?>
             </ul>
@@ -365,6 +379,36 @@ $totalPage = ceil($userCount / $per_page);
             </ul>
           </nav>
         <?php endif; ?>
+        <?php elseif (isset($_GET["category-radio"])) : ?>
+        <!-- 多項篩選 -->
+        <?php if((isset($_GET["min"])) && (isset($_GET["max"]))) : ?>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                <li class="page-item 
+              <?php
+                if ($i == $page) echo "active";
+              ?>">
+                  <a class="page-link" href="buyer-product-list.php?min=<?= $_GET["min"] ?>&max=<?= $_GET["max"] ?>&category-radio=<?= $_GET["category-radio"] ?>&page=<?= $i ?>"><?= $i ?></a>
+                </li>
+              <?php endfor; ?>
+            </ul>
+          </nav>
+        <?php else : ?>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                <li class="page-item 
+              <?php
+                if ($i == $page) echo "active";
+              ?>">
+                  <a class="page-link" href="buyer-product-list.php?category-radio=<?= $_GET["category-radio"] ?>&page=<?= $i ?>"><?= $i ?></a>
+                </li>
+              <?php endfor; ?>
+            </ul>
+          </nav>
+        <?php endif ?>
+        
       <?php else : ?>
         <nav aria-label="Page navigation example">
           <ul class="pagination">

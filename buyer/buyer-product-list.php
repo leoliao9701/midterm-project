@@ -76,7 +76,7 @@ if (isset($_GET["category"])) {
 }
 // 
 $rows = $result->fetch_all(MYSQLI_ASSOC);
-$productCount = $result->num_rows;
+$productCount = $resultAll->num_rows;
 
 
 //計算頁數
